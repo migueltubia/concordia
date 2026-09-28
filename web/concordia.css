@@ -1,0 +1,164 @@
+/* Estilos propios de Concordia, encima de styles.css (que es el de Escrutinio). */
+:root {
+  --tierra: #e4e3dc; --tierra-borde: #fcfcfb; --oceano: #f6f6f3;
+  --mapa-origen: #b9aef0; --mapa-destino: #f3cf6b;
+  --rel-p2: #2a78d6; --rel-p1: #86b6ef; --rel-n0: #a8a69f; --rel-n1: #f0a3a2; --rel-n2: #e34948;
+  --seq-ink-alto: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --tierra: #34342f; --tierra-borde: #1a1a19; --oceano: #141413;
+    --mapa-origen: #6a5cc9; --mapa-destino: #a8820f;
+    --rel-p2: #3987e5; --rel-p1: #2b5a93; --rel-n0: #6b6a65; --rel-n1: #8f4545; --rel-n2: #e66767;
+    --seq-100: #1b2a3d; --seq-200: #1f3d63; --seq-300: #1c5cab; --seq-400: #2a78d6; --seq-500: #5598e7; --seq-600: #86b6ef; --seq-700: #b7d3f6;
+    --seq-ink-alto: #0b0b0b;
+  }
+}
+:root[data-theme="dark"] {
+  --tierra: #34342f; --tierra-borde: #1a1a19; --oceano: #141413;
+  --mapa-origen: #6a5cc9; --mapa-destino: #a8820f;
+  --rel-p2: #3987e5; --rel-p1: #2b5a93; --rel-n0: #6b6a65; --rel-n1: #8f4545; --rel-n2: #e66767;
+  --seq-100: #1b2a3d; --seq-200: #1f3d63; --seq-300: #1c5cab; --seq-400: #2a78d6; --seq-500: #5598e7; --seq-600: #86b6ef; --seq-700: #b7d3f6;
+  --seq-ink-alto: #0b0b0b;
+}
+
+/* Selectores de la cabecera: país y años */
+.selectores { display: flex; gap: 8px; margin-left: auto; }
+.selectores + .enlace-github { margin-left: 0; }
+.boton-sel {
+  display: inline-flex; align-items: center; gap: 6px; max-width: 260px; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px 4px 8px; cursor: pointer; font-size: 14px; color: var(--ink);
+}
+.boton-sel:hover { border-color: var(--axis); }
+.boton-sel svg { width: 16px; height: 16px; fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.boton-sel .sel-texto { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.boton-sel .sel-flecha { color: var(--muted); font-size: 11px; }
+.movil .selectores { margin-left: auto; gap: 6px; }
+.movil .boton-sel { max-width: 150px; padding: 6px 10px 6px 8px; }
+
+/* Diálogo (selector de país y de años) */
+.dlg-fondo { position: fixed; inset: 0; background: rgba(0, 0, 0, .35); z-index: 45; display: none; }
+.dlg-fondo.abierto { display: block; }
+.dlg {
+  position: fixed; z-index: 46; top: 70px; left: 50%; transform: translateX(-50%); width: min(640px, calc(100vw - 32px));
+  max-height: calc(100vh - 100px); overflow-y: auto; background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 14px; box-shadow: var(--shadow); padding: 16px 18px; display: none;
+}
+.dlg.abierto { display: block; }
+.dlg-cab { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.dlg-cab h3 { margin: 0; font-size: 17px; }
+.movil .dlg { top: auto; bottom: 0; left: 0; right: 0; transform: none; width: 100%; max-height: 85vh; border-radius: 16px 16px 0 0; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+.pais-buscar { font: inherit; font-size: 15px; width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-1); color: var(--ink); margin: 6px 0 10px; }
+.pais-lista { display: flex; flex-direction: column; gap: 8px; }
+.pais-grupo { display: flex; flex-wrap: wrap; gap: 4px 6px; }
+.pais-grupo h4 { flex-basis: 100%; margin: 8px 0 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.pais-op { display: inline-flex; gap: 6px; align-items: center; border: 1px solid var(--border); background: var(--surface-1); color: var(--ink); border-radius: 999px; padding: 4px 10px; cursor: pointer; font-size: 14px; }
+.pais-op:hover { border-color: var(--axis); }
+.pais-op.activo { background: var(--ink); color: var(--surface-1); }
+.pais-op .badge { padding: 0 6px; }
+.anios .filtros label { display: inline-flex; gap: 6px; align-items: center; color: var(--ink-2); }
+.anios select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-1); color: var(--ink); }
+.boton.primario { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* Mapa */
+.mapa { position: relative; margin: 8px 0; background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mapa-svg { display: block; width: 100%; height: auto; touch-action: pan-y; user-select: none; }
+.mapa .oceano { fill: var(--oceano); stroke: var(--grid); stroke-width: 1; }
+.mapa .pais { fill: var(--tierra); stroke: var(--tierra-borde); stroke-width: .5; vector-effect: non-scaling-stroke; cursor: pointer; }
+.mapa .pais:hover { stroke: var(--ink-2); stroke-width: 1.2; }
+.mapa .pais.micro { stroke-width: 1; }
+.mapa-zoom { position: absolute; right: 10px; top: 10px; display: flex; flex-direction: column; gap: 4px; }
+.mapa-zoom .boton { width: 34px; height: 34px; padding: 0; font-size: 18px; line-height: 1; }
+.flecha { cursor: pointer; }
+.flecha .linea { fill: none; stroke-linecap: round; opacity: .88; }
+.flecha .hit-flecha { fill: none; stroke: transparent; }
+.flecha:hover .linea { opacity: 1; }
+.fl-p2 .linea { stroke: var(--rel-p2); } .fl-p2 .cabeza { fill: var(--rel-p2); }
+.fl-p1 .linea { stroke: var(--rel-p1); } .fl-p1 .cabeza { fill: var(--rel-p1); }
+.fl-n0 .linea { stroke: var(--rel-n0); } .fl-n0 .cabeza { fill: var(--rel-n0); }
+.fl-n1 .linea { stroke: var(--rel-n1); } .fl-n1 .cabeza { fill: var(--rel-n1); }
+.fl-n2 .linea { stroke: var(--rel-n2); } .fl-n2 .cabeza { fill: var(--rel-n2); }
+.legend i.fl-p2 { background: var(--rel-p2); } .legend i.fl-p1 { background: var(--rel-p1); } .legend i.fl-n0 { background: var(--rel-n0); }
+.legend i.fl-n1 { background: var(--rel-n1); } .legend i.fl-n2 { background: var(--rel-n2); }
+.legend i[class^="fl-"] { height: 4px; width: 16px; vertical-align: 3px; border-radius: 2px; }
+
+/* Relaciones: chips y filas del panel */
+.chip.rel .s { font-weight: 700; }
+.chip.rel1 .s { color: var(--si); } .chip.rel-1 .s { color: var(--no); } .chip.rel0 .s { color: var(--muted); }
+.chip.rel1 { box-shadow: inset 2px 0 0 var(--si); } .chip.rel-1 { box-shadow: inset 2px 0 0 var(--no); }
+.fila-rel { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--grid); }
+.fila-rel .fecha { color: var(--ink-2); font-size: 13px; font-variant-numeric: tabular-nums; }
+.fila-rel .titulo { font-weight: 600; }
+.fila-rel .resumen { font-size: 13px; margin-top: 4px; }
+.movil .fila-rel { grid-template-columns: 1fr; gap: 4px; }
+.rel-motivos { margin-top: 6px; }
+.ficha h4 { margin: 10px 0 4px; font-size: 13px; }
+
+/* Barras horizontales */
+.barrash { grid-template-columns: minmax(110px, 200px) 1fr; }
+.bh-label { color: var(--ink-2); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bh-pista { display: flex; align-items: center; gap: 8px; min-height: 18px; }
+.bh-pista.clic { cursor: pointer; border-radius: 4px; }
+.bh-pista.clic:hover { background: var(--surface-2); }
+.bh-barra { height: 12px; border-radius: 0 4px 4px 0; min-width: 2px; }
+.bh-pila { display: flex; gap: 2px; height: 12px; border-radius: 0 4px 4px 0; overflow: hidden; }
+.bh-pila span { display: block; height: 100%; min-width: 0; }
+.bh-pila .si { background: var(--si); } .bh-pila .abs { background: var(--abs); } .bh-pila .no { background: var(--no); }
+.bh-pista b { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink); min-width: 34px; }
+
+/* País */
+.cab-pais h2 span { font-weight: 400; }
+.aviso-card { border-left: 3px solid var(--mapa-destino); }
+.voto-pais { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+.voto-pais.si { color: var(--si); } .voto-pais.no { color: var(--no); } .voto-pais.abstencion { color: var(--ink-2); }
+.voto-pais.no_vota { color: var(--muted); font-weight: 400; }
+tr.actual td { background: var(--surface-2); font-weight: 600; }
+.ms-buscar { font: inherit; font-size: 14px; width: 100%; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-1); color: var(--ink); margin-bottom: 6px; }
+.segmentos .muted { align-self: center; }
+section.card + section.card { margin-top: 16px; }
+.movil .barra-movil { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.movil header.top h1 { font-size: 16px; }
+.movil .boton-sel { max-width: 36vw; padding: 6px 10px; }
+.movil .boton-sel svg, .movil .boton-sel .sel-flecha { display: none; }
+.movil .selectores + .enlace-github + .tema-toggle { padding: 6px 8px; }
+/* Relleno de países por saldo (tintes claros de los colores de las flechas) */
+:root { --relf-p2: #9ec5f4; --relf-p1: #cde2fb; --relf-n0: #d6d5ce; --relf-n1: #f8d3d2; --relf-n2: #f0a3a2; }
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) { --relf-p2: #1c5cab; --relf-p1: #1b3656; --relf-n0: #45443f; --relf-n1: #5a2e2e; --relf-n2: #8f4545; }
+}
+:root[data-theme="dark"] { --relf-p2: #1c5cab; --relf-p1: #1b3656; --relf-n0: #45443f; --relf-n1: #5a2e2e; --relf-n2: #8f4545; }
+@media (max-width: 1150px) { header.top h1 span { display: none; } header.top { gap: 14px; } nav.tabs a { padding: 6px 9px; } }
+
+/* Mapa: halo bajo las flechas, nodos, rótulos, resaltado y arrastre */
+.flecha .halo { fill: none; stroke: var(--surface-1); stroke-linecap: round; stroke-linejoin: round; opacity: .85; }
+.flecha .linea { opacity: .92; }
+.mapa-svg.enfoque .flecha { transition: opacity .12s; }
+.mapa-svg.enfoque .flecha:not(.activa) { opacity: .12; }
+.mapa-svg.enfoque .flecha.activa .linea { opacity: 1; }
+.mapa .nodo { fill: var(--ink-2); stroke: var(--surface-1); stroke-width: 1.2; cursor: pointer; }
+.mapa .nodo-origen { fill: var(--ink); }
+.mapa .rotulo { font: 600 11.5px var(--font); fill: var(--ink); paint-order: stroke; stroke: var(--surface-1); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.mapa .rotulo-origen { font-size: 12.5px; }
+.mapa-svg.ampliado { cursor: grab; }
+.mapa-svg.arrastrando { cursor: grabbing; }
+.mapa-svg.arrastrando .flecha, .mapa-svg.arrastrando .pais { pointer-events: none; }
+
+/* Línea de tiempo */
+.linea-tiempo { background: var(--surface-1); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px 8px; margin: 8px 0; }
+.lt-cab { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; }
+.lt-cab .segmentos { margin: 0; }
+.lt-control { display: flex; align-items: center; gap: 10px; }
+.lt-anio { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 72px; text-align: right; }
+.sin-tiempo .lt-anio { font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.lt-play { width: 42px; height: 36px; padding: 0; font-size: 14px; }
+.lt-pista { margin-top: 6px; }
+.lt-hist { display: block; width: 100%; height: 44px; }
+.lt-hist .hit { fill: transparent; cursor: pointer; }
+.lt-pos { fill: var(--si); } .lt-neg { fill: var(--no); } .lt-neu { fill: var(--abs); } .lt-valor { fill: var(--accent); }
+.lt-barra.fuera rect:not(.hit) { opacity: .22; }
+.lt-rango { display: block; width: 100%; margin: 2px 0 0; accent-color: var(--accent); }
+.lt-escala { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.movil .lt-anio { font-size: 18px; }
+.movil .mapa-zoom { top: 6px; right: 6px; gap: 3px; }
+.movil .mapa-zoom .boton { width: 30px; height: 30px; min-height: 0; font-size: 15px; }
+.movil .lt-play { width: 38px; height: 34px; min-height: 0; }

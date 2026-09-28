@@ -1,0 +1,550 @@
+"use strict";
+
+// ------------------------------------------------------------------ utilidades
+
+const $ = (sel, root = document) => root.querySelector(sel);
+
+function el(tag, attrs, ...hijos) {
+  const svg = tag.startsWith("svg:");
+  const n = svg ? document.createElementNS("http://www.w3.org/2000/svg", tag.slice(4)) : document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "class") svg ? n.setAttribute("class", v) : (n.className = v);
+    else if (k === "style") n.setAttribute("style", v);
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else if (k === "html") n.innerHTML = v; // solo para marcado propio, nunca datos
+    else n.setAttribute(k, v === true ? "" : v);
+  }
+  for (const h of hijos.flat(Infinity)) {
+    if (h === null || h === undefined || h === false) continue;
+    n.appendChild(h instanceof Node ? h : document.createTextNode(String(h)));
+  }
+  return n;
+}
+const svgEl = (tag, attrs, ...hijos) => el("svg:" + tag, attrs, ...hijos);
+
+// Móvil: pantalla estrecha o teléfono girado. La clase «movil» en <html> activa su interfaz (styles.css).
+const MQ_MOVIL = matchMedia("(max-width: 700px), (pointer: coarse) and (max-height: 500px)");
+const esMovil = () => MQ_MOVIL.matches;
+document.documentElement.classList.toggle("movil", esMovil());
+const anchoGrafico = (defecto) => (esMovil() ? Math.max(280, Math.min(defecto, window.innerWidth - 40)) : defecto);
+
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+const fmt = (n) => (n ?? 0).toLocaleString("es-ES");
+const pct = (a, b) => (b ? Math.round((100 * a) / b) : 0);
+function fecha(iso) {
+  if (!iso) return "";
+  const [y, m, d] = iso.slice(0, 10).split("-");
+  return `${+d} ${MESES[+m - 1]} ${y}`;
+}
+const jsonDe = (v, d) => { try { return v ? JSON.parse(v) : d; } catch { return d; } };
+const lista = (v) => String(v ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+const recortar = (t, max = 140) => (!t ? "" : t.length <= max ? t : t.slice(0, max - 1).replace(/\s+\S*$/, "") + "…");
+const enlace = (href, texto) => el("a", { href, target: "_blank", rel: "noopener" }, texto);
+
+// ------------------------------------------------------------------ base de datos (sql.js)
+// La SQLite viaja troceada y comprimida en datos/*.js (ver concordia/exportar_web.py): comun.js, un
+// <fuente>/<año>.js por año de cada fuente y un mundo/<año>.js con las relaciones de ese año. Se cargan con
+// <script> (funciona con file://) y se juntan en una sola base en memoria. Solo se descarga lo que pide
+// cada vista (el país y los años elegidos); lo ya cargado se queda.
+
+let SQL = null;
+let DB = null;
+let CAT = null;          // catálogo de comun.js: países, fuentes, partidos, temas, cobertura
+const CARGADOS = new Set();
+
+function b64aBytes(b64) {
+  const bin = atob(b64);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+async function descomprimir(b64) {
+  const flujo = new Blob([b64aBytes(b64)]).stream().pipeThrough(new DecompressionStream("gzip"));
+  return new Uint8Array(await new Response(flujo).arrayBuffer());
+}
+function cargarScript(src) {
+  return new Promise((ok, mal) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.onload = ok;
+    s.onerror = () => mal(new Error(`no se pudo cargar ${src}`));
+    document.head.appendChild(s);
+  });
+}
+const INDICE = () => window.CONCORDIA_INDICE;
+const DATOS = () => (window.CONCORDIA_DATOS = window.CONCORDIA_DATOS || {});
+const conVersion = (f) => `datos/${f.nombre}.js${location.protocol.startsWith("http") ? `?v=${f.huella}` : ""}`;
+
+function q(sql, params = []) {
+  const st = DB.prepare(sql);
+  st.bind(params.map((v) => (v === undefined ? null : v)));
+  const filas = [];
+  while (st.step()) filas.push(st.getAsObject());
+  st.free();
+  return filas;
+}
+const q1 = (sql, params) => q(sql, params)[0] || {};
+const marcas = (xs) => xs.map(() => "?").join(",");
+
+async function abrirBase() {
+  if (!INDICE()) throw new Error("Falta web/datos/indice.js. Genéralo con: python -m concordia web");
+  SQL = await initSqlJs({ wasmBinary: b64aBytes(window.SQL_WASM_B64) });
+  delete window.SQL_WASM_B64;
+  const comun = INDICE().ficheros.find((f) => f.nombre === "comun");
+  await cargarScript(conVersion(comun));
+  DB = new SQL.Database(await descomprimir(DATOS().comun));
+  delete DATOS().comun;
+  CARGADOS.add("comun");
+  leerCatalogo();
+}
+
+function leerCatalogo() {
+  const paises = Object.fromEntries(q("SELECT * FROM pais").map((p) => [p.iso3, p]));
+  const fuentes = Object.fromEntries(q("SELECT * FROM fuente ORDER BY orden").map((f) => [f.codigo, f]));
+  const fuentesDe = {};
+  for (const f of Object.values(fuentes)) if (f.pais && f.votaciones) (fuentesDe[f.pais] = fuentesDe[f.pais] || []).push(f);
+  const partidos = {};
+  for (const p of q("SELECT * FROM partido")) partidos[`${p.fuente}|${p.codigo}`] = p;
+  const anios = q1("SELECT MIN(anio) AS a, MAX(anio) AS b FROM cobertura");
+  CAT = {
+    paises, fuentes, fuentesDe, partidos,
+    temas: q("SELECT * FROM tema ORDER BY rowid"),
+    tiposRel: Object.fromEntries(q("SELECT * FROM tipo_relacion").map((t) => [t.codigo, t.nombre])),
+    camaras: Object.fromEntries(q("SELECT * FROM camara").map((c) => [c.codigo, c])),
+    cobertura: q("SELECT * FROM cobertura ORDER BY fuente, anio"),
+    anioMin: anios.a || 1946, anioMax: Math.max(anios.b || 0, new Date().getFullYear()),
+    ficheros: Object.fromEntries(INDICE().ficheros.map((f) => [f.nombre, f])),
+  };
+}
+
+// Descarga (si hace falta) y junta en la base los ficheros pedidos.
+async function asegurar(nombres, avisar = () => {}) {
+  const faltan = nombres.filter((n) => !CARGADOS.has(n) && CAT.ficheros[n]);
+  if (!faltan.length) return;
+  const bajar = faltan.filter((n) => !DATOS()[n]);
+  if (bajar.length) {
+    const mb = bajar.reduce((a, n) => a + CAT.ficheros[n].bytes, 0) / 1e6;
+    avisar(`Descargando ${bajar.length} fichero${bajar.length === 1 ? "" : "s"} de datos (${mb.toLocaleString("es-ES", { maximumFractionDigits: 1 })} MB)…`);
+    await Promise.all(bajar.map((n) => cargarScript(conVersion(CAT.ficheros[n]))));
+  }
+  avisar(`Abriendo ${faltan.length} fichero${faltan.length === 1 ? "" : "s"}…`);
+  for (const n of faltan) {
+    const trozo = new SQL.Database(await descomprimir(DATOS()[n]));
+    delete DATOS()[n];
+    DB.exec(`ATTACH DATABASE '/${trozo.filename}' AS l`);
+    DB.exec("BEGIN");
+    for (const { name } of q("SELECT name FROM l.sqlite_master WHERE type = 'table'")) {
+      DB.exec(`INSERT OR IGNORE INTO main."${name}" SELECT * FROM l."${name}"`);
+    }
+    DB.exec("COMMIT");
+    DB.exec("DETACH DATABASE l");
+    trozo.close();
+    CARGADOS.add(n);
+  }
+}
+const nombresFuente = (fuente, [desde, hasta]) =>
+  Object.values(CAT.ficheros).filter((f) => f.tipo === "fuente" && f.fuente === fuente && f.anio >= desde && f.anio <= hasta).map((f) => f.nombre);
+const nombresMundo = ([desde, hasta]) =>
+  Object.values(CAT.ficheros).filter((f) => f.tipo === "mundo" && f.anio >= desde && f.anio <= hasta).map((f) => f.nombre);
+const pesoDe = (nombres) => nombres.filter((n) => !CARGADOS.has(n)).reduce((a, n) => a + (CAT.ficheros[n]?.bytes || 0), 0);
+
+// ------------------------------------------------------------------ catálogo: nombres y colores
+
+const nombrePais = (iso3) => CAT.paises[iso3]?.nombre || iso3;
+function puntoPais(iso3) {
+  let p = CAT.paises[iso3];
+  if (p && p.lat == null && p.sucesor) p = CAT.paises[p.sucesor];
+  return p && p.lat != null ? [p.lon, p.lat] : null;
+}
+const temaNombre = (c) => CAT.temas.find((t) => t.codigo === c)?.nombre || c || "Sin tema";
+function partido(fuente, codigo) {
+  return CAT.partidos[`${fuente}|${codigo}`] || { codigo, siglas: codigo, nombre: codigo, color: "#898781" };
+}
+const colorPartido = (fuente, codigo) => partido(fuente, codigo).color || "#898781";
+const TIPOS_ASUNTO = { ley: "Ley", resolucion: "Resolución", mocion: "Moción", tratado: "Tratado", nombramiento: "Nombramiento",
+  procedimiento: "Procedimiento", otro: "Otro" };
+const TIPOS_VOTACION = { final: "Votación final", enmienda: "Enmienda", parcial: "Votación separada", procedimiento: "Procedimiento",
+  nombramiento: "Nombramiento", otra: "Otra" };
+const SENTIDO = { si: ["✓", "Sí"], no: ["✗", "No"], abstencion: ["~", "Abstención"], dividido: ["±", "Dividido"], no_vota: ["·", "No vota"] };
+const ORIENTACION = { 1: ["+", "positiva"], "-1": ["−", "negativa"], 0: ["○", "neutra"] };
+const ORIENTACION_TXT = { positiva: 1, negativa: -1, neutra: 0 };
+function origenFicha(o) {
+  if (!o) return "sin ficha";
+  if (o === "reglas" || o === "escrutinio:reglas") return "reglas (sin IA)";
+  if (o.startsWith("escrutinio:")) return "Escrutinio";
+  if (o.startsWith("deepseek:")) return "IA (" + o.slice(9) + ")";
+  return o;
+}
+
+// ------------------------------------------------------------------ ruta y selección global
+// #/<vista>?p=ESP&a=2021-2026&... El país (p) y los años (a) se conservan al cambiar de vista.
+
+const CLAVE_PAIS = "concordia.pais";
+function leerRuta() {
+  const h = location.hash.replace(/^#\/?/, "");
+  const [vista, qs] = h.split("?");
+  return { vista: vista || "mundo", q: Object.fromEntries(new URLSearchParams(qs || "")) };
+}
+function hashDe(vista, qobj) {
+  const limpio = Object.fromEntries(Object.entries(qobj).filter(([, v]) => v !== "" && v !== null && v !== undefined));
+  const s = new URLSearchParams(limpio).toString();
+  return `#/${vista}${s ? "?" + s : ""}`;
+}
+function irA(vista, cambios = {}, { reemplazar = false } = {}) {
+  const r = leerRuta();
+  const base = vista === r.vista ? r.q : { p: r.q.p, a: r.q.a };
+  const h = hashDe(vista, { ...base, ...cambios });
+  if (reemplazar) history.replaceState(null, "", h);
+  else location.hash = h;
+  if (reemplazar) render();
+}
+function paisActual() {
+  const r = leerRuta();
+  if (r.q.p && CAT.paises[r.q.p]) return r.q.p;
+  try { const g = localStorage.getItem(CLAVE_PAIS); if (g && CAT.paises[g]) return g; } catch { /* sin almacenamiento */ }
+  return "ESP";
+}
+function aniosActuales() {
+  const r = leerRuta();
+  const m = /^(\d{4})(?:-(\d{4}))?$/.exec(r.q.a || "");
+  if (m) {
+    const a = Math.max(CAT.anioMin, +m[1]), b = Math.min(CAT.anioMax, +(m[2] || m[1]));
+    if (a <= b) return [a, b];
+  }
+  return [CAT.anioMax - 5, CAT.anioMax];
+}
+const textoAnios = ([a, b]) => (a === b ? String(a) : `${a}–${b}`);
+
+// ------------------------------------------------------------------ cabecera: país y años
+
+function pintarCabecera() {
+  const iso = paisActual();
+  $("#botonPais .sel-texto").textContent = nombrePais(iso);
+  $("#botonAnios .sel-texto").textContent = textoAnios(aniosActuales());
+  const r = leerRuta();
+  for (const a of document.querySelectorAll("[data-tab]")) {
+    a.classList.toggle("activo", a.dataset.tab === r.vista);
+    if (a.tagName === "A") a.setAttribute("href", hashDe(a.dataset.tab, { p: r.q.p, a: r.q.a }));
+  }
+}
+
+function abrirDialogo(contenido, titulo) {
+  const fondo = $("#dialogoFondo"), caja = $("#dialogo");
+  caja.replaceChildren(el("div", { class: "dlg-cab" }, el("h3", {}, titulo),
+    el("button", { type: "button", class: "boton", onclick: cerrarDialogo, "aria-label": "Cerrar" }, "✕")), contenido);
+  fondo.classList.add("abierto");
+  caja.classList.add("abierto");
+  caja.setAttribute("aria-hidden", "false");
+}
+function cerrarDialogo() {
+  $("#dialogoFondo").classList.remove("abierto");
+  $("#dialogo").classList.remove("abierto");
+  $("#dialogo").setAttribute("aria-hidden", "true");
+}
+
+function elegirPais(iso3) {
+  try { localStorage.setItem(CLAVE_PAIS, iso3); } catch { /* sin almacenamiento */ }
+  cerrarDialogo();
+  const r = leerRuta();
+  if (r.vista === "mundo") {
+    // En el mapa, el país elegido pasa a ser el origen (o la referencia, en el modo de afinidad).
+    location.hash = hashDe("mundo", r.q.modo === "afinidad" ? { ...r.q, p: iso3, ref: iso3 } : { ...r.q, p: iso3, o: iso3, d: "" });
+    return;
+  }
+  location.hash = hashDe(r.vista === "ayuda" ? "resumen" : r.vista, { p: iso3, a: r.q.a });
+}
+
+function abrirSelectorPais() {
+  const actual = paisActual();
+  const conParlamento = Object.keys(CAT.fuentesDe).sort((a, b) => nombrePais(a).localeCompare(nombrePais(b), "es"));
+  const todos = Object.values(CAT.paises).filter((p) => p.onu_desde || CAT.fuentesDe[p.iso3])
+    .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+  const listaNodo = el("div", { class: "pais-lista" });
+  const fila = (p) => el("button", { type: "button", class: "pais-op" + (p.iso3 === actual ? " activo" : ""), onclick: () => elegirPais(p.iso3) },
+    el("span", {}, p.nombre),
+    CAT.fuentesDe[p.iso3] ? el("span", { class: "badge ok" }, "parlamento") : null,
+    p.sucesor ? el("span", { class: "muted small" }, `hasta ${p.onu_hasta}`) : null);
+  const pintar = (texto) => {
+    const t = texto.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+    const casa = (p) => !t || p.nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").includes(t) || p.iso3.toLowerCase() === t;
+    const regiones = {};
+    for (const p of todos.filter(casa)) (regiones[p.region || "Otros"] = regiones[p.region || "Otros"] || []).push(p);
+    listaNodo.replaceChildren(
+      !t ? el("div", { class: "pais-grupo" }, el("h4", {}, "Con votaciones de su parlamento"),
+        conParlamento.map((i) => fila(CAT.paises[i]))) : null,
+      Object.entries(regiones).sort(([a], [b]) => a.localeCompare(b, "es")).map(([reg, ps]) =>
+        el("div", { class: "pais-grupo" }, el("h4", {}, reg), ps.map(fila))));
+  };
+  const buscador = el("input", { type: "search", placeholder: "Buscar país…", class: "pais-buscar", oninput: (e) => pintar(e.target.value) });
+  pintar("");
+  abrirDialogo(el("div", {},
+    el("p", { class: "muted small" }, "Los países con parlamento tienen sus votaciones; todos tienen su voto en la ONU (1946–2023) y lo que otros votan sobre ellos."),
+    buscador, listaNodo), "Elegir país");
+  setTimeout(() => buscador.focus(), 50);
+}
+
+function abrirSelectorAnios() {
+  const [a, b] = aniosActuales();
+  const opciones = [];
+  for (let y = CAT.anioMax; y >= CAT.anioMin; y--) opciones.push(y);
+  const sel = (v) => el("select", {}, opciones.map((y) => el("option", { value: y, selected: y === v }, y)));
+  const desde = sel(a), hasta = sel(b);
+  const aplicar = (x, y) => { cerrarDialogo(); irA(leerRuta().vista, { a: x === y ? String(x) : `${Math.min(x, y)}-${Math.max(x, y)}`, pagina: "" }); };
+  const max = CAT.anioMax;
+  const atajo = (texto, x, y) => el("button", { type: "button", class: "boton", onclick: () => aplicar(x, y) }, texto);
+  abrirDialogo(el("div", { class: "anios" },
+    el("div", { class: "segmentos" },
+      atajo("Este año", max, max), atajo("Últimos 3", max - 2, max), atajo("Últimos 6", max - 5, max),
+      atajo("Últimos 10", max - 9, max), atajo("Desde 2001", 2001, max), atajo("Guerra Fría (1946–1991)", 1946, 1991), atajo("Todo", CAT.anioMin, max)),
+    el("div", { class: "filtros" }, el("label", {}, "Desde ", desde), el("label", {}, "Hasta ", hasta),
+      el("button", { type: "button", class: "boton primario", onclick: () => aplicar(+desde.value, +hasta.value) }, "Aplicar")),
+    el("p", { class: "muted small" }, "Cada país legisla por legislaturas distintas, así que todo se filtra por años naturales. La ONU tiene datos de 1946 a septiembre de 2023; los parlamentos, desde el año de la tabla de cobertura.")),
+  "Años");
+}
+
+// ------------------------------------------------------------------ panel lateral de detalle
+
+function abrirPanel(contenido) {
+  const panel = $("#panel");
+  panel.replaceChildren(el("button", { class: "cerrar", onclick: cerrarPanel }, "Cerrar ✕"), contenido);
+  panel.classList.add("abierto");
+  panel.setAttribute("aria-hidden", "false");
+  $("#panelFondo").classList.add("abierto");
+  panel.scrollTop = 0;
+}
+function cerrarPanel() {
+  $("#panel").classList.remove("abierto");
+  $("#panel").setAttribute("aria-hidden", "true");
+  $("#panelFondo").classList.remove("abierto");
+}
+
+// ------------------------------------------------------------------ tooltip
+
+const TT = () => $("#tooltip");
+function tip(evt, valor, etiqueta, extra) {
+  const t = TT();
+  t.replaceChildren(el("div", { class: "tv" }, valor), etiqueta ? el("div", { class: "tl" }, etiqueta) : null,
+    extra ? el("div", { class: "tl small" }, extra) : null);
+  t.style.display = "block";
+  const x = Math.min(evt.clientX + 14, window.innerWidth - t.offsetWidth - 8);
+  const y = evt.clientY + 14 + t.offsetHeight > window.innerHeight ? evt.clientY - t.offsetHeight - 10 : evt.clientY + 14;
+  t.style.left = `${Math.max(8, x)}px`;
+  t.style.top = `${Math.max(8, y)}px`;
+}
+const tipOff = () => (TT().style.display = "none");
+function conTip(nodo, valor, etiqueta, extra) {
+  nodo.addEventListener("pointermove", (e) => tip(e, typeof valor === "function" ? valor() : valor, etiqueta, extra));
+  nodo.addEventListener("pointerleave", tipOff);
+  return nodo;
+}
+
+// ------------------------------------------------------------------ componentes
+
+function stat(label, valor, nota) {
+  return el("div", { class: "card stat" }, el("div", { class: "label" }, label), el("div", { class: "value" }, valor),
+    nota ? el("div", { class: "nota" }, nota) : null);
+}
+
+// Selector desplegable con varias opciones (casillas). Se aplica al cerrar o con «Aplicar».
+function multiSelect(nombre, opciones, valor, etiquetaVacia, plural = "seleccionados", { buscar = false } = {}) {
+  const elegidos = new Set(lista(valor));
+  const textoDe = new Map(opciones.map(([v, t]) => [String(v), t]));
+  const texto = el("span", { class: "ms-texto" });
+  const det = el("details", { class: "ms", "data-nombre": nombre }, el("summary", { title: etiquetaVacia }, texto));
+  const pintar = () => {
+    const xs = [...elegidos];
+    texto.textContent = !xs.length ? etiquetaVacia : xs.length === 1 ? textoDe.get(xs[0]) || xs[0]
+      : xs.length === 2 ? xs.map((x) => textoDe.get(x) || x).join(" + ") : `${xs.length} ${plural}`;
+    det.classList.toggle("activo", xs.length > 0);
+  };
+  const cajas = opciones.map(([v, t]) => el("label", { class: "ms-op", "data-t": String(t).toLowerCase() },
+    el("input", { type: "checkbox", class: "ms-cb", value: v, checked: elegidos.has(String(v)),
+      onchange: (e) => { e.target.checked ? elegidos.add(String(v)) : elegidos.delete(String(v)); pintar(); } }), t));
+  const listaNodo = el("div", { class: "ms-lista" }, cajas);
+  const filtro = buscar ? el("input", { type: "search", class: "ms-buscar", placeholder: "Buscar…",
+    oninput: (e) => { const t = e.target.value.toLowerCase(); for (const c of cajas) c.style.display = c.dataset.t.includes(t) ? "" : "none"; } }) : null;
+  det.append(el("div", { class: "ms-panel" },
+    el("div", { class: "ms-titulo" }, etiquetaVacia),
+    el("div", { class: "ms-acciones" },
+      el("button", { type: "button", class: "boton", onclick: () => { for (const c of det.querySelectorAll(".ms-cb")) c.checked = false; elegidos.clear(); pintar(); } }, "Ninguno"),
+      el("button", { type: "button", class: "boton", onclick: () => { det.open = false; } }, "Aplicar")),
+    filtro, listaNodo));
+  let aplicado = [...elegidos].sort().join(",");
+  det.valor = () => [...elegidos].join(",");
+  det.addEventListener("toggle", () => {
+    if (det.open) { for (const o of document.querySelectorAll("details.ms[open]")) if (o !== det) o.open = false; return; }
+    const ahora = [...elegidos].sort().join(",");
+    if (ahora !== aplicado) { aplicado = ahora; det.dispatchEvent(new CustomEvent("ms-cambio", { bubbles: true, detail: { nombre, valor: det.valor() } })); }
+  });
+  pintar();
+  return det;
+}
+
+// Fila de filtros: cada control lleva data-nombre; al cambiar, se llama a onCambio({nombre: valor}).
+function filaFiltros(controles, onCambio) {
+  const f = el("div", { class: "filtros" }, controles);
+  const leer = (n) => {
+    if (n.matches("details.ms")) return n.valor();
+    if (n.type === "checkbox") return n.checked ? "1" : "";
+    return n.value;
+  };
+  f.addEventListener("change", (e) => {
+    const n = e.target.closest("[data-nombre]");
+    if (n && !e.target.classList.contains("ms-cb") && e.target.type !== "search") onCambio({ [n.dataset.nombre]: leer(n) });
+  });
+  f.addEventListener("ms-cambio", (e) => onCambio({ [e.detail.nombre]: e.detail.valor }));
+  f.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && e.target.type === "search") { e.preventDefault(); onCambio({ [e.target.dataset.nombre]: e.target.value }); }
+  });
+  f.addEventListener("search", (e) => onCambio({ [e.target.dataset.nombre]: e.target.value }));
+  return f;
+}
+const selectFiltro = (nombre, opciones, valor) =>
+  el("select", { "data-nombre": nombre }, opciones.map(([v, t]) => el("option", { value: v, selected: String(v) === String(valor ?? "") }, t)));
+const checkFiltro = (nombre, texto, valor) =>
+  el("label", { class: "check" }, el("input", { type: "checkbox", "data-nombre": nombre, checked: valor === "1" }), texto);
+const buscarFiltro = (nombre, valor, placeholder) =>
+  el("input", { type: "search", "data-nombre": nombre, value: valor || "", placeholder });
+
+function segmentos(opciones, valor, onClic) {
+  return el("div", { class: "segmentos", role: "group" }, opciones.map(([v, t]) =>
+    el("button", { type: "button", class: "boton" + (String(v) === String(valor) ? " activo" : ""), "aria-pressed": String(String(v) === String(valor)),
+      onclick: () => onClic(v) }, t)));
+}
+
+// Barras horizontales: [{etiqueta, valor, color, nota, onclick}]. Marca <= 14px con extremo redondeado.
+function barrasH(items, { max, formato = fmt, alClicar } = {}) {
+  const m = max ?? Math.max(1, ...items.map((i) => i.valor));
+  return el("div", { class: "barrash" }, items.flatMap((i) => [
+    el("div", { class: "bh-label", title: i.etiqueta }, i.etiqueta, i.nota ? el("span", { class: "muted small" }, " " + i.nota) : null),
+    conTip(el("div", { class: "bh-pista" + (alClicar ? " clic" : ""), onclick: alClicar ? () => alClicar(i) : null },
+      el("div", { class: "bh-barra", style: `width:${Math.max(1, (100 * i.valor) / m)}%;background:${i.color || "var(--accent)"}` }),
+      el("b", {}, formato(i.valor))), formato(i.valor), i.etiqueta, i.tip),
+  ]));
+}
+
+// Columnas por año (una serie). datos: [{x, y, tip}]
+function columnasAnio(datos, { alto = 160, formato = fmt, color = "var(--accent)" } = {}) {
+  const ancho = anchoGrafico(900), mi = 34, mb = 22, mt = 8;
+  const max = Math.max(1, ...datos.map((d) => d.y));
+  const bw = (ancho - mi) / Math.max(1, datos.length);
+  const y = (v) => mt + (alto - mt - mb) * (1 - v / max);
+  const svg = svgEl("svg", { viewBox: `0 0 ${ancho} ${alto}`, role: "img" });
+  for (const t of [0, 0.5, 1]) {
+    svg.append(svgEl("line", { class: t ? "gridline" : "baseline", x1: mi, x2: ancho, y1: y(max * t), y2: y(max * t) }),
+      svgEl("text", { x: mi - 6, y: y(max * t) + 4, "text-anchor": "end" }, formato(Math.round(max * t))));
+  }
+  const paso = Math.ceil(datos.length / Math.floor((ancho - mi) / 40));
+  datos.forEach((d, i) => {
+    const x = mi + i * bw, h = y(0) - y(d.y), w = Math.max(1, bw - 2);
+    const g = svgEl("g", {});
+    if (d.y > 0) g.append(svgEl("path", { class: "mark", fill: color, d: `M${x + 1},${y(0)} v${-Math.max(0, h - 4)} q0,-4 4,-4 h${Math.max(0, w - 8)} q4,0 4,4 v${Math.max(0, h - 4)} z` }));
+    g.append(svgEl("rect", { class: "hit", x, y: mt, width: bw, height: alto - mt - mb }));
+    conTip(g, formato(d.y), String(d.x), d.tip);
+    if (i % paso === 0) svg.append(svgEl("text", { x: x + bw / 2, y: alto - 6, "text-anchor": "middle" }, String(d.x)));
+    svg.append(g);
+  });
+  return el("div", { class: "chart" }, svg);
+}
+
+// Líneas por año, varias series: series = [{nombre, color, puntos: [{x, y}]}]; y en 0-100.
+function lineasAnio(series, { alto = 220, formato = (v) => `${Math.round(v)} %`, min = 0, max = 100 } = {}) {
+  const ancho = anchoGrafico(900), mi = 40, mb = 22, mt = 10, md = 12;
+  const xs = [...new Set(series.flatMap((s) => s.puntos.map((p) => p.x)))].sort((a, b) => a - b);
+  if (!xs.length) return el("div", { class: "vacio" }, "Sin datos en esos años");
+  const x0 = xs[0], x1 = xs[xs.length - 1] === x0 ? x0 + 1 : xs[xs.length - 1];
+  const X = (v) => mi + ((ancho - mi - md) * (v - x0)) / (x1 - x0);
+  const Y = (v) => mt + ((alto - mt - mb) * (max - v)) / (max - min);
+  const svg = svgEl("svg", { viewBox: `0 0 ${ancho} ${alto}`, role: "img" });
+  for (let t = min; t <= max; t += (max - min) / 4) {
+    svg.append(svgEl("line", { class: t === min ? "baseline" : "gridline", x1: mi, x2: ancho - md, y1: Y(t), y2: Y(t) }),
+      svgEl("text", { x: mi - 6, y: Y(t) + 4, "text-anchor": "end" }, formato(t)));
+  }
+  const paso = Math.ceil(xs.length / Math.floor((ancho - mi) / 46));
+  xs.forEach((v, i) => { if (i % paso === 0) svg.append(svgEl("text", { x: X(v), y: alto - 6, "text-anchor": "middle" }, String(v))); });
+  for (const s of series) {
+    let d = "", seguido = false;
+    const pts = [...s.puntos].sort((a, b) => a.x - b.x);
+    pts.forEach((p, i) => {
+      d += `${seguido && pts[i - 1].x === p.x - 1 ? "L" : "M"}${X(p.x).toFixed(1)},${Y(p.y).toFixed(1)}`;
+      seguido = true;
+    });
+    svg.append(svgEl("path", { d, fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round" }));
+    for (const p of pts) if (pts.length < 40) svg.append(svgEl("circle", { cx: X(p.x), cy: Y(p.y), r: 3, fill: s.color }));
+  }
+  // Capa de lectura: línea vertical y valores del año bajo el puntero.
+  const cruz = svgEl("line", { class: "baseline", y1: mt, y2: alto - mb, style: "display:none" });
+  const capa = svgEl("rect", { class: "hit", x: mi, y: mt, width: ancho - mi - md, height: alto - mt - mb });
+  svg.append(cruz, capa);
+  capa.addEventListener("pointermove", (e) => {
+    const r = svg.getBoundingClientRect();
+    const vx = ((e.clientX - r.left) / r.width) * ancho;
+    const anio = xs.reduce((a, b) => (Math.abs(X(b) - vx) < Math.abs(X(a) - vx) ? b : a), xs[0]);
+    cruz.setAttribute("x1", X(anio)); cruz.setAttribute("x2", X(anio)); cruz.style.display = "";
+    const valores = series.map((s) => [s.nombre, s.puntos.find((p) => p.x === anio)]).filter(([, p]) => p);
+    tip(e, String(anio), valores.map(([n, p]) => `${n}: ${formato(p.y)}`).join(" · "));
+  });
+  capa.addEventListener("pointerleave", () => { cruz.style.display = "none"; tipOff(); });
+  return el("div", { class: "chart" },
+    el("div", { class: "legend" }, series.map((s) => el("span", {}, el("i", { style: `background:${s.color}` }), s.nombre))), svg);
+}
+
+function paginacion(total, pagina, tam, ir) {
+  const paginas = Math.max(1, Math.ceil(total / tam));
+  return el("div", { class: "paginacion" },
+    el("button", { disabled: pagina <= 1, onclick: () => ir(pagina - 1) }, "‹ Anterior"),
+    el("span", { class: "muted" }, `Página ${pagina} de ${fmt(paginas)} · ${fmt(total)} en total`),
+    el("button", { disabled: pagina >= paginas, onclick: () => ir(pagina + 1) }, "Siguiente ›"));
+}
+
+// Barra de resultado: sí | abstención | no.
+function barraVotos(v) {
+  const t = (v.a_favor || 0) + (v.en_contra || 0) + (v.abstenciones || 0);
+  if (!t) return el("div", { class: "muted small" }, "Sin totales");
+  return el("div", {},
+    el("div", { class: "barra" },
+      el("span", { class: "si", style: `width:${(100 * (v.a_favor || 0)) / t}%` }),
+      el("span", { class: "abs", style: `width:${(100 * (v.abstenciones || 0)) / t}%` }),
+      el("span", { class: "no", style: `width:${(100 * (v.en_contra || 0)) / t}%` })),
+    el("div", { class: "totales" }, el("span", {}, "Sí ", el("b", {}, fmt(v.a_favor))), el("span", {}, "Abst. ", el("b", {}, fmt(v.abstenciones))),
+      el("span", {}, "No ", el("b", {}, fmt(v.en_contra)))));
+}
+function badgeResultado(r) {
+  if (r === "aprobada" || r === "aprobado") return el("span", { class: "badge ok" }, el("span", { class: "ic" }, "✓"), r === "aprobado" ? "Aprobado" : "Aprobada");
+  if (r === "rechazada" || r === "rechazado") return el("span", { class: "badge ko" }, el("span", { class: "ic" }, "✗"), r === "rechazado" ? "Rechazado" : "Rechazada");
+  return null;
+}
+function chipRelacion(r, conPais = true) {
+  const o = typeof r.orientacion === "string" ? ORIENTACION_TXT[r.orientacion] : r.orientacion;
+  const [ic, txt] = ORIENTACION[o] || ORIENTACION[0];
+  return el("span", { class: `chip rel rel${o}`, title: [txt, CAT.tiposRel[r.tipo], r.motivo].filter(Boolean).join(" · ") },
+    el("span", { class: "s" }, ic), conPais ? nombrePais(r.pais || r.destino) : txt, r.tipo && r.tipo !== "otro" ? el("span", { class: "muted" }, " · " + (CAT.tiposRel[r.tipo] || r.tipo).toLowerCase()) : null);
+}
+
+// ------------------------------------------------------------------ vistas y render
+
+const VISTAS = {};
+let renderEnCurso = 0;
+
+async function render() {
+  const yo = ++renderEnCurso;
+  tipOff();
+  cerrarPanel();
+  const r = leerRuta();
+  const vista = VISTAS[r.vista] ? r.vista : "mundo";
+  pintarCabecera();
+  document.title = `Concordia · ${VISTAS[vista].titulo || ""}`;
+  const main = $("#vista");
+  const avisar = (texto) => { if (yo === renderEnCurso) main.replaceChildren(el("div", { class: "vacio" }, texto)); };
+  try {
+    if (VISTAS[vista].datos) await asegurar(VISTAS[vista].datos(r.q), avisar);
+    if (yo !== renderEnCurso) return;
+    const nodo = await VISTAS[vista].pintar(r.q);
+    if (yo !== renderEnCurso) return;
+    main.replaceChildren(nodo);
+  } catch (e) {
+    console.error(e);
+    main.replaceChildren(el("div", { class: "vacio" }, "Error al pintar la vista: " + e.message));
+  }
+}

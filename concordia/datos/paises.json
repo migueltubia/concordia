@@ -1,0 +1,5015 @@
+[
+{
+"iso3": "AFG",
+"iso2": "AF",
+"num": "004",
+"nombre": "Afganistán",
+"nombre_en": "Afghanistan",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 33.84,
+"lon": 66.0,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Afghanistan",
+"Afghan"
+],
+"alias_es": [
+"Afganistán"
+]
+},
+{
+"iso3": "ALB",
+"iso2": "AL",
+"num": "008",
+"nombre": "Albania",
+"nombre_en": "Albania",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 41.14,
+"lon": 20.05,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Albania"
+],
+"alias_es": [
+"Albania"
+]
+},
+{
+"iso3": "DZA",
+"iso2": "DZ",
+"num": "012",
+"nombre": "Argelia",
+"nombre_en": "Algeria",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 28.16,
+"lon": 2.62,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Algeria"
+],
+"alias_es": [
+"Argelia"
+]
+},
+{
+"iso3": "ASM",
+"iso2": "AS",
+"num": "016",
+"nombre": "Samoa Americana",
+"nombre_en": "American Samoa",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -14.3,
+"lon": -170.72,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"American Samoa"
+],
+"alias_es": [
+"Samoa Americana"
+]
+},
+{
+"iso3": "AND",
+"iso2": "AD",
+"num": "020",
+"nombre": "Andorra",
+"nombre_en": "Andorra",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 42.54,
+"lon": 1.56,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Andorra"
+],
+"alias_es": [
+"Andorra"
+]
+},
+{
+"iso3": "AGO",
+"iso2": "AO",
+"num": "024",
+"nombre": "Angola",
+"nombre_en": "Angola",
+"region": "África",
+"subregion": "África central",
+"lat": -12.33,
+"lon": 17.56,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Angola"
+],
+"alias_es": [
+"Angola"
+]
+},
+{
+"iso3": "AIA",
+"iso2": "AI",
+"num": "660",
+"nombre": "Anguila",
+"nombre_en": "Anguilla",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.22,
+"lon": -63.07,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Anguilla"
+],
+"alias_es": [
+"Anguila"
+]
+},
+{
+"iso3": "ATG",
+"iso2": "AG",
+"num": "028",
+"nombre": "Antigua y Barbuda",
+"nombre_en": "Antigua and Barbuda",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 17.08,
+"lon": -61.79,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Antigua and Barbuda"
+],
+"alias_es": [
+"Antigua y Barbuda"
+]
+},
+{
+"iso3": "ARG",
+"iso2": "AR",
+"num": "032",
+"nombre": "Argentina",
+"nombre_en": "Argentina",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -35.18,
+"lon": -65.16,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Argentina"
+],
+"alias_es": [
+"Argentina"
+]
+},
+{
+"iso3": "ARM",
+"iso2": "AM",
+"num": "051",
+"nombre": "Armenia",
+"nombre_en": "Armenia",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 40.29,
+"lon": 44.93,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Armenia"
+],
+"alias_es": [
+"Armenia"
+]
+},
+{
+"iso3": "ABW",
+"iso2": "AW",
+"num": "533",
+"nombre": "Aruba",
+"nombre_en": "Aruba",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 12.52,
+"lon": -69.98,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Aruba"
+],
+"alias_es": [
+"Aruba"
+]
+},
+{
+"iso3": "AUS",
+"iso2": "AU",
+"num": "036",
+"nombre": "Australia",
+"nombre_en": "Australia",
+"region": "Oceanía",
+"subregion": "Australia y Nueva Zelandia",
+"lat": -25.57,
+"lon": 134.36,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Australia"
+],
+"alias_es": [
+"Australia"
+]
+},
+{
+"iso3": "AUT",
+"iso2": "AT",
+"num": "040",
+"nombre": "Austria",
+"nombre_en": "Austria",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 47.59,
+"lon": 14.13,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Austria"
+],
+"alias_es": [
+"Austria"
+]
+},
+{
+"iso3": "AZE",
+"iso2": "AZ",
+"num": "031",
+"nombre": "Azerbaiyán",
+"nombre_en": "Azerbaijan",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 40.34,
+"lon": 47.66,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Azerbaijan"
+],
+"alias_es": [
+"Azerbaiyán"
+]
+},
+{
+"iso3": "BHS",
+"iso2": "BS",
+"num": "044",
+"nombre": "Bahamas",
+"nombre_en": "Bahamas",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 24.7,
+"lon": -78.04,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Bahamas"
+],
+"alias_es": [
+"Bahamas"
+]
+},
+{
+"iso3": "BHR",
+"iso2": "BH",
+"num": "048",
+"nombre": "Baréin",
+"nombre_en": "Bahrain",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 26.04,
+"lon": 50.54,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Bahrain"
+],
+"alias_es": [
+"Baréin",
+"Bahrein"
+]
+},
+{
+"iso3": "BGD",
+"iso2": "BD",
+"num": "050",
+"nombre": "Bangladesh",
+"nombre_en": "Bangladesh",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 23.9,
+"lon": 90.22,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Bangladesh"
+],
+"alias_es": [
+"Bangladesh"
+]
+},
+{
+"iso3": "BRB",
+"iso2": "BB",
+"num": "052",
+"nombre": "Barbados",
+"nombre_en": "Barbados",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 13.18,
+"lon": -59.56,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Barbados"
+],
+"alias_es": [
+"Barbados"
+]
+},
+{
+"iso3": "BLR",
+"iso2": "BY",
+"num": "112",
+"nombre": "Bielorrusia",
+"nombre_en": "Belarus",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 53.53,
+"lon": 28.03,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Belarus"
+],
+"alias_es": [
+"Bielorrusia",
+"Belarús"
+]
+},
+{
+"iso3": "BEL",
+"iso2": "BE",
+"num": "056",
+"nombre": "Bélgica",
+"nombre_en": "Belgium",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 50.64,
+"lon": 4.64,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Belgium"
+],
+"alias_es": [
+"Bélgica"
+]
+},
+{
+"iso3": "BLZ",
+"iso2": "BZ",
+"num": "084",
+"nombre": "Belice",
+"nombre_en": "Belize",
+"region": "Américas",
+"subregion": "América central",
+"lat": 17.2,
+"lon": -88.72,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Belize"
+],
+"alias_es": [
+"Belice"
+]
+},
+{
+"iso3": "BEN",
+"iso2": "BJ",
+"num": "204",
+"nombre": "Benín",
+"nombre_en": "Benin",
+"region": "África",
+"subregion": "África occidental",
+"lat": 9.64,
+"lon": 2.33,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Benin"
+],
+"alias_es": [
+"Benín",
+"Benin"
+]
+},
+{
+"iso3": "BMU",
+"iso2": "BM",
+"num": "060",
+"nombre": "Bermuda",
+"nombre_en": "Bermuda",
+"region": "Américas",
+"subregion": "América septentrional",
+"lat": 32.31,
+"lon": -64.76,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Bermuda"
+],
+"alias_es": [
+"Bermuda",
+"Bermudas"
+]
+},
+{
+"iso3": "BTN",
+"iso2": "BT",
+"num": "064",
+"nombre": "Bután",
+"nombre_en": "Bhutan",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 27.41,
+"lon": 90.4,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Bhutan"
+],
+"alias_es": [
+"Bután",
+"Bhután"
+]
+},
+{
+"iso3": "BOL",
+"iso2": "BO",
+"num": "068",
+"nombre": "Bolivia",
+"nombre_en": "Bolivia",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -16.71,
+"lon": -64.69,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Bolivia",
+"Plurinational State of Bolivia",
+"Bolivia (Plurinational State of)"
+],
+"alias_es": [
+"Bolivia",
+"Bolivia (Estado Plurinacional de)"
+]
+},
+{
+"iso3": "BIH",
+"iso2": "BA",
+"num": "070",
+"nombre": "Bosnia y Herzegovina",
+"nombre_en": "Bosnia and Herzegovina",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 44.17,
+"lon": 17.77,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Bosnia and Herzegovina",
+"Bosnia"
+],
+"alias_es": [
+"Bosnia y Herzegovina"
+]
+},
+{
+"iso3": "BWA",
+"iso2": "BW",
+"num": "072",
+"nombre": "Botsuana",
+"nombre_en": "Botswana",
+"region": "África",
+"subregion": "África meridional",
+"lat": -22.18,
+"lon": 23.8,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Botswana"
+],
+"alias_es": [
+"Botsuana",
+"Botswana"
+]
+},
+{
+"iso3": "BVT",
+"iso2": "BV",
+"num": "074",
+"nombre": "Isla Bouvet",
+"nombre_en": "Bouvet Island",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Bouvet Island"
+],
+"alias_es": [
+"Isla Bouvet"
+]
+},
+{
+"iso3": "BRA",
+"iso2": "BR",
+"num": "076",
+"nombre": "Brasil",
+"nombre_en": "Brazil",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -10.84,
+"lon": -53.12,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Brazil"
+],
+"alias_es": [
+"Brasil"
+]
+},
+{
+"iso3": "IOT",
+"iso2": "IO",
+"num": "086",
+"nombre": "Territorio Británico del Océano Índico",
+"nombre_en": "British Indian Ocean Territory",
+"region": "África",
+"subregion": "África oriental",
+"lat": -7.33,
+"lon": 72.45,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"British Indian Ocean Territory"
+],
+"alias_es": [
+"Territorio Británico del Océano Índico"
+]
+},
+{
+"iso3": "BRN",
+"iso2": "BN",
+"num": "096",
+"nombre": "Brunéi",
+"nombre_en": "Brunei Darussalam",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 4.49,
+"lon": 114.59,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Brunei Darussalam"
+],
+"alias_es": [
+"Brunéi",
+"Brunei Darussalam"
+]
+},
+{
+"iso3": "BGR",
+"iso2": "BG",
+"num": "100",
+"nombre": "Bulgaria",
+"nombre_en": "Bulgaria",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 42.77,
+"lon": 25.22,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Bulgaria"
+],
+"alias_es": [
+"Bulgaria"
+]
+},
+{
+"iso3": "BFA",
+"iso2": "BF",
+"num": "854",
+"nombre": "Burkina Faso",
+"nombre_en": "Burkina Faso",
+"region": "África",
+"subregion": "África occidental",
+"lat": 12.27,
+"lon": -1.75,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Burkina Faso"
+],
+"alias_es": [
+"Burkina Faso"
+]
+},
+{
+"iso3": "BDI",
+"iso2": "BI",
+"num": "108",
+"nombre": "Burundi",
+"nombre_en": "Burundi",
+"region": "África",
+"subregion": "África oriental",
+"lat": -3.36,
+"lon": 29.88,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Burundi"
+],
+"alias_es": [
+"Burundi"
+]
+},
+{
+"iso3": "KHM",
+"iso2": "KH",
+"num": "116",
+"nombre": "Camboya",
+"nombre_en": "Cambodia",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 12.72,
+"lon": 104.91,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Cambodia",
+"Kampuchea"
+],
+"alias_es": [
+"Camboya"
+]
+},
+{
+"iso3": "CMR",
+"iso2": "CM",
+"num": "120",
+"nombre": "Camerún",
+"nombre_en": "Cameroon",
+"region": "África",
+"subregion": "África central",
+"lat": 5.69,
+"lon": 12.74,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Cameroon"
+],
+"alias_es": [
+"Camerún"
+]
+},
+{
+"iso3": "CAN",
+"iso2": "CA",
+"num": "124",
+"nombre": "Canadá",
+"nombre_en": "Canada",
+"region": "Américas",
+"subregion": "América septentrional",
+"lat": 57.93,
+"lon": -102.37,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Canada"
+],
+"alias_es": [
+"Canadá"
+]
+},
+{
+"iso3": "CPV",
+"iso2": "CV",
+"num": "132",
+"nombre": "Cabo Verde",
+"nombre_en": "Cape Verde",
+"region": "África",
+"subregion": "África occidental",
+"lat": 15.08,
+"lon": -23.64,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Cape Verde",
+"Cabo Verde"
+],
+"alias_es": [
+"Cabo Verde"
+]
+},
+{
+"iso3": "CYM",
+"iso2": "KY",
+"num": "136",
+"nombre": "Islas Caimán",
+"nombre_en": "Cayman Islands",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 19.32,
+"lon": -81.29,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Cayman Islands"
+],
+"alias_es": [
+"Islas Caimán"
+]
+},
+{
+"iso3": "CAF",
+"iso2": "CF",
+"num": "140",
+"nombre": "República Centroafricana",
+"nombre_en": "Central African Republic",
+"region": "África",
+"subregion": "África central",
+"lat": 6.57,
+"lon": 20.47,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Central African Republic"
+],
+"alias_es": [
+"República Centroafricana"
+]
+},
+{
+"iso3": "TCD",
+"iso2": "TD",
+"num": "148",
+"nombre": "Chad",
+"nombre_en": "Chad",
+"region": "África",
+"subregion": "África central",
+"lat": 15.33,
+"lon": 18.65,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Chad"
+],
+"alias_es": [
+"Chad"
+]
+},
+{
+"iso3": "CHL",
+"iso2": "CL",
+"num": "152",
+"nombre": "Chile",
+"nombre_en": "Chile",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -35.75,
+"lon": -71.31,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Chile"
+],
+"alias_es": [
+"Chile"
+]
+},
+{
+"iso3": "CHN",
+"iso2": "CN",
+"num": "156",
+"nombre": "China",
+"nombre_en": "People's Republic of China",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 36.62,
+"lon": 103.8,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"China",
+"People's Republic of China",
+"Chinese"
+],
+"alias_es": [
+"China"
+]
+},
+{
+"iso3": "CXR",
+"iso2": "CX",
+"num": "162",
+"nombre": "Isla Christmas",
+"nombre_en": "Christmas Island",
+"region": "Oceanía",
+"subregion": "Australia y Nueva Zelandia",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Christmas Island"
+],
+"alias_es": [
+"Isla Christmas",
+"Isla de Navidad"
+]
+},
+{
+"iso3": "CCK",
+"iso2": "CC",
+"num": "166",
+"nombre": "Islas Cocos (Keeling)",
+"nombre_en": "Cocos (Keeling) Islands",
+"region": "Oceanía",
+"subregion": "Australia y Nueva Zelandia",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Cocos (Keeling) Islands"
+],
+"alias_es": [
+"Islas Cocos (Keeling)"
+]
+},
+{
+"iso3": "COL",
+"iso2": "CO",
+"num": "170",
+"nombre": "Colombia",
+"nombre_en": "Colombia",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": 3.91,
+"lon": -73.08,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Colombia"
+],
+"alias_es": [
+"Colombia"
+]
+},
+{
+"iso3": "COM",
+"iso2": "KM",
+"num": "174",
+"nombre": "Comoras",
+"nombre_en": "Comoros",
+"region": "África",
+"subregion": "África oriental",
+"lat": -11.65,
+"lon": 43.34,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Comoros"
+],
+"alias_es": [
+"Comoras"
+]
+},
+{
+"iso3": "COG",
+"iso2": "CG",
+"num": "178",
+"nombre": "República del Congo",
+"nombre_en": "Republic of the Congo",
+"region": "África",
+"subregion": "África central",
+"lat": -0.84,
+"lon": 15.22,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Republic of the Congo",
+"Congo"
+],
+"alias_es": [
+"República del Congo",
+"Congo"
+]
+},
+{
+"iso3": "COD",
+"iso2": "CD",
+"num": "180",
+"nombre": "República Democrática del Congo",
+"nombre_en": "Democratic Republic of the Congo",
+"region": "África",
+"subregion": "África central",
+"lat": -2.88,
+"lon": 23.64,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Democratic Republic of the Congo",
+"DR Congo",
+"Zaire",
+"Congo"
+],
+"alias_es": [
+"República Democrática del Congo",
+"Congo (República Democrática del)"
+]
+},
+{
+"iso3": "COK",
+"iso2": "CK",
+"num": "184",
+"nombre": "Islas Cook",
+"nombre_en": "Cook Islands",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -21.22,
+"lon": -159.79,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Cook Islands"
+],
+"alias_es": [
+"Islas Cook"
+]
+},
+{
+"iso3": "CRI",
+"iso2": "CR",
+"num": "188",
+"nombre": "Costa Rica",
+"nombre_en": "Costa Rica",
+"region": "Américas",
+"subregion": "América central",
+"lat": 9.98,
+"lon": -84.19,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Costa Rica"
+],
+"alias_es": [
+"Costa Rica"
+]
+},
+{
+"iso3": "CIV",
+"iso2": "CI",
+"num": "384",
+"nombre": "Costa de Marfil",
+"nombre_en": "Cote d'Ivoire",
+"region": "África",
+"subregion": "África occidental",
+"lat": 7.63,
+"lon": -5.57,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Côte d'Ivoire",
+"Cote d'Ivoire",
+"Ivory Coast",
+"Côte d’Ivoire"
+],
+"alias_es": [
+"Costa de Marfil",
+"Côte d’Ivoire"
+]
+},
+{
+"iso3": "HRV",
+"iso2": "HR",
+"num": "191",
+"nombre": "Croacia",
+"nombre_en": "Croatia",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 45.16,
+"lon": 16.42,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Croatia"
+],
+"alias_es": [
+"Croacia"
+]
+},
+{
+"iso3": "CUB",
+"iso2": "CU",
+"num": "192",
+"nombre": "Cuba",
+"nombre_en": "Cuba",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 21.61,
+"lon": -78.94,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Cuba",
+"Cuban"
+],
+"alias_es": [
+"Cuba"
+]
+},
+{
+"iso3": "CYP",
+"iso2": "CY",
+"num": "196",
+"nombre": "Chipre",
+"nombre_en": "Cyprus",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 34.92,
+"lon": 33.01,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Cyprus",
+"Cypriot"
+],
+"alias_es": [
+"Chipre"
+]
+},
+{
+"iso3": "CZE",
+"iso2": "CZ",
+"num": "203",
+"nombre": "Chequia",
+"nombre_en": "Czech Republic",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 49.73,
+"lon": 15.31,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Czech Republic",
+"Czechia"
+],
+"alias_es": [
+"Chequia",
+"República Checa"
+]
+},
+{
+"iso3": "DNK",
+"iso2": "DK",
+"num": "208",
+"nombre": "Dinamarca",
+"nombre_en": "Denmark",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 56.24,
+"lon": 9.36,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Denmark"
+],
+"alias_es": [
+"Dinamarca"
+]
+},
+{
+"iso3": "DJI",
+"iso2": "DJ",
+"num": "262",
+"nombre": "Yibuti",
+"nombre_en": "Djibouti",
+"region": "África",
+"subregion": "África oriental",
+"lat": 11.75,
+"lon": 42.56,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Djibouti"
+],
+"alias_es": [
+"Yibuti",
+"Djibouti"
+]
+},
+{
+"iso3": "DMA",
+"iso2": "DM",
+"num": "212",
+"nombre": "Dominica",
+"nombre_en": "Dominica",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 15.44,
+"lon": -61.36,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Dominica"
+],
+"alias_es": [
+"Dominica"
+]
+},
+{
+"iso3": "DOM",
+"iso2": "DO",
+"num": "214",
+"nombre": "República Dominicana",
+"nombre_en": "Dominican Republic",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.89,
+"lon": -70.51,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Dominican Republic"
+],
+"alias_es": [
+"República Dominicana"
+]
+},
+{
+"iso3": "ECU",
+"iso2": "EC",
+"num": "218",
+"nombre": "Ecuador",
+"nombre_en": "Ecuador",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -1.45,
+"lon": -78.39,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Ecuador"
+],
+"alias_es": [
+"Ecuador"
+]
+},
+{
+"iso3": "EGY",
+"iso2": "EG",
+"num": "818",
+"nombre": "Egipto",
+"nombre_en": "Egypt",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 26.5,
+"lon": 29.86,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Egypt"
+],
+"alias_es": [
+"Egipto"
+]
+},
+{
+"iso3": "SLV",
+"iso2": "SV",
+"num": "222",
+"nombre": "El Salvador",
+"nombre_en": "El Salvador",
+"region": "Américas",
+"subregion": "América central",
+"lat": 13.74,
+"lon": -88.87,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"El Salvador"
+],
+"alias_es": [
+"El Salvador"
+]
+},
+{
+"iso3": "GNQ",
+"iso2": "GQ",
+"num": "226",
+"nombre": "Guinea Ecuatorial",
+"nombre_en": "Equatorial Guinea",
+"region": "África",
+"subregion": "África central",
+"lat": 1.57,
+"lon": 10.47,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Equatorial Guinea"
+],
+"alias_es": [
+"Guinea Ecuatorial"
+]
+},
+{
+"iso3": "ERI",
+"iso2": "ER",
+"num": "232",
+"nombre": "Eritrea",
+"nombre_en": "Eritrea",
+"region": "África",
+"subregion": "África oriental",
+"lat": 15.36,
+"lon": 38.84,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Eritrea"
+],
+"alias_es": [
+"Eritrea"
+]
+},
+{
+"iso3": "EST",
+"iso2": "EE",
+"num": "233",
+"nombre": "Estonia",
+"nombre_en": "Estonia",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 58.69,
+"lon": 25.83,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Estonia"
+],
+"alias_es": [
+"Estonia"
+]
+},
+{
+"iso3": "ETH",
+"iso2": "ET",
+"num": "231",
+"nombre": "Etiopía",
+"nombre_en": "Ethiopia",
+"region": "África",
+"subregion": "África oriental",
+"lat": 8.62,
+"lon": 39.6,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Ethiopia"
+],
+"alias_es": [
+"Etiopía"
+]
+},
+{
+"iso3": "FLK",
+"iso2": "FK",
+"num": "238",
+"nombre": "Islas Malvinas",
+"nombre_en": "Falkland Islands (Malvinas)",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -51.74,
+"lon": -58.76,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Falkland Islands (Malvinas)"
+],
+"alias_es": [
+"Islas Malvinas",
+"Islas Malvinas (Falkland)"
+]
+},
+{
+"iso3": "FRO",
+"iso2": "FO",
+"num": "234",
+"nombre": "Islas Feroe",
+"nombre_en": "Faroe Islands",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 62.17,
+"lon": -6.88,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Faroe Islands"
+],
+"alias_es": [
+"Islas Feroe"
+]
+},
+{
+"iso3": "FJI",
+"iso2": "FJ",
+"num": "242",
+"nombre": "Fiyi",
+"nombre_en": "Fiji",
+"region": "Oceanía",
+"subregion": "Melanesia",
+"lat": -17.82,
+"lon": 177.97,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Fiji"
+],
+"alias_es": [
+"Fiyi",
+"Fiji"
+]
+},
+{
+"iso3": "FIN",
+"iso2": "FI",
+"num": "246",
+"nombre": "Finlandia",
+"nombre_en": "Finland",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 64.5,
+"lon": 26.28,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Finland"
+],
+"alias_es": [
+"Finlandia"
+]
+},
+{
+"iso3": "FRA",
+"iso2": "FR",
+"num": "250",
+"nombre": "Francia",
+"nombre_en": "France",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 46.62,
+"lon": 2.45,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"France"
+],
+"alias_es": [
+"Francia"
+]
+},
+{
+"iso3": "GUF",
+"iso2": "GF",
+"num": "254",
+"nombre": "Guayana Francesa",
+"nombre_en": "French Guiana",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"French Guiana"
+],
+"alias_es": [
+"Guayana Francesa"
+]
+},
+{
+"iso3": "PYF",
+"iso2": "PF",
+"num": "258",
+"nombre": "Polinesia Francesa",
+"nombre_en": "French Polynesia",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -17.66,
+"lon": -149.42,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"French Polynesia"
+],
+"alias_es": [
+"Polinesia Francesa"
+]
+},
+{
+"iso3": "ATF",
+"iso2": "TF",
+"num": "260",
+"nombre": "Territorio de las Tierras Australes Francesas",
+"nombre_en": "French Southern Territories",
+"region": "África",
+"subregion": "África oriental",
+"lat": -49.3,
+"lon": 69.5,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"French Southern Territories"
+],
+"alias_es": [
+"Territorio de las Tierras Australes Francesas",
+"Tierras Australes Francesas"
+]
+},
+{
+"iso3": "GAB",
+"iso2": "GA",
+"num": "266",
+"nombre": "Gabón",
+"nombre_en": "Gabon",
+"region": "África",
+"subregion": "África central",
+"lat": -0.59,
+"lon": 11.79,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Gabon"
+],
+"alias_es": [
+"Gabón"
+]
+},
+{
+"iso3": "GMB",
+"iso2": "GM",
+"num": "270",
+"nombre": "Gambia",
+"nombre_en": "Republic of The Gambia",
+"region": "África",
+"subregion": "África occidental",
+"lat": 13.45,
+"lon": -15.4,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Republic of The Gambia",
+"The Gambia",
+"Gambia"
+],
+"alias_es": [
+"Gambia"
+]
+},
+{
+"iso3": "GEO",
+"iso2": "GE",
+"num": "268",
+"nombre": "Georgia",
+"nombre_en": "Georgia",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 42.17,
+"lon": 43.51,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Georgia"
+],
+"alias_es": [
+"Georgia"
+]
+},
+{
+"iso3": "DEU",
+"iso2": "DE",
+"num": "276",
+"nombre": "Alemania",
+"nombre_en": "Germany",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 51.09,
+"lon": 10.37,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Germany"
+],
+"alias_es": [
+"Alemania"
+]
+},
+{
+"iso3": "GHA",
+"iso2": "GH",
+"num": "288",
+"nombre": "Ghana",
+"nombre_en": "Ghana",
+"region": "África",
+"subregion": "África occidental",
+"lat": 7.95,
+"lon": -1.22,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Ghana"
+],
+"alias_es": [
+"Ghana"
+]
+},
+{
+"iso3": "GIB",
+"iso2": "GI",
+"num": "292",
+"nombre": "Gibraltar",
+"nombre_en": "Gibraltar",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Gibraltar"
+],
+"alias_es": [
+"Gibraltar"
+]
+},
+{
+"iso3": "GRC",
+"iso2": "GR",
+"num": "300",
+"nombre": "Grecia",
+"nombre_en": "Greece",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 39.48,
+"lon": 22.58,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Greece"
+],
+"alias_es": [
+"Grecia"
+]
+},
+{
+"iso3": "GRL",
+"iso2": "GL",
+"num": "304",
+"nombre": "Groenlandia",
+"nombre_en": "Greenland",
+"region": "Américas",
+"subregion": "América septentrional",
+"lat": 74.72,
+"lon": -41.36,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Greenland"
+],
+"alias_es": [
+"Groenlandia"
+]
+},
+{
+"iso3": "GRD",
+"iso2": "GD",
+"num": "308",
+"nombre": "Granada",
+"nombre_en": "Grenada",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 12.12,
+"lon": -61.68,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Grenada"
+],
+"alias_es": [
+"Granada"
+]
+},
+{
+"iso3": "GLP",
+"iso2": "GP",
+"num": "312",
+"nombre": "Guadalupe",
+"nombre_en": "Guadeloupe",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Guadeloupe"
+],
+"alias_es": [
+"Guadalupe"
+]
+},
+{
+"iso3": "GUM",
+"iso2": "GU",
+"num": "316",
+"nombre": "Guam",
+"nombre_en": "Guam",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": 13.44,
+"lon": 144.77,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Guam"
+],
+"alias_es": [
+"Guam"
+]
+},
+{
+"iso3": "GTM",
+"iso2": "GT",
+"num": "320",
+"nombre": "Guatemala",
+"nombre_en": "Guatemala",
+"region": "Américas",
+"subregion": "América central",
+"lat": 15.69,
+"lon": -90.37,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Guatemala"
+],
+"alias_es": [
+"Guatemala"
+]
+},
+{
+"iso3": "GIN",
+"iso2": "GN",
+"num": "324",
+"nombre": "Guinea",
+"nombre_en": "Guinea",
+"region": "África",
+"subregion": "África occidental",
+"lat": 10.44,
+"lon": -10.94,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Guinea"
+],
+"alias_es": [
+"Guinea"
+]
+},
+{
+"iso3": "GNB",
+"iso2": "GW",
+"num": "624",
+"nombre": "Guinea-Bissau",
+"nombre_en": "Guinea-Bissau",
+"region": "África",
+"subregion": "África occidental",
+"lat": 12.06,
+"lon": -14.92,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Guinea-Bissau"
+],
+"alias_es": [
+"Guinea-Bissau",
+"Guinea Bissau"
+]
+},
+{
+"iso3": "GUY",
+"iso2": "GY",
+"num": "328",
+"nombre": "Guyana",
+"nombre_en": "Guyana",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": 4.79,
+"lon": -58.98,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Guyana"
+],
+"alias_es": [
+"Guyana"
+]
+},
+{
+"iso3": "HTI",
+"iso2": "HT",
+"num": "332",
+"nombre": "Haití",
+"nombre_en": "Haiti",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.93,
+"lon": -72.68,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Haiti"
+],
+"alias_es": [
+"Haití"
+]
+},
+{
+"iso3": "HMD",
+"iso2": "HM",
+"num": "334",
+"nombre": "Islas Heard y McDonald",
+"nombre_en": "Heard Island and McDonald Islands",
+"region": "Oceanía",
+"subregion": "Australia y Nueva Zelandia",
+"lat": -53.09,
+"lon": 73.52,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Heard Island and McDonald Islands"
+],
+"alias_es": [
+"Islas Heard y McDonald",
+"Heard e Islas McDonald"
+]
+},
+{
+"iso3": "VAT",
+"iso2": "VA",
+"num": "336",
+"nombre": "Santa Sede",
+"nombre_en": "Holy See (Vatican City State)",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 41.9,
+"lon": 12.43,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Holy See",
+"Vatican",
+"Holy See (Vatican City State)"
+],
+"alias_es": [
+"Santa Sede"
+]
+},
+{
+"iso3": "HND",
+"iso2": "HN",
+"num": "340",
+"nombre": "Honduras",
+"nombre_en": "Honduras",
+"region": "Américas",
+"subregion": "América central",
+"lat": 14.82,
+"lon": -86.62,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Honduras"
+],
+"alias_es": [
+"Honduras"
+]
+},
+{
+"iso3": "HKG",
+"iso2": "HK",
+"num": "344",
+"nombre": "Hong Kong",
+"nombre_en": "Hong Kong",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 22.44,
+"lon": 114.14,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Hong Kong",
+"China, Hong Kong Special Administrative Region"
+],
+"alias_es": [
+"Hong Kong",
+"China, región administrativa especial de Hong Kong"
+]
+},
+{
+"iso3": "HUN",
+"iso2": "HU",
+"num": "348",
+"nombre": "Hungría",
+"nombre_en": "Hungary",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 47.16,
+"lon": 19.4,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Hungary"
+],
+"alias_es": [
+"Hungría"
+]
+},
+{
+"iso3": "ISL",
+"iso2": "IS",
+"num": "352",
+"nombre": "Islandia",
+"nombre_en": "Iceland",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 65.0,
+"lon": -18.57,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Iceland"
+],
+"alias_es": [
+"Islandia"
+]
+},
+{
+"iso3": "IND",
+"iso2": "IN",
+"num": "356",
+"nombre": "India",
+"nombre_en": "India",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 22.91,
+"lon": 79.59,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"India"
+],
+"alias_es": [
+"India"
+]
+},
+{
+"iso3": "IDN",
+"iso2": "ID",
+"num": "360",
+"nombre": "Indonesia",
+"nombre_en": "Indonesia",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": -0.19,
+"lon": 114.01,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Indonesia"
+],
+"alias_es": [
+"Indonesia"
+]
+},
+{
+"iso3": "IRN",
+"iso2": "IR",
+"num": "364",
+"nombre": "Irán",
+"nombre_en": "Islamic Republic of Iran",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 32.58,
+"lon": 54.27,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Iran",
+"Islamic Republic of Iran",
+"Iran (Islamic Republic of)"
+],
+"alias_es": [
+"Irán",
+"República Islámica de Irán",
+"Irán (República Islámica del)"
+]
+},
+{
+"iso3": "IRQ",
+"iso2": "IQ",
+"num": "368",
+"nombre": "Irak",
+"nombre_en": "Iraq",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 33.04,
+"lon": 43.74,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Iraq"
+],
+"alias_es": [
+"Irak",
+"Iraq"
+]
+},
+{
+"iso3": "IRL",
+"iso2": "IE",
+"num": "372",
+"nombre": "Irlanda",
+"nombre_en": "Ireland",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 53.17,
+"lon": -8.13,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Ireland"
+],
+"alias_es": [
+"Irlanda"
+]
+},
+{
+"iso3": "ISR",
+"iso2": "IL",
+"num": "376",
+"nombre": "Israel",
+"nombre_en": "Israel",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 31.46,
+"lon": 35.0,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Israel",
+"Israeli"
+],
+"alias_es": [
+"Israel",
+"israelí"
+]
+},
+{
+"iso3": "ITA",
+"iso2": "IT",
+"num": "380",
+"nombre": "Italia",
+"nombre_en": "Italy",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 43.53,
+"lon": 12.15,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Italy"
+],
+"alias_es": [
+"Italia"
+]
+},
+{
+"iso3": "JAM",
+"iso2": "JM",
+"num": "388",
+"nombre": "Jamaica",
+"nombre_en": "Jamaica",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.16,
+"lon": -77.31,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Jamaica"
+],
+"alias_es": [
+"Jamaica"
+]
+},
+{
+"iso3": "JPN",
+"iso2": "JP",
+"num": "392",
+"nombre": "Japón",
+"nombre_en": "Japan",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 36.65,
+"lon": 137.99,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Japan"
+],
+"alias_es": [
+"Japón"
+]
+},
+{
+"iso3": "JOR",
+"iso2": "JO",
+"num": "400",
+"nombre": "Jordania",
+"nombre_en": "Jordan",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 31.25,
+"lon": 36.77,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Jordan"
+],
+"alias_es": [
+"Jordania"
+]
+},
+{
+"iso3": "KAZ",
+"iso2": "KZ",
+"num": "398",
+"nombre": "Kazajistán",
+"nombre_en": "Kazakhstan",
+"region": "Asia",
+"subregion": "Asia central",
+"lat": 48.16,
+"lon": 67.29,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Kazakhstan"
+],
+"alias_es": [
+"Kazajistán",
+"Kazajstán"
+]
+},
+{
+"iso3": "KEN",
+"iso2": "KE",
+"num": "404",
+"nombre": "Kenia",
+"nombre_en": "Kenya",
+"region": "África",
+"subregion": "África oriental",
+"lat": 0.6,
+"lon": 37.8,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Kenya"
+],
+"alias_es": [
+"Kenia",
+"Kenya"
+]
+},
+{
+"iso3": "KIR",
+"iso2": "KI",
+"num": "296",
+"nombre": "Kiribati",
+"nombre_en": "Kiribati",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": 1.85,
+"lon": -157.37,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Kiribati"
+],
+"alias_es": [
+"Kiribati"
+]
+},
+{
+"iso3": "PRK",
+"iso2": "KP",
+"num": "408",
+"nombre": "Corea del Norte",
+"nombre_en": "North Korea",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 40.15,
+"lon": 127.19,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Democratic People's Republic of Korea",
+"North Korea",
+"DPRK"
+],
+"alias_es": [
+"Corea del Norte",
+"República Popular Democrática de Corea"
+]
+},
+{
+"iso3": "KOR",
+"iso2": "KR",
+"num": "410",
+"nombre": "Corea del Sur",
+"nombre_en": "South Korea",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 36.46,
+"lon": 127.87,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Republic of Korea",
+"South Korea",
+"Korea, Republic of"
+],
+"alias_es": [
+"Corea del Sur",
+"República de Corea"
+]
+},
+{
+"iso3": "KWT",
+"iso2": "KW",
+"num": "414",
+"nombre": "Kuwait",
+"nombre_en": "Kuwait",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 29.32,
+"lon": 47.56,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Kuwait"
+],
+"alias_es": [
+"Kuwait"
+]
+},
+{
+"iso3": "KGZ",
+"iso2": "KG",
+"num": "417",
+"nombre": "Kirguistán",
+"nombre_en": "Kyrgyzstan",
+"region": "Asia",
+"subregion": "Asia central",
+"lat": 41.46,
+"lon": 74.53,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Kyrgyzstan"
+],
+"alias_es": [
+"Kirguistán"
+]
+},
+{
+"iso3": "LAO",
+"iso2": "LA",
+"num": "418",
+"nombre": "Laos",
+"nombre_en": "Lao People's Democratic Republic",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 18.5,
+"lon": 103.74,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Lao People's Democratic Republic",
+"Laos"
+],
+"alias_es": [
+"Laos",
+"República Democrática Popular de Lao",
+"República Democrática Popular Lao"
+]
+},
+{
+"iso3": "LVA",
+"iso2": "LV",
+"num": "428",
+"nombre": "Letonia",
+"nombre_en": "Latvia",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 56.85,
+"lon": 24.91,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Latvia"
+],
+"alias_es": [
+"Letonia"
+]
+},
+{
+"iso3": "LBN",
+"iso2": "LB",
+"num": "422",
+"nombre": "Líbano",
+"nombre_en": "Lebanon",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 33.92,
+"lon": 35.88,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Lebanon"
+],
+"alias_es": [
+"Líbano"
+]
+},
+{
+"iso3": "LSO",
+"iso2": "LS",
+"num": "426",
+"nombre": "Lesoto",
+"nombre_en": "Lesotho",
+"region": "África",
+"subregion": "África meridional",
+"lat": -29.58,
+"lon": 28.23,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Lesotho"
+],
+"alias_es": [
+"Lesoto",
+"Lesotho"
+]
+},
+{
+"iso3": "LBR",
+"iso2": "LR",
+"num": "430",
+"nombre": "Liberia",
+"nombre_en": "Liberia",
+"region": "África",
+"subregion": "África occidental",
+"lat": 6.45,
+"lon": -9.32,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Liberia"
+],
+"alias_es": [
+"Liberia"
+]
+},
+{
+"iso3": "LBY",
+"iso2": "LY",
+"num": "434",
+"nombre": "Libia",
+"nombre_en": "Libya",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 27.03,
+"lon": 18.01,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Libya"
+],
+"alias_es": [
+"Libia"
+]
+},
+{
+"iso3": "LIE",
+"iso2": "LI",
+"num": "438",
+"nombre": "Liechtenstein",
+"nombre_en": "Liechtenstein",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 47.14,
+"lon": 9.54,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Liechtenstein"
+],
+"alias_es": [
+"Liechtenstein"
+]
+},
+{
+"iso3": "LTU",
+"iso2": "LT",
+"num": "440",
+"nombre": "Lituania",
+"nombre_en": "Lithuania",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 55.33,
+"lon": 23.89,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Lithuania"
+],
+"alias_es": [
+"Lituania"
+]
+},
+{
+"iso3": "LUX",
+"iso2": "LU",
+"num": "442",
+"nombre": "Luxemburgo",
+"nombre_en": "Luxembourg",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 49.77,
+"lon": 6.07,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Luxembourg"
+],
+"alias_es": [
+"Luxemburgo"
+]
+},
+{
+"iso3": "MAC",
+"iso2": "MO",
+"num": "446",
+"nombre": "Macao",
+"nombre_en": "Macao",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 22.22,
+"lon": 113.51,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Macao",
+"China, Macao Special Administrative Region"
+],
+"alias_es": [
+"Macao",
+"China, región administrativa especial de Macao"
+]
+},
+{
+"iso3": "MDG",
+"iso2": "MG",
+"num": "450",
+"nombre": "Madagascar",
+"nombre_en": "Madagascar",
+"region": "África",
+"subregion": "África oriental",
+"lat": -19.38,
+"lon": 46.7,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Madagascar"
+],
+"alias_es": [
+"Madagascar"
+]
+},
+{
+"iso3": "MWI",
+"iso2": "MW",
+"num": "454",
+"nombre": "Malaui",
+"nombre_en": "Malawi",
+"region": "África",
+"subregion": "África oriental",
+"lat": -13.22,
+"lon": 34.29,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Malawi"
+],
+"alias_es": [
+"Malaui",
+"Malawi"
+]
+},
+{
+"iso3": "MYS",
+"iso2": "MY",
+"num": "458",
+"nombre": "Malasia",
+"nombre_en": "Malaysia",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 3.62,
+"lon": 114.72,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Malaysia"
+],
+"alias_es": [
+"Malasia"
+]
+},
+{
+"iso3": "MDV",
+"iso2": "MV",
+"num": "462",
+"nombre": "Maldivas",
+"nombre_en": "Maldives",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 4.2,
+"lon": 73.5,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Maldives"
+],
+"alias_es": [
+"Maldivas"
+]
+},
+{
+"iso3": "MLI",
+"iso2": "ML",
+"num": "466",
+"nombre": "Malí",
+"nombre_en": "Mali",
+"region": "África",
+"subregion": "África occidental",
+"lat": 17.35,
+"lon": -3.54,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Mali"
+],
+"alias_es": [
+"Malí"
+]
+},
+{
+"iso3": "MLT",
+"iso2": "MT",
+"num": "470",
+"nombre": "Malta",
+"nombre_en": "Malta",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 35.89,
+"lon": 14.44,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Malta"
+],
+"alias_es": [
+"Malta"
+]
+},
+{
+"iso3": "MHL",
+"iso2": "MH",
+"num": "584",
+"nombre": "Islas Marshall",
+"nombre_en": "Marshall Islands",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": 7.11,
+"lon": 171.19,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Marshall Islands"
+],
+"alias_es": [
+"Islas Marshall"
+]
+},
+{
+"iso3": "MTQ",
+"iso2": "MQ",
+"num": "474",
+"nombre": "Martinica",
+"nombre_en": "Martinique",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Martinique"
+],
+"alias_es": [
+"Martinica"
+]
+},
+{
+"iso3": "MRT",
+"iso2": "MR",
+"num": "478",
+"nombre": "Mauritania",
+"nombre_en": "Mauritania",
+"region": "África",
+"subregion": "África occidental",
+"lat": 20.26,
+"lon": -10.35,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Mauritania"
+],
+"alias_es": [
+"Mauritania"
+]
+},
+{
+"iso3": "MUS",
+"iso2": "MU",
+"num": "480",
+"nombre": "Mauricio",
+"nombre_en": "Mauritius",
+"region": "África",
+"subregion": "África oriental",
+"lat": -20.28,
+"lon": 57.57,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Mauritius"
+],
+"alias_es": [
+"Mauricio"
+]
+},
+{
+"iso3": "MYT",
+"iso2": "YT",
+"num": "175",
+"nombre": "Mayotte",
+"nombre_en": "Mayotte",
+"region": "África",
+"subregion": "África oriental",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Mayotte"
+],
+"alias_es": [
+"Mayotte"
+]
+},
+{
+"iso3": "MEX",
+"iso2": "MX",
+"num": "484",
+"nombre": "México",
+"nombre_en": "Mexico",
+"region": "Américas",
+"subregion": "América central",
+"lat": 23.94,
+"lon": -102.51,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Mexico"
+],
+"alias_es": [
+"México"
+]
+},
+{
+"iso3": "FSM",
+"iso2": "FM",
+"num": "583",
+"nombre": "Micronesia",
+"nombre_en": "Micronesia, Federated States of",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": 6.89,
+"lon": 158.23,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Micronesia, Federated States of",
+"Micronesia (Federated States of)"
+],
+"alias_es": [
+"Micronesia",
+"Micronesia (Estados Federados de)"
+]
+},
+{
+"iso3": "MDA",
+"iso2": "MD",
+"num": "498",
+"nombre": "Moldavia",
+"nombre_en": "Moldova, Republic of",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 47.19,
+"lon": 28.46,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Republic of Moldova",
+"Moldova",
+"Moldova, Republic of"
+],
+"alias_es": [
+"Moldavia",
+"República de Moldova"
+]
+},
+{
+"iso3": "MCO",
+"iso2": "MC",
+"num": "492",
+"nombre": "Mónaco",
+"nombre_en": "Monaco",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 43.75,
+"lon": 7.41,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Monaco"
+],
+"alias_es": [
+"Mónaco"
+]
+},
+{
+"iso3": "MNG",
+"iso2": "MN",
+"num": "496",
+"nombre": "Mongolia",
+"nombre_en": "Mongolia",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 46.83,
+"lon": 103.05,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Mongolia"
+],
+"alias_es": [
+"Mongolia"
+]
+},
+{
+"iso3": "MSR",
+"iso2": "MS",
+"num": "500",
+"nombre": "Montserrat",
+"nombre_en": "Montserrat",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 16.74,
+"lon": -62.19,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Montserrat"
+],
+"alias_es": [
+"Montserrat"
+]
+},
+{
+"iso3": "MAR",
+"iso2": "MA",
+"num": "504",
+"nombre": "Marruecos",
+"nombre_en": "Morocco",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 29.84,
+"lon": -8.46,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Morocco"
+],
+"alias_es": [
+"Marruecos",
+"marroquí"
+]
+},
+{
+"iso3": "MOZ",
+"iso2": "MZ",
+"num": "508",
+"nombre": "Mozambique",
+"nombre_en": "Mozambique",
+"region": "África",
+"subregion": "África oriental",
+"lat": -17.27,
+"lon": 35.53,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Mozambique"
+],
+"alias_es": [
+"Mozambique"
+]
+},
+{
+"iso3": "MMR",
+"iso2": "MM",
+"num": "104",
+"nombre": "Myanmar",
+"nombre_en": "Myanmar",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 21.22,
+"lon": 96.49,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Myanmar",
+"Burma"
+],
+"alias_es": [
+"Myanmar"
+]
+},
+{
+"iso3": "NAM",
+"iso2": "NA",
+"num": "516",
+"nombre": "Namibia",
+"nombre_en": "Namibia",
+"region": "África",
+"subregion": "África meridional",
+"lat": -22.13,
+"lon": 17.21,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Namibia",
+"South West Africa"
+],
+"alias_es": [
+"Namibia"
+]
+},
+{
+"iso3": "NRU",
+"iso2": "NR",
+"num": "520",
+"nombre": "Nauru",
+"nombre_en": "Nauru",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": -0.52,
+"lon": 166.93,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Nauru",
+"Naoero"
+],
+"alias_es": [
+"Nauru",
+"Naoero"
+]
+},
+{
+"iso3": "NPL",
+"iso2": "NP",
+"num": "524",
+"nombre": "Nepal",
+"nombre_en": "Nepal",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 28.25,
+"lon": 83.92,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Nepal"
+],
+"alias_es": [
+"Nepal"
+]
+},
+{
+"iso3": "NLD",
+"iso2": "NL",
+"num": "528",
+"nombre": "Países Bajos",
+"nombre_en": "Netherlands",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 52.28,
+"lon": 5.64,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Netherlands",
+"The Netherlands",
+"Netherlands (Kingdom of the)"
+],
+"alias_es": [
+"Países Bajos",
+"Países Bajos (Reino de los)"
+]
+},
+{
+"iso3": "NCL",
+"iso2": "NC",
+"num": "540",
+"nombre": "Nueva Caledonia",
+"nombre_en": "New Caledonia",
+"region": "Oceanía",
+"subregion": "Melanesia",
+"lat": -21.33,
+"lon": 165.49,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"New Caledonia"
+],
+"alias_es": [
+"Nueva Caledonia"
+]
+},
+{
+"iso3": "NZL",
+"iso2": "NZ",
+"num": "554",
+"nombre": "Nueva Zelanda",
+"nombre_en": "New Zealand",
+"region": "Oceanía",
+"subregion": "Australia y Nueva Zelandia",
+"lat": -43.97,
+"lon": 170.53,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"New Zealand"
+],
+"alias_es": [
+"Nueva Zelanda",
+"Nueva Zelandia"
+]
+},
+{
+"iso3": "NIC",
+"iso2": "NI",
+"num": "558",
+"nombre": "Nicaragua",
+"nombre_en": "Nicaragua",
+"region": "Américas",
+"subregion": "América central",
+"lat": 12.85,
+"lon": -85.03,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Nicaragua"
+],
+"alias_es": [
+"Nicaragua"
+]
+},
+{
+"iso3": "NER",
+"iso2": "NE",
+"num": "562",
+"nombre": "Níger",
+"nombre_en": "Niger",
+"region": "África",
+"subregion": "África occidental",
+"lat": 17.42,
+"lon": 9.39,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Niger"
+],
+"alias_es": [
+"Níger"
+]
+},
+{
+"iso3": "NGA",
+"iso2": "NG",
+"num": "566",
+"nombre": "Nigeria",
+"nombre_en": "Nigeria",
+"region": "África",
+"subregion": "África occidental",
+"lat": 9.6,
+"lon": 8.09,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Nigeria"
+],
+"alias_es": [
+"Nigeria"
+]
+},
+{
+"iso3": "NIU",
+"iso2": "NU",
+"num": "570",
+"nombre": "Niue",
+"nombre_en": "Niue",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -19.05,
+"lon": -169.87,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Niue"
+],
+"alias_es": [
+"Niue"
+]
+},
+{
+"iso3": "NFK",
+"iso2": "NF",
+"num": "574",
+"nombre": "Isla Norfolk",
+"nombre_en": "Norfolk Island",
+"region": "Oceanía",
+"subregion": "Australia y Nueva Zelandia",
+"lat": -29.05,
+"lon": 167.95,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Norfolk Island"
+],
+"alias_es": [
+"Isla Norfolk"
+]
+},
+{
+"iso3": "MNP",
+"iso2": "MP",
+"num": "580",
+"nombre": "Islas Marianas Septentrionales",
+"nombre_en": "Northern Mariana Islands",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": 15.18,
+"lon": 145.74,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Northern Mariana Islands"
+],
+"alias_es": [
+"Islas Marianas Septentrionales",
+"Islas Marianas del Norte"
+]
+},
+{
+"iso3": "MKD",
+"iso2": "MK",
+"num": "807",
+"nombre": "Macedonia del Norte",
+"nombre_en": "The Republic of North Macedonia",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 41.6,
+"lon": 21.68,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"North Macedonia",
+"Macedonia",
+"Former Yugoslav Republic of Macedonia",
+"The Republic of North Macedonia"
+],
+"alias_es": [
+"Macedonia del Norte"
+]
+},
+{
+"iso3": "NOR",
+"iso2": "NO",
+"num": "578",
+"nombre": "Noruega",
+"nombre_en": "Norway",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 64.24,
+"lon": 13.91,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Norway"
+],
+"alias_es": [
+"Noruega"
+]
+},
+{
+"iso3": "OMN",
+"iso2": "OM",
+"num": "512",
+"nombre": "Omán",
+"nombre_en": "Oman",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 20.58,
+"lon": 56.09,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Oman"
+],
+"alias_es": [
+"Omán"
+]
+},
+{
+"iso3": "PAK",
+"iso2": "PK",
+"num": "586",
+"nombre": "Pakistán",
+"nombre_en": "Pakistan",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 29.95,
+"lon": 69.34,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Pakistan"
+],
+"alias_es": [
+"Pakistán"
+]
+},
+{
+"iso3": "PLW",
+"iso2": "PW",
+"num": "585",
+"nombre": "Palau",
+"nombre_en": "Palau",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": 7.51,
+"lon": 134.58,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Palau"
+],
+"alias_es": [
+"Palau"
+]
+},
+{
+"iso3": "PSE",
+"iso2": "PS",
+"num": "275",
+"nombre": "Palestina",
+"nombre_en": "State of Palestine",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 31.95,
+"lon": 35.25,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Palestine",
+"State of Palestine",
+"Palestinian",
+"Palestinians",
+"Occupied Palestinian Territory",
+"Gaza",
+"West Bank",
+"East Jerusalem"
+],
+"alias_es": [
+"Palestina",
+"palestino",
+"palestina",
+"Gaza",
+"Cisjordania",
+"Estado de Palestina"
+]
+},
+{
+"iso3": "PAN",
+"iso2": "PA",
+"num": "591",
+"nombre": "Panamá",
+"nombre_en": "Panama",
+"region": "Américas",
+"subregion": "América central",
+"lat": 8.52,
+"lon": -80.11,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Panama"
+],
+"alias_es": [
+"Panamá"
+]
+},
+{
+"iso3": "PNG",
+"iso2": "PG",
+"num": "598",
+"nombre": "Papua Nueva Guinea",
+"nombre_en": "Papua New Guinea",
+"region": "Oceanía",
+"subregion": "Melanesia",
+"lat": -6.61,
+"lon": 144.24,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Papua New Guinea"
+],
+"alias_es": [
+"Papua Nueva Guinea"
+]
+},
+{
+"iso3": "PRY",
+"iso2": "PY",
+"num": "600",
+"nombre": "Paraguay",
+"nombre_en": "Paraguay",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -23.23,
+"lon": -58.4,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Paraguay"
+],
+"alias_es": [
+"Paraguay"
+]
+},
+{
+"iso3": "PER",
+"iso2": "PE",
+"num": "604",
+"nombre": "Perú",
+"nombre_en": "Peru",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -9.15,
+"lon": -74.38,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Peru"
+],
+"alias_es": [
+"Perú"
+]
+},
+{
+"iso3": "PHL",
+"iso2": "PH",
+"num": "608",
+"nombre": "Filipinas",
+"nombre_en": "Philippines",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 15.96,
+"lon": 121.42,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Philippines"
+],
+"alias_es": [
+"Filipinas"
+]
+},
+{
+"iso3": "PCN",
+"iso2": "PN",
+"num": "612",
+"nombre": "Pitcairn",
+"nombre_en": "Pitcairn",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -24.36,
+"lon": -128.32,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Pitcairn",
+"Pitcairn Islands"
+],
+"alias_es": [
+"Pitcairn"
+]
+},
+{
+"iso3": "POL",
+"iso2": "PL",
+"num": "616",
+"nombre": "Polonia",
+"nombre_en": "Poland",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 52.13,
+"lon": 19.39,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Poland"
+],
+"alias_es": [
+"Polonia"
+]
+},
+{
+"iso3": "PRT",
+"iso2": "PT",
+"num": "620",
+"nombre": "Portugal",
+"nombre_en": "Portugal",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 39.68,
+"lon": -7.98,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Portugal"
+],
+"alias_es": [
+"Portugal"
+]
+},
+{
+"iso3": "PRI",
+"iso2": "PR",
+"num": "630",
+"nombre": "Puerto Rico",
+"nombre_en": "Puerto Rico",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.23,
+"lon": -66.48,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Puerto Rico"
+],
+"alias_es": [
+"Puerto Rico"
+]
+},
+{
+"iso3": "QAT",
+"iso2": "QA",
+"num": "634",
+"nombre": "Qatar",
+"nombre_en": "Qatar",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 25.31,
+"lon": 51.18,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Qatar"
+],
+"alias_es": [
+"Qatar",
+"Catar"
+]
+},
+{
+"iso3": "REU",
+"iso2": "RE",
+"num": "638",
+"nombre": "Reunión",
+"nombre_en": "Reunion",
+"region": "África",
+"subregion": "África oriental",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Reunion",
+"Réunion"
+],
+"alias_es": [
+"Reunión"
+]
+},
+{
+"iso3": "ROU",
+"iso2": "RO",
+"num": "642",
+"nombre": "Rumanía",
+"nombre_en": "Romania",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 45.85,
+"lon": 24.97,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Romania"
+],
+"alias_es": [
+"Rumanía",
+"Rumania"
+]
+},
+{
+"iso3": "RUS",
+"iso2": "RU",
+"num": "643",
+"nombre": "Rusia",
+"nombre_en": "Russian Federation",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 61.7,
+"lon": 99.73,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Russia",
+"Russian Federation",
+"Soviet Union",
+"USSR"
+],
+"alias_es": [
+"Rusia",
+"Federación de Rusia",
+"Federación Rusa",
+"Unión Soviética"
+]
+},
+{
+"iso3": "RWA",
+"iso2": "RW",
+"num": "646",
+"nombre": "Ruanda",
+"nombre_en": "Rwanda",
+"region": "África",
+"subregion": "África oriental",
+"lat": -1.99,
+"lon": 29.92,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Rwanda"
+],
+"alias_es": [
+"Ruanda",
+"Rwanda"
+]
+},
+{
+"iso3": "SHN",
+"iso2": "SH",
+"num": "654",
+"nombre": "Santa Elena",
+"nombre_en": "Saint Helena",
+"region": "África",
+"subregion": "África occidental",
+"lat": -15.96,
+"lon": -5.72,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Helena"
+],
+"alias_es": [
+"Santa Elena",
+"Santa Helena, Ascensión y Tristán de Acuña"
+]
+},
+{
+"iso3": "KNA",
+"iso2": "KN",
+"num": "659",
+"nombre": "Saint Kitts y Nevis",
+"nombre_en": "Saint Kitts and Nevis",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 17.33,
+"lon": -62.75,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Kitts and Nevis"
+],
+"alias_es": [
+"Saint Kitts y Nevis"
+]
+},
+{
+"iso3": "LCA",
+"iso2": "LC",
+"num": "662",
+"nombre": "Santa Lucía",
+"nombre_en": "Saint Lucia",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 13.89,
+"lon": -60.97,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Lucia"
+],
+"alias_es": [
+"Santa Lucía"
+]
+},
+{
+"iso3": "SPM",
+"iso2": "PM",
+"num": "666",
+"nombre": "San Pedro y Miquelón",
+"nombre_en": "Saint Pierre and Miquelon",
+"region": "Américas",
+"subregion": "América septentrional",
+"lat": 46.94,
+"lon": -56.33,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Pierre and Miquelon"
+],
+"alias_es": [
+"San Pedro y Miquelón"
+]
+},
+{
+"iso3": "VCT",
+"iso2": "VC",
+"num": "670",
+"nombre": "San Vicente y las Granadinas",
+"nombre_en": "Saint Vincent and the Grenadines",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 13.25,
+"lon": -61.2,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Vincent and the Grenadines"
+],
+"alias_es": [
+"San Vicente y las Granadinas"
+]
+},
+{
+"iso3": "WSM",
+"iso2": "WS",
+"num": "882",
+"nombre": "Samoa",
+"nombre_en": "Samoa",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -13.63,
+"lon": -172.44,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Samoa"
+],
+"alias_es": [
+"Samoa"
+]
+},
+{
+"iso3": "SMR",
+"iso2": "SM",
+"num": "674",
+"nombre": "San Marino",
+"nombre_en": "San Marino",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 43.94,
+"lon": 12.46,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"San Marino"
+],
+"alias_es": [
+"San Marino"
+]
+},
+{
+"iso3": "STP",
+"iso2": "ST",
+"num": "678",
+"nombre": "Santo Tomé y Príncipe",
+"nombre_en": "Sao Tome and Principe",
+"region": "África",
+"subregion": "África central",
+"lat": 0.24,
+"lon": 6.61,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Sao Tome and Principe"
+],
+"alias_es": [
+"Santo Tomé y Príncipe"
+]
+},
+{
+"iso3": "SAU",
+"iso2": "SA",
+"num": "682",
+"nombre": "Arabia Saudí",
+"nombre_en": "Saudi Arabia",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 24.12,
+"lon": 44.54,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Saudi Arabia"
+],
+"alias_es": [
+"Arabia Saudí",
+"Arabia Saudita"
+]
+},
+{
+"iso3": "SEN",
+"iso2": "SN",
+"num": "686",
+"nombre": "Senegal",
+"nombre_en": "Senegal",
+"region": "África",
+"subregion": "África occidental",
+"lat": 14.37,
+"lon": -14.47,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Senegal"
+],
+"alias_es": [
+"Senegal"
+]
+},
+{
+"iso3": "SYC",
+"iso2": "SC",
+"num": "690",
+"nombre": "Seychelles",
+"nombre_en": "Seychelles",
+"region": "África",
+"subregion": "África oriental",
+"lat": -4.66,
+"lon": 55.48,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Seychelles"
+],
+"alias_es": [
+"Seychelles"
+]
+},
+{
+"iso3": "SLE",
+"iso2": "SL",
+"num": "694",
+"nombre": "Sierra Leona",
+"nombre_en": "Sierra Leone",
+"region": "África",
+"subregion": "África occidental",
+"lat": 8.57,
+"lon": -11.79,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Sierra Leone"
+],
+"alias_es": [
+"Sierra Leona"
+]
+},
+{
+"iso3": "SGP",
+"iso2": "SG",
+"num": "702",
+"nombre": "Singapur",
+"nombre_en": "Singapore",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 1.36,
+"lon": 103.82,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Singapore"
+],
+"alias_es": [
+"Singapur"
+]
+},
+{
+"iso3": "SVK",
+"iso2": "SK",
+"num": "703",
+"nombre": "Eslovaquia",
+"nombre_en": "Slovakia",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 48.71,
+"lon": 19.48,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Slovakia"
+],
+"alias_es": [
+"Eslovaquia"
+]
+},
+{
+"iso3": "SVN",
+"iso2": "SI",
+"num": "705",
+"nombre": "Eslovenia",
+"nombre_en": "Slovenia",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 46.12,
+"lon": 14.8,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Slovenia"
+],
+"alias_es": [
+"Eslovenia"
+]
+},
+{
+"iso3": "SLB",
+"iso2": "SB",
+"num": "090",
+"nombre": "Islas Salomón",
+"nombre_en": "Solomon Islands",
+"region": "Oceanía",
+"subregion": "Melanesia",
+"lat": -9.62,
+"lon": 160.17,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Solomon Islands"
+],
+"alias_es": [
+"Islas Salomón"
+]
+},
+{
+"iso3": "SOM",
+"iso2": "SO",
+"num": "706",
+"nombre": "Somalia",
+"nombre_en": "Somalia",
+"region": "África",
+"subregion": "África oriental",
+"lat": 4.75,
+"lon": 45.71,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Somalia"
+],
+"alias_es": [
+"Somalia"
+]
+},
+{
+"iso3": "ZAF",
+"iso2": "ZA",
+"num": "710",
+"nombre": "Sudáfrica",
+"nombre_en": "South Africa",
+"region": "África",
+"subregion": "África meridional",
+"lat": -29.01,
+"lon": 25.16,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"South Africa"
+],
+"alias_es": [
+"Sudáfrica"
+]
+},
+{
+"iso3": "SGS",
+"iso2": "GS",
+"num": "239",
+"nombre": "Georgia del Sur y las Islas Sandwich del Sur",
+"nombre_en": "South Georgia and the South Sandwich Islands",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -54.36,
+"lon": -36.69,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"South Georgia and the South Sandwich Islands"
+],
+"alias_es": [
+"Georgia del Sur y las Islas Sandwich del Sur"
+]
+},
+{
+"iso3": "ESP",
+"iso2": "ES",
+"num": "724",
+"nombre": "España",
+"nombre_en": "Spain",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 40.4,
+"lon": -3.56,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Spain"
+],
+"alias_es": [
+"España"
+]
+},
+{
+"iso3": "LKA",
+"iso2": "LK",
+"num": "144",
+"nombre": "Sri Lanka",
+"nombre_en": "Sri Lanka",
+"region": "Asia",
+"subregion": "Asia meridional",
+"lat": 7.61,
+"lon": 80.7,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Sri Lanka",
+"Ceylon"
+],
+"alias_es": [
+"Sri Lanka"
+]
+},
+{
+"iso3": "SDN",
+"iso2": "SD",
+"num": "729",
+"nombre": "Sudán",
+"nombre_en": "Sudan",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 15.99,
+"lon": 29.94,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Sudan"
+],
+"alias_es": [
+"Sudán"
+]
+},
+{
+"iso3": "SUR",
+"iso2": "SR",
+"num": "740",
+"nombre": "Surinam",
+"nombre_en": "Suriname",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": 4.13,
+"lon": -55.91,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Suriname"
+],
+"alias_es": [
+"Surinam",
+"Suriname"
+]
+},
+{
+"iso3": "SJM",
+"iso2": "SJ",
+"num": "744",
+"nombre": "Islas Svalbard y Jan Mayen",
+"nombre_en": "Svalbard and Jan Mayen",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Svalbard and Jan Mayen",
+"Svalbard and Jan Mayen Islands"
+],
+"alias_es": [
+"Islas Svalbard y Jan Mayen",
+"Svalbard y Jan Mayen"
+]
+},
+{
+"iso3": "SWZ",
+"iso2": "SZ",
+"num": "748",
+"nombre": "Esuatini",
+"nombre_en": "Eswatini",
+"region": "África",
+"subregion": "África meridional",
+"lat": -26.56,
+"lon": 31.48,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Eswatini",
+"Swaziland"
+],
+"alias_es": [
+"Esuatini",
+"Eswatini"
+]
+},
+{
+"iso3": "SWE",
+"iso2": "SE",
+"num": "752",
+"nombre": "Suecia",
+"nombre_en": "Sweden",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 62.83,
+"lon": 16.73,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Sweden"
+],
+"alias_es": [
+"Suecia"
+]
+},
+{
+"iso3": "CHE",
+"iso2": "CH",
+"num": "756",
+"nombre": "Suiza",
+"nombre_en": "Switzerland",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 46.8,
+"lon": 8.21,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Switzerland"
+],
+"alias_es": [
+"Suiza"
+]
+},
+{
+"iso3": "SYR",
+"iso2": "SY",
+"num": "760",
+"nombre": "Siria",
+"nombre_en": "Syrian Arab Republic",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 35.03,
+"lon": 38.51,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Syria",
+"Syrian Arab Republic",
+"Syrian Golan"
+],
+"alias_es": [
+"Siria",
+"República Árabe Siria"
+]
+},
+{
+"iso3": "TWN",
+"iso2": "TW",
+"num": "158",
+"nombre": "Taiwán",
+"nombre_en": "Taiwan, Province of China",
+"region": "Asia",
+"subregion": "Asia oriental",
+"lat": 23.75,
+"lon": 120.96,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Taiwan",
+"Republic of China",
+"Taiwan, Province of China"
+],
+"alias_es": [
+"Taiwán"
+]
+},
+{
+"iso3": "TJK",
+"iso2": "TJ",
+"num": "762",
+"nombre": "Tayikistán",
+"nombre_en": "Tajikistan",
+"region": "Asia",
+"subregion": "Asia central",
+"lat": 38.53,
+"lon": 71.01,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Tajikistan"
+],
+"alias_es": [
+"Tayikistán"
+]
+},
+{
+"iso3": "TZA",
+"iso2": "TZ",
+"num": "834",
+"nombre": "Tanzania",
+"nombre_en": "United Republic of Tanzania",
+"region": "África",
+"subregion": "África oriental",
+"lat": -6.28,
+"lon": 34.8,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"United Republic of Tanzania",
+"Tanzania"
+],
+"alias_es": [
+"Tanzania",
+"República Unida de Tanzanía"
+]
+},
+{
+"iso3": "THA",
+"iso2": "TH",
+"num": "764",
+"nombre": "Tailandia",
+"nombre_en": "Thailand",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 15.13,
+"lon": 101.01,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Thailand"
+],
+"alias_es": [
+"Tailandia"
+]
+},
+{
+"iso3": "TLS",
+"iso2": "TL",
+"num": "626",
+"nombre": "Timor Oriental",
+"nombre_en": "Timor-Leste",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": -8.81,
+"lon": 125.92,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Timor-Leste"
+],
+"alias_es": [
+"Timor Oriental",
+"Timor-Leste"
+]
+},
+{
+"iso3": "TGO",
+"iso2": "TG",
+"num": "768",
+"nombre": "Togo",
+"nombre_en": "Togo",
+"region": "África",
+"subregion": "África occidental",
+"lat": 8.53,
+"lon": 0.96,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Togo"
+],
+"alias_es": [
+"Togo"
+]
+},
+{
+"iso3": "TKL",
+"iso2": "TK",
+"num": "772",
+"nombre": "Tokelau",
+"nombre_en": "Tokelau",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Tokelau"
+],
+"alias_es": [
+"Tokelau"
+]
+},
+{
+"iso3": "TON",
+"iso2": "TO",
+"num": "776",
+"nombre": "Tonga",
+"nombre_en": "Tonga",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -21.17,
+"lon": -175.22,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Tonga"
+],
+"alias_es": [
+"Tonga"
+]
+},
+{
+"iso3": "TTO",
+"iso2": "TT",
+"num": "780",
+"nombre": "Trinidad y Tobago",
+"nombre_en": "Trinidad and Tobago",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 10.42,
+"lon": -61.29,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Trinidad and Tobago"
+],
+"alias_es": [
+"Trinidad y Tobago",
+"Trinidad y Tabago"
+]
+},
+{
+"iso3": "TUN",
+"iso2": "TN",
+"num": "788",
+"nombre": "Túnez",
+"nombre_en": "Tunisia",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 34.12,
+"lon": 9.55,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Tunisia"
+],
+"alias_es": [
+"Túnez"
+]
+},
+{
+"iso3": "TUR",
+"iso2": "TR",
+"num": "792",
+"nombre": "Turquía",
+"nombre_en": "Türkiye",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 38.99,
+"lon": 35.42,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Turkey",
+"Türkiye",
+"Turkiye"
+],
+"alias_es": [
+"Turquía",
+"Türkiye"
+]
+},
+{
+"iso3": "TKM",
+"iso2": "TM",
+"num": "795",
+"nombre": "Turkmenistán",
+"nombre_en": "Turkmenistan",
+"region": "Asia",
+"subregion": "Asia central",
+"lat": 39.12,
+"lon": 59.37,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Turkmenistan"
+],
+"alias_es": [
+"Turkmenistán"
+]
+},
+{
+"iso3": "TCA",
+"iso2": "TC",
+"num": "796",
+"nombre": "Islas Turcas y Caicos",
+"nombre_en": "Turks and Caicos Islands",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 21.81,
+"lon": -71.74,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Turks and Caicos Islands"
+],
+"alias_es": [
+"Islas Turcas y Caicos"
+]
+},
+{
+"iso3": "TUV",
+"iso2": "TV",
+"num": "798",
+"nombre": "Tuvalu",
+"nombre_en": "Tuvalu",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -8.52,
+"lon": 179.2,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Tuvalu"
+],
+"alias_es": [
+"Tuvalu"
+]
+},
+{
+"iso3": "UGA",
+"iso2": "UG",
+"num": "800",
+"nombre": "Uganda",
+"nombre_en": "Uganda",
+"region": "África",
+"subregion": "África oriental",
+"lat": 1.27,
+"lon": 32.37,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Uganda"
+],
+"alias_es": [
+"Uganda"
+]
+},
+{
+"iso3": "UKR",
+"iso2": "UA",
+"num": "804",
+"nombre": "Ucrania",
+"nombre_en": "Ukraine",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 49.16,
+"lon": 31.25,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Ukraine",
+"Ukrainian"
+],
+"alias_es": [
+"Ucrania",
+"ucraniano",
+"ucraniana"
+]
+},
+{
+"iso3": "ARE",
+"iso2": "AE",
+"num": "784",
+"nombre": "Emiratos Árabes Unidos",
+"nombre_en": "United Arab Emirates",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 23.9,
+"lon": 54.31,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"United Arab Emirates",
+"UAE"
+],
+"alias_es": [
+"Emiratos Árabes Unidos"
+]
+},
+{
+"iso3": "GBR",
+"iso2": "GB",
+"num": "826",
+"nombre": "Reino Unido",
+"nombre_en": "United Kingdom",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 53.94,
+"lon": -2.51,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"United Kingdom",
+"Great Britain",
+"Britain",
+"U.K.",
+"UK",
+"United Kingdom of Great Britain and Northern Ireland"
+],
+"alias_es": [
+"Reino Unido",
+"Gran Bretaña",
+"Reino Unido de Gran Bretaña e Irlanda del Norte"
+]
+},
+{
+"iso3": "USA",
+"iso2": "US",
+"num": "840",
+"nombre": "Estados Unidos",
+"nombre_en": "United States of America",
+"region": "Américas",
+"subregion": "América septentrional",
+"lat": 39.53,
+"lon": -99.14,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"United States",
+"United States of America",
+"U.S.",
+"USA",
+"U.S.A.",
+"US"
+],
+"alias_es": [
+"Estados Unidos",
+"EEUU",
+"EE. UU.",
+"EE.UU.",
+"Estados Unidos de América"
+]
+},
+{
+"iso3": "UMI",
+"iso2": "UM",
+"num": "581",
+"nombre": "Islas menores alejadas de Estados Unidos",
+"nombre_en": "United States Minor Outlying Islands",
+"region": "Oceanía",
+"subregion": "Micronesia",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"United States Minor Outlying Islands"
+],
+"alias_es": [
+"Islas menores alejadas de Estados Unidos",
+"Islas Ultramarinas Menores de los Estados Unidos"
+]
+},
+{
+"iso3": "URY",
+"iso2": "UY",
+"num": "858",
+"nombre": "Uruguay",
+"nombre_en": "Uruguay",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": -32.8,
+"lon": -56.02,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Uruguay"
+],
+"alias_es": [
+"Uruguay"
+]
+},
+{
+"iso3": "UZB",
+"iso2": "UZ",
+"num": "860",
+"nombre": "Uzbekistán",
+"nombre_en": "Uzbekistan",
+"region": "Asia",
+"subregion": "Asia central",
+"lat": 41.76,
+"lon": 63.13,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Uzbekistan"
+],
+"alias_es": [
+"Uzbekistán"
+]
+},
+{
+"iso3": "VUT",
+"iso2": "VU",
+"num": "548",
+"nombre": "Vanuatu",
+"nombre_en": "Vanuatu",
+"region": "Oceanía",
+"subregion": "Melanesia",
+"lat": -15.23,
+"lon": 166.85,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Vanuatu"
+],
+"alias_es": [
+"Vanuatu"
+]
+},
+{
+"iso3": "VEN",
+"iso2": "VE",
+"num": "862",
+"nombre": "Venezuela",
+"nombre_en": "Venezuela",
+"region": "Américas",
+"subregion": "América del Sur",
+"lat": 7.12,
+"lon": -66.19,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Venezuela",
+"Bolivarian Republic of Venezuela",
+"Venezuela (Bolivarian Republic of)"
+],
+"alias_es": [
+"Venezuela",
+"Venezuela (República Bolivariana de)"
+]
+},
+{
+"iso3": "VNM",
+"iso2": "VN",
+"num": "704",
+"nombre": "Vietnam",
+"nombre_en": "Vietnam",
+"region": "Asia",
+"subregion": "Asia sudoriental",
+"lat": 16.65,
+"lon": 106.3,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Viet Nam",
+"Vietnam"
+],
+"alias_es": [
+"Vietnam",
+"Viet Nam"
+]
+},
+{
+"iso3": "VGB",
+"iso2": "VG",
+"num": "092",
+"nombre": "Islas Vírgenes Británicas",
+"nombre_en": "Virgin Islands, British",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.42,
+"lon": -64.62,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Virgin Islands, British",
+"British Virgin Islands"
+],
+"alias_es": [
+"Islas Vírgenes Británicas",
+"Islas Vírgenes británicas"
+]
+},
+{
+"iso3": "VIR",
+"iso2": "VI",
+"num": "850",
+"nombre": "Islas Vírgenes de los Estados Unidos",
+"nombre_en": "Virgin Islands, U.S.",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 17.74,
+"lon": -64.77,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Virgin Islands, U.S.",
+"United States Virgin Islands"
+],
+"alias_es": [
+"Islas Vírgenes de los Estados Unidos"
+]
+},
+{
+"iso3": "WLF",
+"iso2": "WF",
+"num": "876",
+"nombre": "Islas Wallis y Futuna",
+"nombre_en": "Wallis and Futuna",
+"region": "Oceanía",
+"subregion": "Polinesia",
+"lat": -14.29,
+"lon": -178.13,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Wallis and Futuna",
+"Wallis and Futuna Islands"
+],
+"alias_es": [
+"Islas Wallis y Futuna",
+"Wallis y Futuna"
+]
+},
+{
+"iso3": "ESH",
+"iso2": "EH",
+"num": "732",
+"nombre": "Sáhara Occidental",
+"nombre_en": "Western Sahara",
+"region": "África",
+"subregion": "África septentrional",
+"lat": 24.23,
+"lon": -12.22,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Western Sahara"
+],
+"alias_es": [
+"Sáhara Occidental",
+"Sahara Occidental",
+"saharaui"
+]
+},
+{
+"iso3": "YEM",
+"iso2": "YE",
+"num": "887",
+"nombre": "Yemen",
+"nombre_en": "Yemen",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 15.94,
+"lon": 47.54,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Yemen"
+],
+"alias_es": [
+"Yemen"
+]
+},
+{
+"iso3": "ZMB",
+"iso2": "ZM",
+"num": "894",
+"nombre": "Zambia",
+"nombre_en": "Zambia",
+"region": "África",
+"subregion": "África oriental",
+"lat": -13.46,
+"lon": 27.77,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Zambia"
+],
+"alias_es": [
+"Zambia"
+]
+},
+{
+"iso3": "ZWE",
+"iso2": "ZW",
+"num": "716",
+"nombre": "Zimbabwe",
+"nombre_en": "Zimbabwe",
+"region": "África",
+"subregion": "África oriental",
+"lat": -19.0,
+"lon": 29.85,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Zimbabwe",
+"Southern Rhodesia",
+"Rhodesia"
+],
+"alias_es": [
+"Zimbabwe",
+"Zimbabue"
+]
+},
+{
+"iso3": "ALA",
+"iso2": "AX",
+"num": "248",
+"nombre": "Islas Åland",
+"nombre_en": "Åland Islands",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 60.23,
+"lon": 19.94,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Åland Islands",
+"Aland Islands"
+],
+"alias_es": [
+"Islas Åland"
+]
+},
+{
+"iso3": "BES",
+"iso2": "BQ",
+"num": "535",
+"nombre": "Bonaire, San Eustaquio y Saba",
+"nombre_en": "Bonaire, Sint Eustatius and Saba",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": null,
+"lon": null,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Bonaire, Sint Eustatius and Saba"
+],
+"alias_es": [
+"Bonaire, San Eustaquio y Saba"
+]
+},
+{
+"iso3": "CUW",
+"iso2": "CW",
+"num": "531",
+"nombre": "Curazao",
+"nombre_en": "Curaçao",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 12.2,
+"lon": -68.97,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Curaçao"
+],
+"alias_es": [
+"Curazao",
+"Curaçao"
+]
+},
+{
+"iso3": "GGY",
+"iso2": "GG",
+"num": "831",
+"nombre": "Guernsey",
+"nombre_en": "Guernsey",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 49.47,
+"lon": -2.57,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Guernsey"
+],
+"alias_es": [
+"Guernsey"
+]
+},
+{
+"iso3": "IMN",
+"iso2": "IM",
+"num": "833",
+"nombre": "Isla de Man",
+"nombre_en": "Isle of Man",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 54.22,
+"lon": -4.54,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Isle of Man"
+],
+"alias_es": [
+"Isla de Man"
+]
+},
+{
+"iso3": "JEY",
+"iso2": "JE",
+"num": "832",
+"nombre": "Jersey",
+"nombre_en": "Jersey",
+"region": "Europa",
+"subregion": "Europa septentrional",
+"lat": 49.22,
+"lon": -2.13,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Jersey"
+],
+"alias_es": [
+"Jersey"
+]
+},
+{
+"iso3": "MNE",
+"iso2": "ME",
+"num": "499",
+"nombre": "Montenegro",
+"nombre_en": "Montenegro",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 42.79,
+"lon": 19.24,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Montenegro"
+],
+"alias_es": [
+"Montenegro"
+]
+},
+{
+"iso3": "BLM",
+"iso2": "BL",
+"num": "652",
+"nombre": "San Barthélemy",
+"nombre_en": "Saint Barthélemy",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 17.9,
+"lon": -62.84,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Barthélemy"
+],
+"alias_es": [
+"San Barthélemy",
+"Saint Barthélemy"
+]
+},
+{
+"iso3": "MAF",
+"iso2": "MF",
+"num": "663",
+"nombre": "San Martín (parte francesa)",
+"nombre_en": "Saint Martin (French part)",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.09,
+"lon": -63.06,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Saint Martin (French part)",
+"Saint Martin (French Part)"
+],
+"alias_es": [
+"San Martín (parte francesa)",
+"Saint Martin (francesa)"
+]
+},
+{
+"iso3": "SRB",
+"iso2": "RS",
+"num": "688",
+"nombre": "Serbia",
+"nombre_en": "Serbia",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 44.22,
+"lon": 20.79,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Serbia"
+],
+"alias_es": [
+"Serbia"
+]
+},
+{
+"iso3": "SXM",
+"iso2": "SX",
+"num": "534",
+"nombre": "San Martín (parte Holandesa)",
+"nombre_en": "Sint Maarten (Dutch part)",
+"region": "Américas",
+"subregion": "El Caribe",
+"lat": 18.05,
+"lon": -63.06,
+"sucesor": null,
+"en_mapa": 0,
+"alias_en": [
+"Sint Maarten (Dutch part)"
+],
+"alias_es": [
+"San Martín (parte Holandesa)",
+"Sint Maarten (neerlandesa)"
+]
+},
+{
+"iso3": "SSD",
+"iso2": "SS",
+"num": "728",
+"nombre": "Sudán del Sur",
+"nombre_en": "South Sudan",
+"region": "África",
+"subregion": "África oriental",
+"lat": 7.31,
+"lon": 30.25,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"South Sudan"
+],
+"alias_es": [
+"Sudán del Sur"
+]
+},
+{
+"iso3": "XKK",
+"iso2": "XK",
+"num": "983",
+"nombre": "Kosovo",
+"nombre_en": "Kosovo",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 42.57,
+"lon": 20.87,
+"sucesor": null,
+"en_mapa": 1,
+"alias_en": [
+"Kosovo"
+],
+"alias_es": [
+"Kosovo"
+]
+},
+{
+"iso3": "CSK",
+"iso2": null,
+"num": null,
+"nombre": "Checoslovaquia",
+"nombre_en": "Czechoslovakia",
+"region": "Europa",
+"subregion": "Europa oriental",
+"lat": 49.8,
+"lon": 15.5,
+"sucesor": "CZE",
+"en_mapa": 0,
+"alias_en": [
+"Czechoslovakia"
+],
+"alias_es": [
+"Checoslovaquia"
+]
+},
+{
+"iso3": "DDR",
+"iso2": null,
+"num": null,
+"nombre": "República Democrática Alemana",
+"nombre_en": "German Democratic Republic",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 52.0,
+"lon": 12.6,
+"sucesor": "DEU",
+"en_mapa": 0,
+"alias_en": [
+"German Democratic Republic"
+],
+"alias_es": [
+"República Democrática Alemana"
+]
+},
+{
+"iso3": "YAR",
+"iso2": null,
+"num": null,
+"nombre": "Yemen del Norte",
+"nombre_en": "Yemen Arab Republic",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 15.4,
+"lon": 44.2,
+"sucesor": "YEM",
+"en_mapa": 0,
+"alias_en": [
+"Yemen Arab Republic"
+],
+"alias_es": [
+"Yemen del Norte"
+]
+},
+{
+"iso3": "YMD",
+"iso2": null,
+"num": null,
+"nombre": "Yemen del Sur",
+"nombre_en": "People's Democratic Republic of Yemen",
+"region": "Asia",
+"subregion": "Asia occidental",
+"lat": 13.2,
+"lon": 46.4,
+"sucesor": "YEM",
+"en_mapa": 0,
+"alias_en": [
+"People's Democratic Republic of Yemen"
+],
+"alias_es": [
+"Yemen del Sur"
+]
+},
+{
+"iso3": "YUG",
+"iso2": null,
+"num": null,
+"nombre": "Yugoslavia",
+"nombre_en": "Yugoslavia",
+"region": "Europa",
+"subregion": "Europa meridional",
+"lat": 44.0,
+"lon": 20.9,
+"sucesor": "SRB",
+"en_mapa": 0,
+"alias_en": [
+"Yugoslavia"
+],
+"alias_es": [
+"Yugoslavia"
+]
+},
+{
+"iso3": "EAZ",
+"iso2": null,
+"num": null,
+"nombre": "Zanzíbar",
+"nombre_en": "Zanzibar",
+"region": "África",
+"subregion": "África oriental",
+"lat": -6.1,
+"lon": 39.3,
+"sucesor": "TZA",
+"en_mapa": 0,
+"alias_en": [
+"Zanzibar"
+],
+"alias_es": [
+"Zanzíbar"
+]
+}
+]

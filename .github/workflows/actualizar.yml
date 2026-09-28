@@ -1,0 +1,95 @@
+name: Actualizar datos
+run-name: >-
+  ${{ github.event_name == 'workflow_dispatch' && 'Actualizar datos · manual'
+  || github.event.schedule == '10 5 * * 0' && 'Actualizar datos · semanal'
+  || 'Actualizar datos · diaria' }}
+
+# Cada día: trae las votaciones nuevas de cada fuente (ONU, EEUU, Reino Unido, Polonia y el Congreso de
+# España vía Escrutinio), hace con DeepSeek las fichas de lo nuevo (resumen, tema y relaciones con otros
+# países), recalcula relaciones y afinidades y publica la web con los datos del día. En el repositorio
+# guarda cada día solo las fichas (data/llm, texto pequeño), que es lo que no se puede volver a descargar;
+# los domingos, y al lanzarlo a mano, también la base troceada (data/bd) y los datos de la web (web/datos),
+# para que el historial de git no sume cada día una copia binaria.
+#
+# Configuración en Settings > Secrets and variables > Actions:
+#   Secret   DEEPSEEK_API_KEY   clave de la API de DeepSeek (sin ella se actualiza todo menos las fichas IA)
+#   Variable DEEPSEEK_MODEL     modelo (opcional; por defecto deepseek-flash)
+
+on:
+  schedule:
+    - cron: "10 5 * * 1-6"   # diaria (07:10 en verano, hora peninsular)
+    - cron: "10 5 * * 0"     # semanal (domingo): guarda también la base y la web
+  workflow_dispatch:
+    inputs:
+      limite_fichas:
+        description: "Máximo de fichas IA nuevas en esta ejecución"
+        default: "300"
+      fuente:
+        description: "Solo estas fuentes, separadas por comas (vacío: todas)"
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-datos
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      COMPLETA: ${{ github.event_name != 'schedule' || github.event.schedule == '10 5 * * 0' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Actualizar
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python -m concordia actualizar \
+            --limite-fichas "${{ inputs.limite_fichas || '300' }}" \
+            ${{ inputs.fuente && format('--fuente {0}', inputs.fuente) || '' }}
+
+      # La web se publica con los datos recién calculados, también los días que no se guardan en git.
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: web
+
+      - name: Guardar cambios en el repositorio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/llm
+          if [ "$COMPLETA" = "true" ]; then git add data/bd web/datos; fi
+          if git diff --cached --quiet; then
+            echo "Sin cambios que guardar"
+          else
+            git commit -m "Actualización automática de datos ($(date -u +%F))"
+            git stash push --include-untracked --quiet || true
+            git pull --rebase origin main
+            git push
+          fi
+
+  publicar:
+    needs: actualizar
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
+        uses: actions/deploy-pages@v5
