@@ -245,6 +245,18 @@ def afinidad_onu(con, anios):
 
 # ------------------------------------------------------------------ todo
 
+def limpiar_huerfanos(con, fuente):
+    """Asuntos que se han quedado sin votaciones (un conector que reagrupa) y sus fichas y relaciones."""
+    huerfanos = [r[0] for r in con.execute(
+        "SELECT id FROM asunto WHERE fuente=? AND id NOT IN (SELECT DISTINCT asunto_id FROM votacion WHERE fuente=?)", (fuente, fuente))]
+    for i in range(0, len(huerfanos), 500):
+        trozo = huerfanos[i:i + 500]
+        m = ",".join("?" * len(trozo))
+        for tabla, col in (("relacion", "asunto_id"), ("ficha", "asunto_id"), ("asunto", "id")):
+            con.execute(f"DELETE FROM {tabla} WHERE {col} IN ({m})", trozo)
+    return len(huerfanos)
+
+
 def procesar(con, tocados, log=print):
     if not tocados:
         log("Nada que procesar")
@@ -252,6 +264,8 @@ def procesar(con, tocados, log=print):
     for fuente, anios in tocados.items():
         if not anios:
             continue
+        if (n := limpiar_huerfanos(con, fuente)):
+            log(f"  {fuente}: {n} asuntos sin votaciones eliminados")
         anios = sorted(anios)
         log(f"Procesando {fuente}: {len(anios)} años ({anios[0]}–{anios[-1]})")
         for i in range(0, len(anios), 8):

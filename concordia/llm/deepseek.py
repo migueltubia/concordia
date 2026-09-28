@@ -15,6 +15,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from ..fuentes import FUENTES
 from .fichas_io import (FICHAS_DIR, RELACIONES_DIR, _fuente_de, anotar, guardar_fichas, guardar_relaciones, items_pendientes,
@@ -83,74 +84,98 @@ def chat_json(sistema, usuario, modelo=None, max_tokens=32_000, reintentos=5):
     raise ultimo or ErrorIA("sin respuesta")
 
 
-def _lotes(con, items, sistema, completa, modelo, log):
-    """Pide las fichas en grupos; si una respuesta no cabe, parte el grupo. Devuelve los años tocados."""
+def _pedir(sistema, pendientes, modelo):
+    """Una llamada (en un hilo). Si la respuesta no cabe, parte el grupo en dos. Devuelve [(grupo, datos, modelo, uso, error)]."""
+    try:
+        datos, modelo_real, uso = chat_json(sistema, "Asuntos:\n" + "\n".join(json.dumps(it, ensure_ascii=False) for it in pendientes), modelo)
+        return [(pendientes, datos, modelo_real, uso, None)]
+    except RespuestaTruncada as e:
+        if len(pendientes) > 1:
+            mitad = len(pendientes) // 2
+            return _pedir(sistema, pendientes[:mitad], modelo) + _pedir(sistema, pendientes[mitad:], modelo)
+        return [(pendientes, None, None, {}, str(e))]
+    except ErrorIA as e:
+        return [(pendientes, None, None, {}, str(e))]
+
+
+def _lotes(con, items, sistema, completa, modelo, log, hilos=4):
+    """Pide las fichas en grupos, varias llamadas a la vez; guarda en el hilo principal según llegan.
+
+    Los asuntos que faltan en una respuesta se piden otra vez al final (una sola vez). Devuelve los años tocados.
+    """
     tocados = defaultdict(set)
-    hechas, fallidas, tokens = 0, 0, 0
-    for i in range(0, len(items), POR_LLAMADA):
-        cola = [(items[i:i + POR_LLAMADA], 0)]
-        while cola:
-            pendientes, ronda = cola.pop(0)
-            por_id = {it["id"]: it for it in pendientes}
-            try:
-                datos, modelo_real, uso = chat_json(sistema, "Asuntos:\n" + "\n".join(json.dumps(it, ensure_ascii=False) for it in pendientes), modelo)
-            except RespuestaTruncada:
-                if len(pendientes) > 1:
-                    mitad = len(pendientes) // 2
-                    cola[:0] = [(pendientes[:mitad], ronda), (pendientes[mitad:], ronda)]
-                else:
-                    fallidas += 1
+    cuenta = {"hechas": 0, "fallidas": 0, "tokens": 0}
+    inicio = time.time()
+
+    def guardar(pendientes, datos, modelo_real, uso):
+        cuenta["tokens"] += uso.get("total_tokens", 0)
+        por_id = {it["id"] for it in pendientes}
+        etiqueta = f"deepseek:{modelo_real}"
+        buenas = defaultdict(list)
+        for f in datos.get("fichas") or []:
+            if not isinstance(f, dict) or f.get("id") not in por_id:
                 continue
-            except ErrorIA as e:
-                log(f"  ! {e}")
-                fallidas += len(pendientes)
-                continue
-            tokens += uso.get("total_tokens", 0)
-            etiqueta = f"deepseek:{modelo_real}"
-            buenas = defaultdict(list)
-            for f in datos.get("fichas") or []:
-                if not isinstance(f, dict) or f.get("id") not in por_id:
-                    continue
-                fuente = _fuente_de(f["id"])
-                origen = FUENTES[fuente].pais
-                if completa:
-                    ficha, _ = validar(dict(f), origen)
-                    if ficha:
-                        buenas[fuente].append(ficha)
-                else:
-                    buenas[fuente].append({"id": f["id"], "relaciones": validar_relaciones(f.get("relaciones"), origen)})
-            hechos = set()
-            for fuente, lista in buenas.items():
-                t = guardar_fichas(con, lista, etiqueta) if completa else guardar_relaciones(con, lista, etiqueta)
-                anotar(FICHAS_DIR if completa else RELACIONES_DIR, fuente, [{**x, "_modelo": etiqueta} for x in lista])
-                for f, anios in t.items():
-                    tocados[f] |= anios
-                hechos |= {x["id"] for x in lista}
-            con.commit()
-            hechas += len(hechos)
-            faltan = [it for it in pendientes if it["id"] not in hechos]
-            if faltan and ronda == 0:
-                cola.append((faltan, 1))
+            fuente = _fuente_de(f["id"])
+            origen = FUENTES[fuente].pais
+            if completa:
+                ficha, _ = validar(dict(f), origen)
+                if ficha:
+                    buenas[fuente].append(ficha)
             else:
-                fallidas += len(faltan)
-        log(f"  {min(i + POR_LLAMADA, len(items))}/{len(items)}")
-    log(f"  hechas {hechas}, sin hacer {fallidas}, tokens {tokens}")
+                buenas[fuente].append({"id": f["id"], "relaciones": validar_relaciones(f.get("relaciones"), origen)})
+        hechos = set()
+        for fuente, lista in buenas.items():
+            t = guardar_fichas(con, lista, etiqueta) if completa else guardar_relaciones(con, lista, etiqueta)
+            anotar(FICHAS_DIR if completa else RELACIONES_DIR, fuente, [{**x, "_modelo": etiqueta} for x in lista])
+            for f, anios in t.items():
+                tocados[f] |= anios
+            hechos |= {x["id"] for x in lista}
+        con.commit()
+        cuenta["hechas"] += len(hechos)
+        return [it for it in pendientes if it["id"] not in hechos]
+
+    def ronda(grupos, ultima):
+        faltan = []
+        with ThreadPoolExecutor(hilos) as ex:
+            futuros = [ex.submit(_pedir, sistema, g, modelo) for g in grupos]
+            for n, fut in enumerate(as_completed(futuros), 1):
+                for pendientes, datos, modelo_real, uso, error in fut.result():
+                    if error:
+                        log(f"  ! {error[:200]}")
+                        cuenta["fallidas"] += len(pendientes)
+                        continue
+                    resto = guardar(pendientes, datos, modelo_real, uso)
+                    if ultima:
+                        cuenta["fallidas"] += len(resto)
+                    else:
+                        faltan += resto
+                if n % 10 == 0 or n == len(grupos):
+                    minutos = (time.time() - inicio) / 60
+                    log(f"  {cuenta['hechas']}/{len(items)} fichas · {cuenta['tokens']:,} tokens · {minutos:.1f} min"
+                        + (f" · {cuenta['hechas'] / minutos:.0f} por minuto" if minutos else ""))
+        return faltan
+
+    faltan = ronda([items[i:i + POR_LLAMADA] for i in range(0, len(items), POR_LLAMADA)], False)
+    if faltan:
+        log(f"  segunda ronda con {len(faltan)} asuntos que faltaban en las respuestas")
+        ronda([faltan[i:i + POR_LLAMADA] for i in range(0, len(faltan), POR_LLAMADA)], True)
+    log(f"  hechas {cuenta['hechas']}, sin hacer {cuenta['fallidas']}, tokens {cuenta['tokens']:,}")
     return tocados
 
 
-def generar_fichas(con, limite=300, fuentes=None, modelo=None, log=print):
+def generar_fichas(con, limite=300, fuentes=None, modelo=None, log=print, hilos=4):
     """Fichas completas de los asuntos que no tienen y relaciones de los que ya tienen resumen (Escrutinio)."""
     tocados = defaultdict(set)
     items = items_pendientes(con, limite, fuentes)
     if items:
         log(f"Fichas con DeepSeek: {len(items)} asuntos (límite {limite})")
-        for f, a in _lotes(con, items, instrucciones_fichas(), True, modelo, log).items():
+        for f, a in _lotes(con, items, instrucciones_fichas(), True, modelo, log, hilos).items():
             tocados[f] |= a
     resto = max(0, limite - len(items))
     rels = items_relaciones(con, resto, fuentes) if resto else []
     if rels:
         log(f"Relaciones con DeepSeek: {len(rels)} asuntos con ficha de Escrutinio")
-        for f, a in _lotes(con, rels, instrucciones_relaciones(), False, modelo, log).items():
+        for f, a in _lotes(con, rels, instrucciones_relaciones(), False, modelo, log, hilos).items():
             tocados[f] |= a
     if not items and not rels:
         log("No hay asuntos pendientes de ficha")

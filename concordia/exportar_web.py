@@ -61,7 +61,7 @@ CREATE TABLE relacion(asunto_id TEXT, fuente TEXT, origen TEXT, destino TEXT, or
 CREATE INDEX ix_relacion ON relacion(anio, origen, destino);
 CREATE INDEX ix_relacion_destino ON relacion(destino, anio);
 CREATE TABLE asunto_mundo(id TEXT PRIMARY KEY, fuente TEXT, fecha TEXT, titulo TEXT, codigo TEXT, tipo TEXT, url TEXT,
-  resumen TEXT, tema TEXT, resultado TEXT, anio INTEGER);
+  resumen TEXT, tema TEXT, resultado TEXT, anio INTEGER, relaciones TEXT);
 CREATE TABLE afinidad_onu(anio INTEGER, a TEXT, b TEXT, suma REAL, total INTEGER, PRIMARY KEY(anio, a, b)) WITHOUT ROWID;
 """
 TABLAS_COMUN = ("meta", "pais", "fuente", "camara", "tema", "tipo_relacion", "partido", "cobertura")
@@ -123,7 +123,7 @@ def construir(con, destino, log=print):
     copiar("afinidad", "SELECT fuente, anio, tema, a, b, coinciden, total FROM afinidad")
     copiar("relacion", "SELECT asunto_id, fuente, origen, destino, orientacion, tipo, tema, anio, fecha, via, aprobado, metodo FROM relacion")
     copiar("asunto_mundo", """SELECT a.id, a.fuente, a.fecha, a.titulo, a.codigo, a.tipo, a.url, fi.resumen, fi.tema_principal,
-                                     a.resultado, r.anio
+                                     a.resultado, r.anio, fi.relaciones
                               FROM (SELECT DISTINCT asunto_id, anio FROM relacion) r JOIN asunto a ON a.id=r.asunto_id
                               LEFT JOIN ficha fi ON fi.asunto_id=a.id""")
     copiar("afinidad_onu", "SELECT anio, a, b, ROUND(suma, 1), total FROM afinidad_onu")

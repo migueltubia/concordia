@@ -7,10 +7,10 @@ Dos vías, la primera se carga una sola vez:
    título de cada resolución y sus temas (Oriente Próximo, nuclear, desarme, derechos humanos,
    colonialismo, desarrollo), que sirven de tema provisional.
 2. Desde entonces: el fichero oficial de la Biblioteca Digital de la ONU («General Assembly voting
-   data», https://digitallibrary.un.org/record/4060887), que se actualiza de forma continua. Su web
-   responde a los programas con un reto anti-robots (AWS WAF) que no se intenta saltar: la recogida lo
-   anota y la web lo avisa. Se puede descargar a mano desde el navegador y dejar el CSV en
-   data/raw/onu/undl/; la siguiente recogida lo importa.
+   data», https://digitallibrary.un.org/record/4060887), que se actualiza de forma continua.
+   La web usa AWS WAF que bloquea las peticiones de Python (tanto la página HTML como el endpoint
+   JSON de Invenio). Para obtener datos más recientes, descarga el CSV con un navegador y déjalo en
+   data/raw/onu/undl/.
 """
 
 import csv
@@ -36,6 +36,7 @@ FUENTE = Fuente(
 
 VOETEN_URL = "https://dataverse.harvard.edu/api/access/datafile/9656257"  # UNVotes.csv, versión 32
 UNDL_URL = "https://digitallibrary.un.org/record/4060887"
+UNDL_JSON = "https://digitallibrary.un.org/record/4060887?of=recjson"
 VOETEN_HASTA = "2023-09-30"
 SENTIDO_VOETEN = {"1": "si", "2": "abstencion", "3": "no", "8": "no_vota"}  # 9: no era miembro
 # Códigos COW sin ISO3 propio (o con uno que no es el del Estado de entonces).
@@ -186,10 +187,79 @@ def importar_undl(ctx, texto, desde=VOETEN_HASTA):
     return len(votaciones)
 
 
+_CHROME_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36")
+
+
+def _undl_csv_url(ctx):
+    """URL del CSV actual de la Biblioteca Digital. Devuelve None si la web está bloqueada por WAF."""
+    for url in (UNDL_JSON, UNDL_URL + "?ln=en"):
+        try:
+            datos = ctx.fetch(url)
+            texto = datos.decode("utf-8", "replace")
+            if url.endswith("recjson"):
+                import json as _json
+                meta = _json.loads(texto)
+                registro = meta[0] if isinstance(meta, list) else meta
+                for f in registro.get("files", []):
+                    if f.get("eformat") == ".csv":
+                        return f["url"]
+            else:
+                enlaces = re.findall(r'href="([^"]+/files/[^"]+\.csv)"', texto)
+                if enlaces:
+                    return enlaces[-1] if enlaces[-1].startswith("http") else "https://digitallibrary.un.org" + enlaces[-1]
+        except Exception:
+            pass
+    return None
+
+
+def _playwright_undl(ctx):
+    """Abre un navegador real para pasar el WAF y descarga el CSV. Devuelve el texto del CSV o None.
+
+    En Linux sin display (GitHub Actions) necesita xvfb:
+      sudo apt-get install -y xvfb
+      xvfb-run python -m concordia recoger --fuente onu
+    """
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return None
+    ctx.log("   la Biblioteca Digital requiere navegador real (WAF); abriendo Chrome…")
+    try:
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=False,
+                args=["--disable-blink-features=AutomationControlled"],
+            )
+            context = browser.new_context(
+                user_agent=_CHROME_UA,
+                locale="es-ES",
+                viewport={"width": 1280, "height": 800},
+            )
+            page = context.new_page()
+            page.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+            page.goto(UNDL_URL + "?ln=en", wait_until="networkidle", timeout=30000)
+            links = page.eval_on_selector_all("a[href*='.csv']", "els => els.map(e => e.href)")
+            csv_url = links[-1] if links else None
+            if not csv_url:
+                ctx.log("   ! No se encontró el enlace al CSV en la Biblioteca Digital")
+                browser.close()
+                return None
+            ctx.log(f"   descargando {csv_url.split('/')[-1]} (puede tardar varios minutos)…")
+            cookies = context.cookies()
+            browser.close()
+        cookie_str = "; ".join(f"{c['name']}={c['value']}" for c in cookies)
+        datos = ctx.fetch(csv_url, timeout=900, headers={"Cookie": cookie_str, "User-Agent": _CHROME_UA})
+        return datos.decode("utf-8-sig", "replace")
+    except Exception as e:
+        ctx.log(f"   ! Playwright: {e}")
+        return None
+
+
 def recoger(ctx):
     if ctx.completo or not ctx.marca("voeten"):
         cargar_voeten(ctx)
-    # CSV oficiales descargados a mano (la web no deja a los programas).
+    # CSV oficiales descargados a mano (tienen prioridad sobre la descarga automática).
     manuales = sorted((RAW_DIR / "onu" / "undl").glob("*.csv")) if (RAW_DIR / "onu" / "undl").exists() else []
     for ruta in manuales:
         n = importar_undl(ctx, ruta.read_text(encoding="utf-8-sig", errors="replace"))
@@ -197,12 +267,17 @@ def recoger(ctx):
     if manuales:
         ctx.poner_marca("undl_manual", [r.name for r in manuales])
         return
-    # Intento con la web oficial: si responde con el reto anti-robots, http_util lanza Bloqueada y la
-    # recogida lo anota como aviso (lo ya cargado no se toca).
-    pagina = ctx.fetch(UNDL_URL + "?ln=en").decode("utf-8", "replace")
-    enlaces = re.findall(r'href="([^"]+/files/[^"]+\.csv)"', pagina)
-    if not enlaces:
-        raise RuntimeError("no se encuentra el CSV en la página de la Biblioteca Digital")
-    url = enlaces[-1] if enlaces[-1].startswith("http") else "https://digitallibrary.un.org" + enlaces[-1]
-    n = importar_undl(ctx, ctx.fetch(url, timeout=600).decode("utf-8-sig", "replace"))
-    ctx.log(f"   Biblioteca Digital: {n} votaciones posteriores a {VOETEN_HASTA}")
+    # Descarga automática: primero intenta fetch directo, luego Playwright si el WAF bloquea.
+    url = _undl_csv_url(ctx)
+    if url is not None:
+        ctx.log(f"   descargando {url.split('/')[-1]} de la Biblioteca Digital (puede tardar)…")
+        n = importar_undl(ctx, ctx.fetch(url, timeout=600).decode("utf-8-sig", "replace"))
+        ctx.log(f"   Biblioteca Digital: {n} votaciones posteriores a {VOETEN_HASTA}")
+        return
+    texto = _playwright_undl(ctx)
+    if texto is None:
+        ctx.log(f"   ! No se pudo descargar el CSV de la Biblioteca Digital."
+                f" Descárgalo manualmente desde {UNDL_URL} y déjalo en data/raw/onu/undl/")
+        return
+    n = importar_undl(ctx, texto)
+    ctx.log(f"   Biblioteca Digital (Playwright): {n} votaciones posteriores a {VOETEN_HASTA}")

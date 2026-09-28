@@ -35,7 +35,7 @@ function iniciarTema() {
     cerrarPanel();
     cerrarDialogo();
   });
-  window.addEventListener("hashchange", () => { cerrarPanel(); render(); });
+  window.addEventListener("hashchange", () => render()); // render cierra el detalle y lo reabre si la URL lo pide
   // Al pasar de móvil a escritorio (o al girar el teléfono) se redibuja con el nuevo tamaño.
   MQ_MOVIL.addEventListener("change", () => { document.documentElement.classList.toggle("movil", esMovil()); render(); });
   let ancho = window.innerWidth, espera = null;

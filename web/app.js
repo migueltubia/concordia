@@ -41,6 +41,31 @@ const jsonDe = (v, d) => { try { return v ? JSON.parse(v) : d; } catch { return 
 const lista = (v) => String(v ?? "").split(",").map((s) => s.trim()).filter(Boolean);
 const recortar = (t, max = 140) => (!t ? "" : t.length <= max ? t : t.slice(0, max - 1).replace(/\s+\S*$/, "") + "…");
 const enlace = (href, texto) => el("a", { href, target: "_blank", rel: "noopener" }, texto);
+// «1 ley», «2 leyes»: número con el sustantivo en singular o plural.
+const cuenta = (n, uno, varios) => `${fmt(n)} ${n === 1 ? uno : varios}`;
+const textoSaldo = (pos, neg, neu) =>
+  [cuenta(pos, "positiva", "positivas"), cuenta(neg, "negativa", "negativas"), cuenta(neu, "neutra", "neutras")].join(" · ");
+// Une trozos con « · » sin dejar «Punto 7. · …»: quita el punto final de cada trozo.
+const unirPartes = (partes) => partes.filter(Boolean)
+  .map((p) => String(p).trim().replace(/\.\s*·\s*/g, " · ").replace(/\.$/, "")).join(" · ");
+// Las fichas de la IA a veces comentan el propio título («El título no detalla…»): eso no es un resumen.
+function limpiarResumen(t) {
+  if (!t) return "";
+  return t.replace(/(?:^|\s)(?:El título|El enunciado|No se (?:detalla|especifica|indica|precisa))[^.]*\.(?=\s|$)/g, "").trim();
+}
+const enlaceAyuda = (sec, texto = "¿Qué significa?") =>
+  el("a", { href: `#/ayuda?sec=${sec}`, class: "enlace-ayuda", onclick: (e) => { e.preventDefault(); irA("ayuda", { sec }); } }, texto);
+// Escalas con marcas redondas (0, 1000, 2000, 3000 en vez de 0, 1401, 2801).
+function marcasBonitas(max, n = 4) {
+  const bruto = Math.max(1, max) / n;
+  const pot = 10 ** Math.floor(Math.log10(bruto));
+  const paso = [1, 2, 2.5, 5, 10].map((m) => m * pot).find((p) => p >= bruto);
+  const tope = Math.ceil(max / paso) * paso || paso;
+  const xs = [];
+  for (let v = 0; v <= tope + paso / 2; v += paso) xs.push(v);
+  return { tope, marcas: xs };
+}
+const ANIO_ACTUAL = new Date().getFullYear();
 
 // ------------------------------------------------------------------ base de datos (sql.js)
 // La SQLite viaja troceada y comprimida en datos/*.js (ver concordia/exportar_web.py): comun.js, un
@@ -191,13 +216,22 @@ function hashDe(vista, qobj) {
   const s = new URLSearchParams(limpio).toString();
   return `#/${vista}${s ? "?" + s : ""}`;
 }
-function irA(vista, cambios = {}, { reemplazar = false } = {}) {
+// Al cambiar filtros se cierra el detalle abierto (v: votación, par: flecha), salvo que se pida otro.
+// arriba: volver al principio de la página al pintar (paginación, atajos que cambian de contenido).
+let SUBIR = false;
+function irA(vista, cambios = {}, { reemplazar = false, arriba = false } = {}) {
   const r = leerRuta();
-  const base = vista === r.vista ? r.q : { p: r.q.p, a: r.q.a };
+  const base = vista === r.vista ? { ...r.q, v: "", par: "", sec: "" } : { p: r.q.p, a: r.q.a };
   const h = hashDe(vista, { ...base, ...cambios });
+  SUBIR = SUBIR || arriba;
   if (reemplazar) history.replaceState(null, "", h);
   else location.hash = h;
   if (reemplazar) render();
+}
+// Cambia la URL sin volver a pintar (enlace permanente al detalle abierto).
+function marcarEnUrl(cambios) {
+  const r = leerRuta();
+  history.replaceState(null, "", hashDe(r.vista, { ...r.q, ...cambios }));
 }
 function paisActual() {
   const r = leerRuta();
@@ -270,11 +304,14 @@ function abrirSelectorPais() {
     const casa = (p) => !t || p.nombre.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").includes(t) || p.iso3.toLowerCase() === t;
     const regiones = {};
     for (const p of todos.filter(casa)) (regiones[p.region || "Otros"] = regiones[p.region || "Otros"] || []).push(p);
+    // replaceChildren no aplana listas ni ignora null: se le pasan los nodos sueltos.
+    const grupos = Object.entries(regiones).sort(([a], [b]) => a.localeCompare(b, "es")).map(([reg, ps]) =>
+      el("div", { class: "pais-grupo" }, el("h4", {}, reg), ps.map(fila)));
     listaNodo.replaceChildren(
-      !t ? el("div", { class: "pais-grupo" }, el("h4", {}, "Con votaciones de su parlamento"),
-        conParlamento.map((i) => fila(CAT.paises[i]))) : null,
-      Object.entries(regiones).sort(([a], [b]) => a.localeCompare(b, "es")).map(([reg, ps]) =>
-        el("div", { class: "pais-grupo" }, el("h4", {}, reg), ps.map(fila))));
+      ...(!t ? [el("div", { class: "pais-grupo" }, el("h4", {}, "Con votaciones de su parlamento"),
+        conParlamento.map((i) => fila(CAT.paises[i])))] : []),
+      ...grupos,
+      ...(!grupos.length ? [el("p", { class: "muted" }, "Ningún país con ese nombre.")] : []));
   };
   const buscador = el("input", { type: "search", placeholder: "Buscar país…", class: "pais-buscar", oninput: (e) => pintar(e.target.value) });
   pintar("");
@@ -305,18 +342,28 @@ function abrirSelectorAnios() {
 
 // ------------------------------------------------------------------ panel lateral de detalle
 
-function abrirPanel(contenido) {
+// enlace: lo que se añade a la URL para poder compartir el detalle ({v: id} o {par: "ESP-PSE"}).
+function abrirPanel(contenido, enlaceUrl) {
   const panel = $("#panel");
-  panel.replaceChildren(el("button", { class: "cerrar", onclick: cerrarPanel }, "Cerrar ✕"), contenido);
+  if (enlaceUrl) marcarEnUrl({ v: "", par: "", ...enlaceUrl });
+  const copiar = enlaceUrl ? el("button", { type: "button", class: "boton copiar-enlace", title: "Copiar el enlace a este detalle",
+    onclick: async (e) => {
+      try { await navigator.clipboard.writeText(location.href); e.target.textContent = "Enlace copiado ✓"; }
+      catch { e.target.textContent = "Copia la dirección de la barra"; }
+    } }, "Copiar enlace") : null;
+  panel.replaceChildren(el("div", { class: "panel-acciones" }, copiar, el("button", { class: "cerrar", onclick: () => cerrarPanel() }, "Cerrar ✕")), contenido);
   panel.classList.add("abierto");
   panel.setAttribute("aria-hidden", "false");
   $("#panelFondo").classList.add("abierto");
   panel.scrollTop = 0;
 }
-function cerrarPanel() {
+function cerrarPanel({ url = true } = {}) {
+  const abierto = $("#panel").classList.contains("abierto");
   $("#panel").classList.remove("abierto");
   $("#panel").setAttribute("aria-hidden", "true");
   $("#panelFondo").classList.remove("abierto");
+  const q = leerRuta().q;
+  if (abierto && url && (q.v || q.par)) marcarEnUrl({ v: "", par: "" });
 }
 
 // ------------------------------------------------------------------ tooltip
@@ -347,7 +394,8 @@ function stat(label, valor, nota) {
 }
 
 // Selector desplegable con varias opciones (casillas). Se aplica al cerrar o con «Aplicar».
-function multiSelect(nombre, opciones, valor, etiquetaVacia, plural = "seleccionados", { buscar = false } = {}) {
+// unico: una sola opción (elegirla cierra el desplegable), con el mismo aspecto y buscador.
+function multiSelect(nombre, opciones, valor, etiquetaVacia, plural = "seleccionados", { buscar = false, unico = false } = {}) {
   const elegidos = new Set(lista(valor));
   const textoDe = new Map(opciones.map(([v, t]) => [String(v), t]));
   const texto = el("span", { class: "ms-texto" });
@@ -358,18 +406,23 @@ function multiSelect(nombre, opciones, valor, etiquetaVacia, plural = "seleccion
       : xs.length === 2 ? xs.map((x) => textoDe.get(x) || x).join(" + ") : `${xs.length} ${plural}`;
     det.classList.toggle("activo", xs.length > 0);
   };
-  const cajas = opciones.map(([v, t]) => el("label", { class: "ms-op", "data-t": String(t).toLowerCase() },
-    el("input", { type: "checkbox", class: "ms-cb", value: v, checked: elegidos.has(String(v)),
-      onchange: (e) => { e.target.checked ? elegidos.add(String(v)) : elegidos.delete(String(v)); pintar(); } }), t));
+  const sinTildes = (s) => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const cajas = opciones.map(([v, t]) => el("label", { class: "ms-op", "data-t": sinTildes(t) },
+    el("input", { type: unico ? "radio" : "checkbox", name: unico ? `ms-${nombre}` : null, class: "ms-cb", value: v, checked: elegidos.has(String(v)),
+      onchange: (e) => {
+        if (unico) { elegidos.clear(); elegidos.add(String(v)); pintar(); det.open = false; return; }
+        e.target.checked ? elegidos.add(String(v)) : elegidos.delete(String(v)); pintar();
+      } }), t));
   const listaNodo = el("div", { class: "ms-lista" }, cajas);
   const filtro = buscar ? el("input", { type: "search", class: "ms-buscar", placeholder: "Buscar…",
-    oninput: (e) => { const t = e.target.value.toLowerCase(); for (const c of cajas) c.style.display = c.dataset.t.includes(t) ? "" : "none"; } }) : null;
+    oninput: (e) => { const t = sinTildes(e.target.value); for (const c of cajas) c.style.display = c.dataset.t.includes(t) ? "" : "none"; } }) : null;
   det.append(el("div", { class: "ms-panel" },
     el("div", { class: "ms-titulo" }, etiquetaVacia),
-    el("div", { class: "ms-acciones" },
+    unico ? null : el("div", { class: "ms-acciones" },
       el("button", { type: "button", class: "boton", onclick: () => { for (const c of det.querySelectorAll(".ms-cb")) c.checked = false; elegidos.clear(); pintar(); } }, "Ninguno"),
       el("button", { type: "button", class: "boton", onclick: () => { det.open = false; } }, "Aplicar")),
     filtro, listaNodo));
+  if (filtro) det.addEventListener("toggle", () => { if (det.open && !esMovil()) setTimeout(() => filtro.focus(), 30); });
   let aplicado = [...elegidos].sort().join(",");
   det.valor = () => [...elegidos].join(",");
   det.addEventListener("toggle", () => {
@@ -382,8 +435,20 @@ function multiSelect(nombre, opciones, valor, etiquetaVacia, plural = "seleccion
 }
 
 // Fila de filtros: cada control lleva data-nombre; al cambiar, se llama a onCambio({nombre: valor}).
-function filaFiltros(controles, onCambio) {
+// En el móvil, con muchos controles, se pliegan tras un botón «Filtros» (con cuántos hay puestos).
+function filaFiltros(controles, onCambio, { plegable = true } = {}) {
   const f = el("div", { class: "filtros" }, controles);
+  const nodos = controles.flat(Infinity).filter(Boolean);
+  if (plegable && nodos.length > 3) {
+    const activos = nodos.filter((n) => (n.matches?.("details.ms.activo"))
+      || (n.tagName === "SELECT" && n.value !== "" && !["n", "orden", "ref"].includes(n.dataset.nombre))
+      || (n.matches?.("label.check") && n.querySelector("input")?.checked)).length;
+    const boton = el("button", { type: "button", class: "boton filtros-boton", "aria-expanded": "false",
+      onclick: () => { const d = f.classList.toggle("desplegado"); boton.setAttribute("aria-expanded", String(d)); } },
+    "Filtros", activos ? el("span", { class: "cuenta" }, activos) : null);
+    f.classList.add("plegable");
+    f.prepend(boton);
+  }
   const leer = (n) => {
     if (n.matches("details.ms")) return n.valor();
     if (n.type === "checkbox") return n.checked ? "1" : "";
@@ -424,28 +489,53 @@ function barrasH(items, { max, formato = fmt, alClicar } = {}) {
   ]));
 }
 
-// Columnas por año (una serie). datos: [{x, y, tip}]
-function columnasAnio(datos, { alto = 160, formato = fmt, color = "var(--accent)" } = {}) {
-  const ancho = anchoGrafico(900), mi = 34, mb = 22, mt = 8;
-  const max = Math.max(1, ...datos.map((d) => d.y));
+// Columnas por año (una serie). datos: [{x, y, tip}]. ancho: el del hueco donde va (el texto no se encoge).
+// El año en curso va más claro y con asterisco: todavía no está completo.
+function columnasAnio(datos, { alto = 160, ancho: anchoPedido = 900, formato = fmt, color = "var(--accent)" } = {}) {
+  const ancho = anchoGrafico(anchoPedido), mi = 44, mb = 22, mt = 10;
+  const { tope, marcas } = marcasBonitas(Math.max(1, ...datos.map((d) => d.y)));
   const bw = (ancho - mi) / Math.max(1, datos.length);
-  const y = (v) => mt + (alto - mt - mb) * (1 - v / max);
+  const y = (v) => mt + (alto - mt - mb) * (1 - v / tope);
   const svg = svgEl("svg", { viewBox: `0 0 ${ancho} ${alto}`, role: "img" });
-  for (const t of [0, 0.5, 1]) {
-    svg.append(svgEl("line", { class: t ? "gridline" : "baseline", x1: mi, x2: ancho, y1: y(max * t), y2: y(max * t) }),
-      svgEl("text", { x: mi - 6, y: y(max * t) + 4, "text-anchor": "end" }, formato(Math.round(max * t))));
+  for (const t of marcas) {
+    svg.append(svgEl("line", { class: t ? "gridline" : "baseline", x1: mi, x2: ancho, y1: y(t), y2: y(t) }),
+      svgEl("text", { x: mi - 6, y: y(t) + 4, "text-anchor": "end" }, formato(t)));
   }
   const paso = Math.ceil(datos.length / Math.floor((ancho - mi) / 40));
+  let enCurso = false;
   datos.forEach((d, i) => {
-    const x = mi + i * bw, h = y(0) - y(d.y), w = Math.max(1, bw - 2);
+    const x = mi + i * bw, h = y(0) - y(d.y), w = Math.max(1, bw - 4);
+    const actual = +d.x === ANIO_ACTUAL;
+    enCurso = enCurso || actual;
     const g = svgEl("g", {});
-    if (d.y > 0) g.append(svgEl("path", { class: "mark", fill: color, d: `M${x + 1},${y(0)} v${-Math.max(0, h - 4)} q0,-4 4,-4 h${Math.max(0, w - 8)} q4,0 4,4 v${Math.max(0, h - 4)} z` }));
+    if (d.y > 0) g.append(svgEl("path", { class: "mark", fill: color, "fill-opacity": actual ? 0.45 : 1,
+      d: `M${x + 2},${y(0)} v${-Math.max(0, h - 4)} q0,-4 4,-4 h${Math.max(0, w - 8)} q4,0 4,4 v${Math.max(0, h - 4)} z` }));
     g.append(svgEl("rect", { class: "hit", x, y: mt, width: bw, height: alto - mt - mb }));
-    conTip(g, formato(d.y), String(d.x), d.tip);
-    if (i % paso === 0) svg.append(svgEl("text", { x: x + bw / 2, y: alto - 6, "text-anchor": "middle" }, String(d.x)));
+    conTip(g, formato(d.y), actual ? `${d.x} (año en curso)` : String(d.x), d.tip);
+    if (i % paso === 0) svg.append(svgEl("text", { x: x + bw / 2, y: alto - 6, "text-anchor": "middle" }, actual ? `${d.x}*` : String(d.x)));
     svg.append(g);
   });
-  return el("div", { class: "chart" }, svg);
+  return el("div", { class: "chart" }, svg,
+    enCurso ? el("div", { class: "muted small nota-grafico" }, `* ${ANIO_ACTUAL}: año en curso, todavía incompleto.`) : null);
+}
+
+// Puntos sobre una escala recortada: para comparar valores muy parecidos (96 %, 97 %, 98 %) que en barras
+// desde cero parecerían iguales. items: [{etiqueta, valor, color, tip, iso3}]
+function puntosH(items, { min, max, formato = (v) => `${Math.round(v)} %`, alClicar, color = "var(--accent)" } = {}) {
+  if (!items.length) return el("p", { class: "muted" }, "Sin datos.");
+  const vs = items.map((i) => i.valor);
+  const lo = min ?? Math.max(0, Math.floor((Math.min(...vs) - 1) / 5) * 5);
+  const hi = max ?? Math.min(100, Math.ceil((Math.max(...vs) + 1) / 5) * 5);
+  const pos = (v) => `${(100 * (v - lo)) / Math.max(1, hi - lo)}%`;
+  return el("div", { class: "puntosh" },
+    el("div", {}), el("div", { class: "ph-escala" }, el("span", {}, formato(lo)), el("span", {}, formato(hi))),
+    items.flatMap((i) => [
+      el("div", { class: "bh-label", title: i.etiqueta }, i.etiqueta),
+      conTip(el("div", { class: "ph-pista" + (alClicar ? " clic" : ""), onclick: alClicar ? () => alClicar(i) : null },
+        el("div", { class: "ph-linea", style: `width:${pos(i.valor)};background:${i.color || color}` }),
+        el("div", { class: "ph-punto", style: `left:${pos(i.valor)};background:${i.color || color}` }),
+        el("b", {}, formato(i.valor))), formato(i.valor), i.etiqueta, i.tip),
+    ]));
 }
 
 // Líneas por año, varias series: series = [{nombre, color, puntos: [{x, y}]}]; y en 0-100.
@@ -493,9 +583,9 @@ function lineasAnio(series, { alto = 220, formato = (v) => `${Math.round(v)} %`,
 function paginacion(total, pagina, tam, ir) {
   const paginas = Math.max(1, Math.ceil(total / tam));
   return el("div", { class: "paginacion" },
-    el("button", { disabled: pagina <= 1, onclick: () => ir(pagina - 1) }, "‹ Anterior"),
+    el("button", { disabled: pagina <= 1, onclick: () => { SUBIR = true; ir(pagina - 1); } }, "‹ Anterior"),
     el("span", { class: "muted" }, `Página ${pagina} de ${fmt(paginas)} · ${fmt(total)} en total`),
-    el("button", { disabled: pagina >= paginas, onclick: () => ir(pagina + 1) }, "Siguiente ›"));
+    el("button", { disabled: pagina >= paginas, onclick: () => { SUBIR = true; ir(pagina + 1); } }, "Siguiente ›"));
 }
 
 // Barra de resultado: sí | abstención | no.
@@ -526,13 +616,17 @@ function chipRelacion(r, conPais = true) {
 
 const VISTAS = {};
 let renderEnCurso = 0;
+let VISTA_PINTADA = null;
 
 async function render() {
   const yo = ++renderEnCurso;
   tipOff();
-  cerrarPanel();
   const r = leerRuta();
+  cerrarPanel({ url: false });
   const vista = VISTAS[r.vista] ? r.vista : "mundo";
+  // Otra sección (o una página nueva de la lista): se empieza por arriba, no donde se quedó la anterior.
+  const subir = vista !== VISTA_PINTADA || SUBIR;
+  SUBIR = false;
   pintarCabecera();
   document.title = `Concordia · ${VISTAS[vista].titulo || ""}`;
   const main = $("#vista");
@@ -543,6 +637,14 @@ async function render() {
     const nodo = await VISTAS[vista].pintar(r.q);
     if (yo !== renderEnCurso) return;
     main.replaceChildren(nodo);
+    VISTA_PINTADA = vista;
+    if (subir) window.scrollTo(0, 0);
+    // Enlace permanente a un detalle: se vuelve a abrir.
+    if (r.q.v && typeof panelVotacion === "function") panelVotacion(r.q.v);
+    else if (r.q.par && typeof panelArista === "function") {
+      const [o, d] = r.q.par.split("-");
+      if (CAT.paises[o] && CAT.paises[d]) panelArista(o, d, r.q);
+    }
   } catch (e) {
     console.error(e);
     main.replaceChildren(el("div", { class: "vacio" }, "Error al pintar la vista: " + e.message));

@@ -60,16 +60,44 @@ function centroDe(isos) {
 let RELOJ = null; // reproducción de la línea de tiempo (se para al cambiar de vista)
 function pararReloj() { if (RELOJ) { clearInterval(RELOJ); RELOJ = null; } }
 
+const COMO_AMPLIAR = () => (esMovil() ? "Pellizca para ampliar." : "Amplía con Ctrl + rueda, doble clic o los botones +/−; arrastra para moverte.");
+
+// Preguntas para empezar: atajos a las vistas que las responden, con el país elegido en la cabecera.
+function preguntasInicio() {
+  const iso3 = paisActual(), nombre = nombrePais(iso3);
+  const cerrar = () => { try { localStorage.setItem("concordia.preguntas", "no"); } catch { /* sin almacenamiento */ } caja.remove(); };
+  const otro = el("select", { class: "pregunta-pais", "aria-label": "Otro país" },
+    el("option", { value: "" }, "elige un país…"),
+    opcionesPaises().filter(([i]) => i !== iso3).map(([i, t]) => el("option", { value: i }, t)));
+  otro.addEventListener("change", () => { if (otro.value) irA("mundo", { o: iso3, d: otro.value, modo: "" }, { arriba: true }); });
+  const boton = (texto, accion) => el("button", { type: "button", class: "pregunta", onclick: accion }, texto);
+  const caja = el("section", { class: "preguntas" },
+    el("div", { class: "preguntas-cab" }, el("b", {}, "Empieza por una pregunta"),
+      el("button", { type: "button", class: "boton-cerrar", title: "No volver a mostrar", "aria-label": "Cerrar", onclick: cerrar }, "✕")),
+    el("div", { class: "preguntas-lista" },
+      el("div", { class: "pregunta pregunta-compuesta" }, `¿Qué ha votado ${nombre} sobre `, otro, "?"),
+      boton(`¿Qué votan otros países sobre ${nombre}?`, () => irA("mundo", { d: iso3, o: "", modo: "" }, { arriba: true })),
+      boton(`¿Con qué países vota igual ${nombre} en la ONU?`, () => irA("mundo", { modo: "afinidad", ref: iso3 }, { arriba: true })),
+      CAT.fuentesDe[iso3] ? boton(`¿Qué ha votado cada partido en el parlamento de ${nombre}?`, () => irA("votaciones", {})) : null,
+      boton("Cambiar de país", abrirSelectorPais)));
+  return caja;
+}
+const mostrarPreguntas = () => { try { return localStorage.getItem("concordia.preguntas") !== "no"; } catch { return true; } };
+
 async function pintarMundo(qq) {
   pararReloj();
   const modo = qq.modo === "afinidad" ? "afinidad" : "orientacion";
   const cab = el("div", {},
-    el("h2", {}, "Relaciones entre países"),
+    el("h2", {}, modo === "orientacion" ? "Relaciones entre países" : "Afinidad en la ONU"),
     el("p", { class: "sub" }, modo === "orientacion"
-      ? "Qué vota cada país sobre los demás: lo que aprueba su parlamento (sanciones, tratados, ayuda, condenas…) y cómo vota en la ONU las resoluciones sobre otros Estados. Pulsa un país para elegirlo como origen o destino, y una flecha para ver qué hay detrás. La rueda del ratón amplía; arrastra para moverte."
-      : "Cuánto coincide el voto de un país con el de cada uno de los demás en la Asamblea General de la ONU. Más oscuro, más coincidencia. Pulsa un país para compararlo con todos."),
-    segmentos([["orientacion", "Orientación de leyes y votos"], ["afinidad", "Afinidad en la ONU"]], modo,
+      ? `Qué vota cada país sobre los demás: lo que aprueba su parlamento (sanciones, tratados, ayuda, condenas…) y cómo vota en la ONU las resoluciones sobre otros Estados. Cada flecha va del país que vota al país del que trata; pulsa una para ver qué hay detrás. ${COMO_AMPLIAR()} `
+      : `Cuánto coincide el voto de un país con el de cada uno de los demás en la Asamblea General de la ONU: azul, mucha coincidencia; rojo, poca. Pulsa un país para compararlo con todos. ${COMO_AMPLIAR()} `,
+    enlaceAyuda(modo === "orientacion" ? "mapa" : "glosario", "Cómo se lee")),
+    segmentos([["orientacion", "Qué vota cada país sobre otros"], ["afinidad", "Con quién vota igual en la ONU"]], modo,
       (v) => irA("mundo", { modo: v === "orientacion" ? "" : v, tiempo: "", t: "" })));
+  // Sin nada elegido todavía (la portada), se ofrecen preguntas para empezar.
+  const sinElegir = !["o", "d", "via", "ori", "tema", "tipo", "modo", "ref", "tiempo", "clic"].some((k) => qq[k] !== undefined);
+  if (sinElegir && mostrarPreguntas()) cab.append(preguntasInicio());
   if (!nombresMundo(aniosActuales()).length) {
     return el("div", {}, cab, el("div", { class: "vacio" }, `No hay relaciones en ${textoAnios(aniosActuales())}.`));
   }
@@ -83,7 +111,8 @@ function recordarFotograma(tiempo, t) {
 
 // ------------------------------------------------------------------ línea de tiempo
 // barras: {año: {pos, neg, neu}} (apiladas) o {año: {valor}} (una serie). alCambiar({modo, anio}).
-function lineaTiempo({ desde, hasta, modo, anio, barras, alCambiar, modos, etiquetaBarra }) {
+// sinBarras: solo el deslizador (en la afinidad, las medias de cada año son casi iguales y no dicen nada).
+function lineaTiempo({ desde, hasta, modo, anio, barras, alCambiar, modos, etiquetaBarra, sinBarras = false }) {
   const estado = { modo, anio: Math.min(hasta, Math.max(desde, anio || hasta)) };
   const n = hasta - desde + 1;
   const ancho = 1000, alto = 44, margen = 9;
@@ -106,7 +135,7 @@ function lineaTiempo({ desde, hasta, modo, anio, barras, alCambiar, modos, etiqu
     if (b && b.valor !== undefined) tramo(b.valor, "lt-valor");
     else if (b) { tramo(b.pos, "lt-pos"); tramo(b.neu, "lt-neu"); tramo(b.neg, "lt-neg"); }
     g.append(svgEl("rect", { class: "hit", x: x(y) - (ancho - 2 * margen) / n / 2, y: 0, width: (ancho - 2 * margen) / n, height: alto }));
-    g.addEventListener("pointermove", (e) => tip(e, String(y), b ? etiquetaBarra(b) : "Sin datos", "Pulsa para ver ese año"));
+    g.addEventListener("pointermove", (e) => tip(e, y === ANIO_ACTUAL ? `${y} (año en curso)` : String(y), b ? etiquetaBarra(b) : "Sin datos", "Pulsa para ver ese año"));
     g.addEventListener("pointerleave", tipOff);
     g.addEventListener("click", () => { detener(); fijar(y, estado.modo || "anio"); });
     grupos[y] = g;
@@ -153,10 +182,16 @@ function lineaTiempo({ desde, hasta, modo, anio, barras, alCambiar, modos, etiqu
       fijar(estado.anio + 1);
     }, 1100);
   });
-  const nodo = el("div", { class: "linea-tiempo" },
+  // Un rótulo bajo cada barra (o cada pocos años si hay muchos), alineado con ella.
+  const cada = n <= 14 ? 1 : n <= 30 ? 5 : 10;
+  const escala = el("div", { class: "lt-escala", style: `grid-template-columns:repeat(${n}, minmax(0, 1fr))` });
+  for (let y = desde; y <= hasta; y++) {
+    const ver = y === desde || y === hasta || (y % cada === 0 && y - desde >= cada / 2 && hasta - y >= cada / 2);
+    escala.append(el("span", {}, ver ? String(y) : ""));
+  }
+  const nodo = el("div", { class: "linea-tiempo" + (sinBarras ? " sin-barras" : "") },
     el("div", { class: "lt-cab" }, modosNodo, el("div", { class: "lt-control" }, boton, rotulo)),
-    el("div", { class: "lt-pista" }, svg, deslizador,
-      el("div", { class: "lt-escala" }, el("span", {}, desde), el("span", {}, hasta))));
+    el("div", { class: "lt-pista" }, sinBarras ? null : svg, deslizador, escala));
   pintar();
   return nodo;
 }
@@ -253,15 +288,15 @@ function pintarOrientacion(qq0, cab) {
           : `Pulsa para ${o.has(iso3) || d.has(iso3) ? "quitarlo" : "añadirlo"} como ${clic === "d" ? "destino" : "origen"}`;
         if (s) {
           const [x, y] = lado === "destino" ? [[...o].map(nombrePais).join(" + "), nombrePais(iso3)] : [nombrePais(iso3), [...d].map(nombrePais).join(" + ")];
-          return [nombrePais(iso3), `${x} → ${y} (${textoAnios(fr.anios)}): ${fmt(s.pos)} positivas · ${fmt(s.neg)} negativas · ${fmt(s.neu)} neutras`, accion];
+          return [nombrePais(iso3), `${x} → ${y} (${textoAnios(fr.anios)}): ${textoSaldo(s.pos, s.neg, s.neu)}`, accion];
         }
         return [nombrePais(iso3), c ? `${fmt(c.sale)} como origen · ${fmt(c.entra)} como destino (${textoAnios(fr.anios)})` : "Sin relaciones con estos filtros", accion];
       },
       flechas: fr.visibles.map((e) => ({
         desde: e.origen, hasta: e.destino, n: e.n, clase: claseSaldo(saldoDe(e)),
         tip: () => [`${nombrePais(e.origen)} → ${nombrePais(e.destino)}`,
-          `${textoAnios(fr.anios)}: ${fmt(e.pos)} positivas · ${fmt(e.neg)} negativas · ${fmt(e.neu)} neutras`,
-          [e.leyes ? `${fmt(e.leyes)} de leyes` : "", e.onu ? `${fmt(e.onu)} votos en la ONU` : ""].filter(Boolean).join(" · ") + " · pulsa para ver el detalle"],
+          `${textoAnios(fr.anios)}: ${textoSaldo(e.pos, e.neg, e.neu)}`,
+          unirPartes([e.leyes ? `Parlamento: ${cuenta(e.leyes, "asunto", "asuntos")}` : "", e.onu ? `ONU: ${cuenta(e.onu, "voto", "votos")}` : "", "pulsa para ver el detalle"])],
         alClicar: () => panelArista(e.origen, e.destino, qq, fr.anios),
       })),
       maxN: fr.modo === "anio" ? maxAnio : maxTotal,
@@ -280,32 +315,43 @@ function pintarOrientacion(qq0, cab) {
   const anioInicial = Math.min(hasta, Math.max(desde, +qq.t || hasta));
   let fr = fotograma({ modo: qq.tiempo === "anio" || qq.tiempo === "acum" ? qq.tiempo : "", anio: anioInicial });
   const centro = qq.centro === "1" ? CENTRO_FIJO : centroDe([...o]) ?? centroDe([...d]) ?? CENTRO_FIJO;
-  const mapa = crearMapa({ centro, alClicarPais, ...opcionesMapa(fr) });
+  // Con origen y destino elegidos, el mapa se encuadra en ellos en vez de enseñar el mundo casi vacío.
+  const encuadre = o.size && d.size ? [...o, ...d] : null;
+  const mapa = crearMapa({ centro, alClicarPais, encuadre, ...opcionesMapa(fr) });
 
   const resumenNodo = el("p", { class: "muted small" });
   const tablaNodo = el("div");
   const pintarTexto = () => {
     const n = fr.todas.reduce((s, e) => s + e.n, 0);
-    resumenNodo.textContent = `${textoAnios(fr.anios)}: ${fmt(fr.todas.length)} pares de países y ${fmt(n)} relaciones con estos filtros; se dibujan las ${fmt(fr.visibles.length)} con más asuntos o votos${libres ? `, con un máximo de ${tope} por país para que se vean más` : ""}. La tabla de abajo las tiene todas.`;
-    tablaNodo.replaceChildren(tablaAristas(fr.todas.slice(0, 200), qq, fr.anios));
+    const dibujadas = fr.visibles.length === fr.todas.length ? "se dibujan todas"
+      : `se ${fr.visibles.length === 1 ? "dibuja la" : "dibujan las"} ${fmt(fr.visibles.length)} con más asuntos o votos${libres ? `, como mucho ${tope} por país para que se vean más` : ""}; la tabla de abajo las tiene todas`;
+    resumenNodo.textContent = `${textoAnios(fr.anios)}: ${cuenta(fr.todas.length, "par de países", "pares de países")} y ${cuenta(n, "relación", "relaciones")} con estos filtros; ${dibujadas}.`;
+    tablaNodo.replaceChildren(tablaAristas(fr.todas.slice(0, 200), qq, fr.anios, { conOrigen: o.size !== 1, conDestino: d.size !== 1 || o.size === 1 }));
   };
   pintarTexto();
   const tiempo = lineaTiempo({
     desde, hasta, modo: fr.modo, anio: anioInicial, barras: porAnio,
     modos: [["", "Todo el periodo"], ["anio", "Año a año"], ["acum", "Acumulado"]],
-    etiquetaBarra: (b) => `${fmt(b.pos)} positivas · ${fmt(b.neg)} negativas · ${fmt(b.neu)} neutras`,
+    etiquetaBarra: (b) => textoSaldo(b.pos, b.neg, b.neu),
     alCambiar: (estado) => { fr = fotograma(estado); mapa.actualizar(opcionesMapa(fr)); pintarTexto(); },
   });
 
-  const avisoOnu = hasta > ONU_HASTA && qq.via !== "ley"
-    ? el("p", { class: "aviso-lectura" }, `Los votos en la ONU llegan hasta septiembre de ${ONU_HASTA}: la web oficial que los publica después no deja descargarlos a programas (ver Ayuda). Desde entonces solo hay relaciones de leyes nacionales.`)
-    : null;
-  const leyenda = el("div", { class: "legend" },
+  const avisoOnu = hasta > ONU_HASTA && qq.via !== "ley" ? avisoCerrable("onu",
+    `La ONU solo tiene datos hasta septiembre de ${ONU_HASTA}: después, las flechas son solo de leyes nacionales. `, enlaceAyuda("fuentes", "Por qué")) : null;
+  // Un parlamento con datos pero sin relaciones por ley en esos años (Polonia: títulos en polaco sin ficha de la IA).
+  const sinFiltros = !qq.via && !qq.ori && !qq.tema && !qq.tipo;
+  const sinLeyes = sinFiltros ? [...o].filter((i) => CAT.fuentesDe[i] && !filas.some((f) => f.origen === i && f.leyes)) : [];
+  const avisoLeyes = sinLeyes.length ? el("p", { class: "aviso-lectura" },
+    `${sinLeyes.map(nombrePais).join(" y ")}: su parlamento todavía no tiene relaciones por ley con otros países en ${textoAnios([desde, hasta])}${sinLeyes.includes("POL") ? " (sus títulos están en polaco y aún no tienen ficha de la IA)" : ""}. Las flechas que se ven son sus votos en la ONU.`) : null;
+  const leyenda = el("div", { class: "legend leyenda-mapa" },
+    el("span", { class: "leyenda-titulo" }, "Color de la flecha:"),
     CLASES_SALDO.map(([, c, t]) => el("span", {}, el("i", { class: `fl-${c}` }), t)),
-    el("span", { class: "muted" }, "· grosor: número de asuntos o votos"),
+    el("span", { class: "leyenda-titulo" }, "Grosor:"), el("span", {}, "cuántos asuntos o votos hay detrás"),
+    el("span", { class: "leyenda-titulo" }, "Países:"),
     el("span", {}, el("i", { style: "background:var(--mapa-origen)" }), "origen elegido"),
     el("span", {}, el("i", { style: "background:var(--mapa-destino)" }), "destino elegido"),
-    lado ? el("span", { class: "muted" }, `· cada ${lado} se colorea por su saldo, con el mismo código`) : null);
+    lado ? el("span", {}, `los demás, con el color de su saldo como ${lado}`) : null,
+    enlaceAyuda("glosario"));
   const accesos = el("div", { class: "segmentos" },
     el("span", { class: "muted small" }, "Al pulsar un país:"),
     ...[["o", "origen"], ["d", "destino"], ["p", "ver el país"]].map(([v, t]) =>
@@ -314,59 +360,98 @@ function pintarOrientacion(qq0, cab) {
     el("button", { type: "button", class: "boton", onclick: () => cambiar({ o: paisActual(), d: "" }) }, `Desde ${nombrePais(paisActual())}`),
     el("button", { type: "button", class: "boton", onclick: () => cambiar({ d: paisActual(), o: "" }) }, `Hacia ${nombrePais(paisActual())}`),
     (o.size || d.size) ? el("button", { type: "button", class: "boton", onclick: () => cambiar({ o: "", d: "" }) }, "Todo el mundo") : null);
-  return el("div", {}, cab, filtros, accesos, avisoOnu, mapa.nodo, tiempo, leyenda, resumenNodo, tablaNodo);
+  return el("div", {}, cab, filtros, accesos, avisoOnu, avisoLeyes, mapa.nodo, tiempo, leyenda, resumenNodo, tablaNodo);
 }
 
-function tablaAristas(filas, qq, anios) {
+// Aviso que el lector puede cerrar para no verlo en cada visita (se recuerda en este navegador).
+function avisoCerrable(clave, ...contenido) {
+  const k = "concordia.aviso." + clave;
+  try { if (localStorage.getItem(k) === "visto") return null; } catch { /* sin almacenamiento */ }
+  const nodo = el("div", { class: "aviso-lectura aviso-cerrable" }, el("span", {}, ...contenido),
+    el("button", { type: "button", class: "boton-cerrar", title: "Entendido, no volver a mostrar", "aria-label": "Cerrar aviso",
+      onclick: () => { try { localStorage.setItem(k, "visto"); } catch { /* sin almacenamiento */ } nodo.remove(); } }, "✕"));
+  return nodo;
+}
+
+// conOrigen / conDestino: con un solo origen (o destino) elegido, esa columna repetiría el mismo país en cada fila.
+function tablaAristas(filas, qq, anios, { conOrigen = true, conDestino = true } = {}) {
   if (!filas.length) return el("div", { class: "vacio" }, "No hay relaciones con estos filtros.");
   const barra = (e) => {
     const t = Math.max(1, e.pos + e.neg + e.neu);
-    return el("div", { class: "barra", title: `${e.pos} positivas, ${e.neu} neutras, ${e.neg} negativas` },
+    return el("div", { class: "barra", title: textoSaldo(e.pos, e.neg, e.neu) },
       el("span", { class: "si", style: `width:${(100 * e.pos) / t}%` }), el("span", { class: "abs", style: `width:${(100 * e.neu) / t}%` }),
       el("span", { class: "no", style: `width:${(100 * e.neg) / t}%` }));
   };
+  const soloOrigen = !conOrigen && filas[0] ? nombrePais(filas[0].origen) : null, soloDestino = !conDestino && filas[0] ? nombrePais(filas[0].destino) : null;
   return el("section", { class: "card" },
-    el("h3", {}, `Relaciones con estos filtros · ${textoAnios(anios)}`),
+    el("h3", {}, soloOrigen ? `Lo que vota ${soloOrigen} sobre cada país · ${textoAnios(anios)}` : soloDestino ? `Lo que vota cada país sobre ${soloDestino} · ${textoAnios(anios)}`
+      : `Relaciones con estos filtros · ${textoAnios(anios)}`),
+    el("p", { class: "muted small" }, "Pulsa una fila para ver las leyes y los votos que hay detrás."),
     el("div", { class: "tabla-scroll" }, el("table", { class: "tabla" },
-      el("thead", {}, el("tr", {}, el("th", {}, "Origen"), el("th", {}, "Destino"), el("th", { class: "num" }, "Total"),
+      el("thead", {}, el("tr", {}, conOrigen ? el("th", {}, "Origen") : null, conDestino ? el("th", {}, "Destino") : null, el("th", { class: "num" }, "Total"),
         el("th", { class: "num" }, "Positivas"), el("th", { class: "num" }, "Negativas"), el("th", { class: "num" }, "Neutras"),
-        el("th", {}, "Saldo"), el("th", {}, "De dónde"))),
+        el("th", { title: "Reparto entre positivas (azul), neutras (gris) y negativas (rojo)" }, "Saldo"), el("th", {}, "De dónde"))),
       el("tbody", {}, filas.map((e) => el("tr", { class: "clic", onclick: () => panelArista(e.origen, e.destino, qq, anios) },
-        el("td", {}, nombrePais(e.origen)), el("td", {}, nombrePais(e.destino)), el("td", { class: "num" }, fmt(e.n)),
+        conOrigen ? el("td", {}, nombrePais(e.origen)) : null, conDestino ? el("td", {}, nombrePais(e.destino)) : null, el("td", { class: "num" }, fmt(e.n)),
         el("td", { class: "num" }, fmt(e.pos)), el("td", { class: "num" }, fmt(e.neg)), el("td", { class: "num" }, fmt(e.neu)),
         el("td", { style: "min-width:120px" }, barra(e)),
-        el("td", { class: "small muted" }, [e.leyes ? `${fmt(e.leyes)} leyes` : "", e.onu ? `${fmt(e.onu)} ONU` : ""].filter(Boolean).join(" · "))))))));
+        el("td", { class: "small muted" }, unirPartes([e.leyes ? `Parlamento: ${fmt(e.leyes)}` : "", e.onu ? `ONU: ${fmt(e.onu)}` : ""]))))))));
 }
+
+// Quién decidió qué países trata un asunto y en qué sentido, dicho para cualquiera.
+function badgeMetodo(metodo) {
+  const reglas = !metodo || metodo === "reglas" || metodo === "escrutinio:reglas";
+  return el("span", { class: "badge ia", title: reglas
+    ? "Países y sentido deducidos automáticamente de las palabras del título, sin IA. Puede equivocarse: el texto oficial manda."
+    : `Países y sentido propuestos por una IA (${origenFicha(metodo)}) a partir del título. Puede equivocarse: el texto oficial manda.` },
+  reglas ? "clasificación automática" : "clasificado por IA");
+}
+let COLUMNA_RELACIONES = null; // ¿trae asunto_mundo las relaciones de cada asunto? (datos generados después de añadirla)
+const conRelacionesMundo = () => (COLUMNA_RELACIONES ??= q("PRAGMA table_info(asunto_mundo)").some((c) => c.name === "relaciones"));
 
 function panelArista(origen, destino, qq, anios = aniosActuales()) {
   const [w, a] = filtrosRelacion({ ...qq, o: origen, d: destino }, anios);
-  const filas = q(`SELECT r.*, am.titulo, am.codigo, am.url, am.resumen, am.resultado
+  const filas = q(`SELECT r.*, am.titulo, am.codigo, am.url, am.resumen, am.resultado${conRelacionesMundo() ? ", am.relaciones AS rels" : ""}
                    FROM relacion r LEFT JOIN asunto_mundo am ON am.id=r.asunto_id AND am.anio=r.anio
                    WHERE ${w} ORDER BY r.fecha DESC LIMIT 400`, a);
   const leyes = filas.filter((r) => r.via === "ley"), onu = filas.filter((r) => r.via === "onu");
   const fuenteDe = (f) => CAT.fuentes[f]?.corto || f;
+  // En la ONU la relación es «sentido de la resolución hacia el destino × voto»: con el sentido se recupera el voto.
+  const votoOnu = (r) => {
+    const rel = jsonDe(r.rels, []).find((x) => x.pais === destino);
+    const o = rel ? ORIENTACION_TXT[rel.orientacion] : 0;
+    if (!o) return null;
+    const si = Math.sign(r.orientacion) === Math.sign(o);
+    return el("span", { class: `badge voto-onu ${si ? "si" : "no"}`, title: `La resolución es ${o > 0 ? "favorable" : "desfavorable"} a ${nombrePais(destino)}` },
+      `${nombrePais(origen)} votó ${si ? "sí" : "no"}`);
+  };
   const item = (r) => el("div", { class: "fila-rel" },
     el("div", { class: "fecha" }, fecha(r.fecha)),
     el("div", {},
       el("div", { class: "titulo" }, r.url ? enlace(r.url, recortar(r.titulo, 180)) : recortar(r.titulo, 180)),
-      r.resumen ? el("div", { class: "resumen" }, r.resumen) : null,
+      limpiarResumen(r.resumen) ? el("div", { class: "resumen" }, limpiarResumen(r.resumen)) : null,
       el("div", { class: "badges" },
         chipRelacion({ orientacion: r.orientacion, tipo: r.tipo }, false),
+        r.via === "onu" ? votoOnu(r) : null,
+        r.via === "ley" ? badgeResultado(r.resultado) : null,
         el("span", { class: "badge" }, fuenteDe(r.fuente)), r.codigo ? el("span", { class: "badge" }, r.codigo) : null,
         r.tema ? el("span", { class: "badge" }, temaNombre(r.tema)) : null,
-        r.via === "ley" ? badgeResultado(r.resultado) : null,
-        el("span", { class: "badge ia", title: "Quién dijo qué países son objeto del asunto y en qué sentido" }, r.metodo === "reglas" ? "según reglas" : "según " + origenFicha(r.metodo)))));
+        badgeMetodo(r.metodo))));
   const pos = filas.filter((r) => r.orientacion > 0).length, neg = filas.filter((r) => r.orientacion < 0).length;
+  const neu = filas.length - pos - neg;
+  const [O, D] = [nombrePais(origen), nombrePais(destino)];
   abrirPanel(el("div", {},
-    el("h2", {}, `${nombrePais(origen)} → ${nombrePais(destino)}`),
-    el("p", { class: "sub" }, `${textoAnios(anios)} · ${fmt(filas.length)} relaciones: ${fmt(pos)} positivas, ${fmt(neg)} negativas y ${fmt(filas.length - pos - neg)} neutras.`),
-    leyes.length ? el("section", {}, el("h3", {}, `Lo que vota el parlamento de ${nombrePais(origen)} sobre ${nombrePais(destino)}`),
-      el("p", { class: "muted small" }, "Orientación del asunto hacia el país de destino, en su votación decisiva."), leyes.map(item)) : null,
-    onu.length ? el("section", {}, el("h3", {}, `Cómo vota ${nombrePais(origen)} en la ONU las resoluciones sobre ${nombrePais(destino)}`),
-      el("p", { class: "muted small" }, `Positiva: ${nombrePais(origen)} votó en el sentido favorable a ${nombrePais(destino)} (sí a una resolución que lo favorece o no a una que lo condena). Negativa, al revés. Las abstenciones no cuentan.`),
+    el("h2", {}, `${O} → ${D}`),
+    el("p", { class: "sub" }, `${textoAnios(anios)} · ${cuenta(filas.length, "relación", "relaciones")}: ${textoSaldo(pos, neg, neu)}.`),
+    leyes.length ? el("section", {}, el("h3", {}, `Lo que vota el parlamento de ${O} sobre ${D}`),
+      el("p", { class: "muted small" }, `Cada asunto, con su sentido hacia ${D} (positivo: ayuda, acuerdo, apoyo; negativo: sanción, condena, restricción) y el resultado de su votación final.`), leyes.map(item)) : null,
+    onu.length ? el("section", {}, el("h3", {}, `Cómo vota ${O} en la ONU las resoluciones sobre ${D}`),
+      el("p", { class: "muted small" }, `Positiva: ${O} votó a favor de ${D} (sí a una resolución que lo favorece, o no a una que lo condena). Negativa, al revés. Las abstenciones no cuentan.`),
       onu.map(item)) : null,
     filas.length >= 400 ? el("p", { class: "muted small" }, "Se muestran las 400 más recientes.") : null,
-    el("p", {}, el("button", { class: "boton", onclick: () => { cerrarPanel(); irA("mundo", { o: origen, d: destino }); } }, "Ver solo este par en el mapa"))));
+    el("p", { class: "muted small" }, "El sentido de cada asunto se deduce de su título y puede equivocarse; el enlace lleva al texto oficial. ", enlaceAyuda("calculo", "Cómo se calcula")),
+    el("p", {}, el("button", { class: "boton", onclick: () => { cerrarPanel(); irA("mundo", { o: origen, d: destino, modo: "" }); } }, "Ver solo este par en el mapa"))),
+  { par: `${origen}-${destino}` });
 }
 
 // ------------------------------------------------------------------ modo afinidad en la ONU
@@ -383,10 +468,10 @@ function pintarAfinidad(qq, cab) {
   const ref = (qq.ref && CAT.paises[qq.ref]) ? qq.ref : paisActual();
   const cambiar = (c) => irA("mundo", c);
   const controles = filaFiltros([
-    selectFiltro("ref", opcionesPaises().filter(([i]) => CAT.paises[i].onu_desde), ref),
+    multiSelect("ref", opcionesPaises().filter(([i]) => CAT.paises[i].onu_desde), ref, "País de referencia", "países", { buscar: true, unico: true }),
     selectFiltro("n", [["5", "5 flechas por lado"], ["10", "10 flechas por lado"], ["20", "20 flechas por lado"], ["0", "Sin flechas"]], qq.n || "10"),
     checkFiltro("centro", "Mapa fijo (sin centrar en el país)", qq.centro),
-  ], (c) => cambiar(c));
+  ], (c) => cambiar(c), { plegable: false });
   if (desde > hastaOnu) {
     return el("div", {}, cab, controles, el("div", { class: "vacio" }, `La ONU tiene datos hasta ${ONU_HASTA}: elige años anteriores.`));
   }
@@ -405,11 +490,12 @@ function pintarAfinidad(qq, cab) {
     }
     return Object.values(m).filter((r) => r.t >= 5).map((r) => ({ ...r, pct: (100 * r.s) / r.t }));
   };
-  // Siete tramos por cuantiles de todos los años: los colores son comparables de un año a otro.
+  // Siete tramos por cuantiles de todos los años (comparables de un año a otro), redondeados, en una escala
+  // divergente: rojo, los que menos coinciden con el país; gris, la mitad; azul, los que más.
   const valores = filas.filter((f) => f.t >= 5).map((f) => (100 * f.s) / f.t).sort((x, y) => x - y);
-  const cortes = [1, 2, 3, 4, 5, 6].map((i) => valores[Math.floor((i * valores.length) / 7)]);
-  const tramo = (v) => cortes.filter((c) => v >= c).length;
-  const RAMPA = ["--seq-100", "--seq-200", "--seq-300", "--seq-400", "--seq-500", "--seq-600", "--seq-700"];
+  const cortes = [...new Set([1, 2, 3, 4, 5, 6].map((i) => Math.round(valores[Math.floor((i * valores.length) / 7)])))];
+  const tramo = (v) => cortes.filter((c) => Math.round(v) >= c).length;
+  const RAMPA = ["--div-1", "--div-2", "--div-3", "--div-4", "--div-5", "--div-6", "--div-7"].slice(-(cortes.length + 1));
   const n = +(qq.n ?? 10);
   const media = {};
   for (let y = desde; y <= hastaOnu; y++) {
@@ -443,42 +529,47 @@ function pintarAfinidad(qq, cab) {
   let fr = fotograma({ modo: qq.tiempo === "anio" || qq.tiempo === "acum" ? qq.tiempo : "", anio: anioInicial });
   const centro = qq.centro === "1" ? CENTRO_FIJO : centroDe([ref]) ?? CENTRO_FIJO;
   const mapa = crearMapa({ centro, alClicarPais: (iso3) => { if (fr.porPais[iso3]) cambiar({ ref: iso3 }); }, ...opcionesMapa(fr) });
-  const etiquetas = [Math.round(valores[0]), ...cortes.map(Math.round), Math.round(valores[valores.length - 1])];
-  const leyenda = el("div", { class: "legend" },
+  const bordes = [Math.round(valores[0]), ...cortes, Math.round(valores[valores.length - 1])];
+  const leyenda = el("div", { class: "legend leyenda-mapa" },
     el("span", {}, el("i", { style: "background:var(--ink)" }), nombrePais(ref)),
-    RAMPA.map((v, i) => el("span", {}, el("i", { style: `background:var(${v})` }), `${etiquetas[i]}–${etiquetas[i + 1]} %`)),
-    n ? el("span", {}, el("i", { class: "fl-p2" }), "más afines") : null, n ? el("span", {}, el("i", { class: "fl-n2" }), "menos afines") : null);
-  const aviso = hasta > ONU_HASTA ? el("p", { class: "aviso-lectura" }, `La ONU tiene datos hasta septiembre de ${ONU_HASTA}: se usan ${textoAnios([desde, hastaOnu])}.`) : null;
+    el("span", { class: "leyenda-titulo" }, "Coincide con él en el…"),
+    RAMPA.map((v, i) => el("span", {}, el("i", { style: `background:var(${v})` }), `${bordes[i]}–${bordes[i + 1]} %`)),
+    el("span", { class: "leyenda-titulo" }, "de los votos."),
+    n ? el("span", {}, el("i", { class: "fl-p2" }), "flecha: de los más afines") : null, n ? el("span", {}, el("i", { class: "fl-n2" }), "de los menos afines") : null,
+    enlaceAyuda("glosario"));
+  const aviso = hasta > ONU_HASTA ? avisoCerrable("afinidad", `La ONU tiene datos hasta septiembre de ${ONU_HASTA}: aquí se usan ${textoAnios([desde, hastaOnu])}.`) : null;
   const listas = el("div");
   const pintarListas = () => {
-    const barras = (xs) => barrasH(xs.map((r) => ({ etiqueta: nombrePais(r.otro), valor: r.pct, color: "var(--accent)", tip: `${fmt(r.t)} votos`, iso3: r.otro })),
-      { max: 100, formato: (v) => `${Math.round(v)} %`, alClicar: (i) => cambiar({ ref: i.iso3 }) });
+    const puntos = (xs, color) => puntosH(xs.map((r) => ({ etiqueta: nombrePais(r.otro), valor: r.pct, tip: `${cuenta(r.t, "votación", "votaciones")} en común · pulsa para compararlo con todos`, iso3: r.otro })),
+      { color, alClicar: (i) => cambiar({ ref: i.iso3 }) });
     listas.replaceChildren(
-      el("p", { class: "muted small" }, `${nombrePais(ref)} · ${textoAnios(fr.anios)} · coincidencia en las votaciones finales: 1 si votan igual, ½ si uno se abstiene, 0 si votan lo contrario. Los colores usan los mismos tramos en todos los años.`),
+      el("p", { class: "muted small" }, `${nombrePais(ref)} · ${textoAnios(fr.anios)} · coincidencia en las votaciones finales: 1 si votan igual, ½ si uno se abstiene, 0 si votan lo contrario. Los colores del mapa usan los mismos tramos en todos los años.`),
       el("div", { class: "grid g2" },
-        el("section", { class: "card" }, el("h3", {}, `Más afines · ${textoAnios(fr.anios)}`), barras(fr.orden.slice(0, 15))),
-        el("section", { class: "card" }, el("h3", {}, `Menos afines · ${textoAnios(fr.anios)}`), barras(fr.orden.slice(-15).reverse()))));
+        el("section", { class: "card" }, el("h3", {}, `Los que más votan como ${nombrePais(ref)} · ${textoAnios(fr.anios)}`), puntos(fr.orden.slice(0, 15), "var(--rel-p2)")),
+        el("section", { class: "card" }, el("h3", {}, `Los que menos · ${textoAnios(fr.anios)}`), puntos(fr.orden.slice(-15).reverse(), "var(--rel-n2)"))));
   };
   pintarListas();
   const tiempo = lineaTiempo({
-    desde, hasta: hastaOnu, modo: fr.modo, anio: anioInicial, barras: media,
+    desde, hasta: hastaOnu, modo: fr.modo, anio: anioInicial, barras: media, sinBarras: true,
     modos: [["", "Todo el periodo"], ["anio", "Año a año"], ["acum", "Acumulado"]],
     etiquetaBarra: (b) => `Coincidencia media con los demás: ${Math.round(b.valor)} %`,
     alCambiar: (estado) => { fr = fotograma(estado); mapa.actualizar(opcionesMapa(fr)); pintarListas(); },
   });
   // Evolución con los países elegidos como destino en el otro modo (o con las grandes potencias).
-  const comparar = lista(qq.d).length ? lista(qq.d) : ["USA", "CHN", "RUS", "IND", "BRA"].filter((x) => x !== ref).slice(0, 4);
-  const colores = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"];
+  const comparar = lista(qq.d).length ? lista(qq.d) : COMPARAR_ONU.filter((x) => x !== ref).slice(0, 4);
   const series = comparar.map((otro, i) => ({
-    nombre: nombrePais(otro), color: colores[i % colores.length],
+    nombre: nombrePais(otro), color: COLORES_SERIE[i % COLORES_SERIE.length],
     puntos: filas.filter((f) => f.otro === otro && f.t >= 5).map((f) => ({ x: f.anio, y: (100 * f.s) / f.t })),
   })).filter((s) => s.puntos.length);
   return el("div", {}, cab, controles, aviso, mapa.nodo, tiempo, leyenda, listas,
     el("section", { class: "card", style: "margin-top:16px" },
       el("h3", {}, `Evolución de la coincidencia de ${nombrePais(ref)}`),
-      el("p", { class: "muted small" }, "Con los países elegidos como destino en el modo de orientación, o con las grandes potencias."),
+      el("p", { class: "muted small" }, "Con las grandes potencias (o con los países elegidos como destino en «Qué vota cada país sobre otros»). Para elegir otros, usa «En la ONU»."),
       lineasAnio(series)));
 }
+// Con quién se compara la evolución por defecto, igual en el mapa y en «En la ONU».
+const COMPARAR_ONU = ["USA", "CHN", "RUS", "ESP", "IND"];
+const COLORES_SERIE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"];
 
 // ------------------------------------------------------------------ el mapa (d3-geo)
 
@@ -559,6 +650,8 @@ function crearMapa(op) {
     capaNodos.replaceChildren();
     capaRotulos.replaceChildren();
     const maxN = Math.max(1, op.maxN || Math.max(1, ...op.flechas.map((f) => f.n)));
+    // Con muchas flechas, más finas: 60 flechas gruesas hacia un mismo país tapan el mapa.
+    const densidad = Math.min(1, Math.sqrt(24 / Math.max(24, op.flechas.length)));
     // Nodos: un punto en cada extremo, mayor cuanto más relaciones pasan por él.
     const peso = {};
     for (const f of op.flechas) { peso[f.desde] = (peso[f.desde] || 0) + f.n; peso[f.hasta] = (peso[f.hasta] || 0) + f.n; }
@@ -570,7 +663,7 @@ function crearMapa(op) {
       if (!p0 || !p1) continue;
       const dx = p1[0] - p0[0], dy = p1[1] - p0[1], dist = Math.hypot(dx, dy);
       if (dist < 4) continue;
-      const w = (f.ancho || 1.2 + 5 * Math.sqrt(Math.min(1, f.n / maxN))) * escalaGrosor;
+      const w = (f.ancho || 1.2 + 5 * densidad * Math.sqrt(Math.min(1, f.n / maxN))) * escalaGrosor;
       // Curva hacia la derecha del sentido de la marcha (A->B y B->A no se pisan), acotada en las largas.
       const off = Math.min(dist * 0.22, 26 + dist * 0.09);
       const c = [(p0[0] + p1[0]) / 2 - (dy / dist) * off, (p0[1] + p1[1]) / 2 + (dx / dist) * off];
@@ -647,9 +740,20 @@ function crearMapa(op) {
     tx = cx - ((cx - tx) * nk) / k; ty = cy - ((cy - ty) * nk) / k; k = nk;
     limitar(); redibujar();
   };
+  // La rueda sola desplaza la página (el mapa ocupa casi toda la pantalla y no debe atraparla); con Ctrl
+  // (o ⌘, o el pellizco del trackpad, que llega como Ctrl + rueda) amplía. Ya ampliado, la rueda también
+  // amplía y reduce, y al volver al mundo entero deja pasar el desplazamiento.
+  let avisoRueda = null;
+  const aviso = el("div", { class: "mapa-aviso", "aria-hidden": "true" }, "Usa Ctrl + rueda para ampliar el mapa");
   svg.addEventListener("wheel", (e) => {
-    e.preventDefault();
     const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    if (!(e.ctrlKey || e.metaKey) && k <= 1) {
+      aviso.classList.add("visible");
+      clearTimeout(avisoRueda);
+      avisoRueda = setTimeout(() => aviso.classList.remove("visible"), 1400);
+      return;
+    }
+    e.preventDefault();
     zoom(Math.exp(-delta * 0.0022), aSvg(e));
   }, { passive: false });
   svg.addEventListener("dblclick", (e) => { e.preventDefault(); zoom(e.shiftKey ? 0.5 : 2, aSvg(e)); });
@@ -703,11 +807,23 @@ function crearMapa(op) {
     el("button", { type: "button", class: "boton", title: "Acercar", "aria-label": "Acercar", onclick: () => zoom(1.6, [ancho / 2, alto / 2]) }, "+"),
     el("button", { type: "button", class: "boton", title: "Alejar", "aria-label": "Alejar", onclick: () => zoom(1 / 1.6, [ancho / 2, alto / 2]) }, "−"),
     el("button", { type: "button", class: "boton", title: "Ver el mundo entero", "aria-label": "Ver el mundo entero", onclick: () => { k = 1; tx = 0; ty = 0; limitar(); redibujar(); } }, "⟲"));
+  // Encuadre: ampliar hasta que quepan los países pedidos (con margen para la curva de las flechas).
+  const pts = (op.encuadre || []).map(puntoPais).filter(Boolean).map((p) => proy(p));
+  if (pts.length >= 2) {
+    const xs = pts.map((p) => p[0]), ys = pts.map((p) => p[1]);
+    const margen = Math.max(70, ancho * 0.08);
+    const [x0, x1, y0, y1] = [Math.min(...xs) - margen, Math.max(...xs) + margen, Math.min(...ys) - margen, Math.max(...ys) + margen];
+    k = Math.min(4, ancho / (x1 - x0), alto / (y1 - y0));
+    if (k > 1.15) {
+      tx = ancho / 2 - ((x0 + x1) / 2) * k;
+      ty = alto / 2 - ((y0 + y1) / 2) * k;
+    } else { k = 1; }
+  }
   limitar();
   pintarRellenos();
   dibujar();
   return {
-    nodo: el("div", { class: "mapa" }, svg, botones),
+    nodo: el("div", { class: "mapa" }, svg, botones, esMovil() ? null : aviso),
     actualizar(nuevo) { op = { ...op, ...nuevo }; pintarRellenos(); dibujar(); },
   };
 }

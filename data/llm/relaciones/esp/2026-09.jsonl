@@ -1,0 +1,363 @@
+{"id": "esp:15:130/000016", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000090", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000087", "relaciones": [{"pais": "USA", "orientacion": "negativa", "tipo": "condena", "motivo": "Crítica a anuncios intervencionistas y anexionistas de EE. UU."}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000085", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000172", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000443", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Reafirmar el apoyo político a Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000438", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000046", "relaciones": [{"pais": "PRT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo para un puente internacional sobre el Guadiana"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000421", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000045", "relaciones": [{"pais": "FRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Tratado de amistad y cooperación con Francia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000044", "relaciones": [{"pais": "CHL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo marco avanzado de cooperación con Chile"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000041", "relaciones": [{"pais": "GMB", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación en seguridad y lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000064", "relaciones": [{"pais": "HND", "orientacion": "positiva", "tipo": "tratado", "motivo": "Modificación del acuerdo bilateral de transporte aéreo"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:130/000024", "relaciones": [{"pais": "PSE", "orientacion": "positiva", "tipo": "ayuda", "motivo": "Apoyo a la población palestina en Gaza"}, {"pais": "ISR", "orientacion": "negativa", "tipo": "condena", "motivo": "Medidas urgentes contra el genocidio en Gaza"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000123", "relaciones": [{"pais": "ISR", "orientacion": "negativa", "tipo": "comercio", "motivo": "Revisión del impacto de las relaciones económicas con Israel"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000117", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000061", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000060", "relaciones": [{"pais": "IRQ", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación en seguridad y lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000057", "relaciones": [{"pais": "BOL", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación contra la delincuencia y seguridad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000527", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000103", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000191", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000496", "relaciones": [{"pais": "HUN", "orientacion": "negativa", "tipo": "derechos", "motivo": "Condena de la prohibición de la marcha LGTBI"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000053", "relaciones": [{"pais": "GBR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo sobre actividades remuneradas de familiares diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:130/000038", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:130/000039", "relaciones": [{"pais": "IRN", "orientacion": "neutra", "tipo": "conflicto", "motivo": "Medidas por las consecuencias de la guerra de Irán"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000157", "relaciones": [{"pais": "IRN", "orientacion": "neutra", "tipo": "conflicto", "motivo": "Repercusión de la guerra en Irán sobre España"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000071", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000717", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000154", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000070", "relaciones": [{"pais": "AND", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de interconexión eléctrica entre España y Andorra"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000153", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000697", "relaciones": [{"pais": "USA", "orientacion": "negativa", "tipo": "sanciones", "motivo": "Rechazo a las medidas de coerción contra Cuba"}, {"pais": "CUB", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Apoyo político y defensa de la soberanía cubana"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000068", "relaciones": [{"pais": "OMN", "orientacion": "positiva", "tipo": "migracion", "motivo": "Exención recíproca de visados diplomáticos y de servicio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000684", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000685", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000189", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000830", "relaciones": [{"pais": "MAR", "orientacion": "negativa", "tipo": "migracion", "motivo": "Rechazo a la invasión migratoria y exigencia de retorno de menores"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000175", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000797", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000080", "relaciones": [{"pais": "AUS", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Protección mutua de información clasificada de defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000076", "relaciones": [{"pais": "EGY", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Asistencia judicial mutua en materia penal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000077", "relaciones": [{"pais": "EGY", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Acuerdo de extradición en materia penal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000075", "relaciones": [{"pais": "URY", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Lucha contra la delincuencia organizada transnacional"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000073", "relaciones": [{"pais": "FRA", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Modificación del Acuerdo de Seguridad de la OCCAR"}, {"pais": "DEU", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Modificación del Acuerdo de Seguridad de la OCCAR"}, {"pais": "BEL", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Modificación del Acuerdo de Seguridad de la OCCAR"}, {"pais": "ITA", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Modificación del Acuerdo de Seguridad de la OCCAR"}, {"pais": "GBR", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Modificación del Acuerdo de Seguridad de la OCCAR"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000167", "relaciones": [{"pais": "IRN", "orientacion": "neutra", "tipo": "conflicto", "motivo": "Impacto de la guerra de Irán en Canarias"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000767", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000163", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000067", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000061", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000039", "relaciones": [{"pais": "IDN", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "MYS", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "SGP", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "THA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "PHL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "VNM", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "MMR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}, {"pais": "KHM", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo entre la ASEAN y la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:124/000014", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000046", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000037", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de cooperación científica con la NASA"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000045", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000296", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000292", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "derechos", "motivo": "Orden de arresto contra Maduro por crímenes de lesa humanidad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000286", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "soberania", "motivo": "Reconocer a González Urrutia como ganador de las elecciones"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000035", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de seguridad social entre España y Estados Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000123", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000212", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000129", "relaciones": [{"pais": "MEX", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de cooperación científica y técnica con México"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000198", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Apoyo militar a Ucrania en la UE y la OTAN"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000126", "relaciones": [{"pais": "NGA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo sobre traslado de personas condenadas"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000121", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000119", "relaciones": [{"pais": "CPV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo sobre actividades remuneradas de personal diplomático"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/001134", "relaciones": [{"pais": "BRA", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Apoyo y compromiso con las instituciones brasileñas"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:130/000092", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "ayuda", "motivo": "Medidas de respuesta a las consecuencias de la guerra"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000117", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000189", "relaciones": [{"pais": "MAR", "orientacion": "neutra", "tipo": "migracion", "motivo": "Sucesos en la frontera de Melilla con Marruecos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000185", "relaciones": [{"pais": "UKR", "orientacion": "neutra", "tipo": "conflicto", "motivo": "Crisis energética derivada de la guerra de Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:121/000126", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000013", "relaciones": [{"pais": "FRA", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Tratado de cooperación en defensa con Francia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000012", "relaciones": [{"pais": "RUS", "orientacion": "negativa", "tipo": "seguridad", "motivo": "Suspensión del tratado CFE ante el desafío ruso"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000010", "relaciones": [{"pais": "GTM", "orientacion": "positiva", "tipo": "migracion", "motivo": "Acuerdo de flujos migratorios laborales con Guatemala"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000002", "relaciones": [{"pais": "MDA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de Seguridad Social con Moldavia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000115", "relaciones": [{"pais": "FRA", "orientacion": "negativa", "tipo": "comercio", "motivo": "Ataques a transportistas y agricultores en la frontera"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000117", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000051", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:130/000003", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "ayuda", "motivo": "Medidas frente a las consecuencias del conflicto ucraniano"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000089", "relaciones": [{"pais": "ISR", "orientacion": "negativa", "tipo": "condena", "motivo": "Condena de la ofensiva israelí en Gaza y Cisjordania"}, {"pais": "PSE", "orientacion": "positiva", "tipo": "ayuda", "motivo": "Respaldo y apoyo a la población palestina"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000012", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000002", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:120/000004", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000101", "relaciones": [{"pais": "QAT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación del acuerdo de transporte aéreo UE-Catar"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:121/000105", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000100", "relaciones": [{"pais": "CZE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Tratado sobre secciones bilingües checo-españolas"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000151", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000150", "relaciones": [{"pais": "MAR", "orientacion": "neutra", "tipo": "cooperacion", "motivo": "Insta a informar sobre las relaciones con Marruecos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000099", "relaciones": [{"pais": "DOM", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo con República Dominicana"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:130/000081", "relaciones": [{"pais": "RUS", "orientacion": "negativa", "tipo": "sanciones", "motivo": "Medidas restrictivas por la invasión de Ucrania"}, {"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Apoyo frente a la invasión rusa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:122/000215", "relaciones": [{"pais": "ESH", "orientacion": "positiva", "tipo": "otro", "motivo": "Nacionalidad a saharauis nacidos bajo soberanía española"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000144", "relaciones": [{"pais": "RUS", "orientacion": "negativa", "tipo": "conflicto", "motivo": "Invasión rusa de Ucrania con efectos económicos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:130/000079", "relaciones": [{"pais": "RUS", "orientacion": "negativa", "tipo": "conflicto", "motivo": "Respuesta a la guerra provocada por Rusia"}, {"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Plan nacional de respuesta a la guerra en Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000994", "relaciones": [{"pais": "ESH", "orientacion": "neutra", "tipo": "soberania", "motivo": "Posición del Gobierno sobre el conflicto del Sáhara"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000138", "relaciones": [{"pais": "RUS", "orientacion": "negativa", "tipo": "conflicto", "motivo": "Invasión rusa agrava el sector primario"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000792", "relaciones": [{"pais": "PRT", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Impulso de espacio multinacional iberófono de cooperación"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000070", "relaciones": [{"pais": "QAT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección mutua de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000761", "relaciones": [{"pais": "POL", "orientacion": "negativa", "tipo": "derechos", "motivo": "Denuncia de discursos de intolerancia contra el colectivo LGTBI"}, {"pais": "HUN", "orientacion": "negativa", "tipo": "derechos", "motivo": "Denuncia de discursos de intolerancia contra el colectivo LGTBI"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000087", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000067", "relaciones": [{"pais": "HRV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección mutua de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000068", "relaciones": [{"pais": "MEX", "orientacion": "positiva", "tipo": "tratado", "motivo": "Modificación del convenio de transporte aéreo bilateral"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000063", "relaciones": [{"pais": "VNM", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de protección de inversiones con la Unión Europea"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000064", "relaciones": [{"pais": "DEU", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "FRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "ITA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "NLD", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "BEL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "AUT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "PRT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}, {"pais": "IRL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación de la modificación del Tratado del MEDE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000079", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000060", "relaciones": [{"pais": "CHL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de intercambio de información clasificada en defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000069", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000059", "relaciones": [{"pais": "QAT", "orientacion": "positiva", "tipo": "migracion", "motivo": "Supresión de visados para pasaportes diplomáticos y de servicio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:122/000139", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000058", "relaciones": [{"pais": "NIC", "orientacion": "positiva", "tipo": "tratado", "motivo": "Aceptación de su adhesión al Convenio de La Haya"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000054", "relaciones": [{"pais": "AND", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio bilateral de cooperación en seguridad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000052", "relaciones": [{"pais": "SGP", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Acuerdo de colaboración y cooperación con la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000053", "relaciones": [{"pais": "GHA", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de asociación económica con la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000048", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:130/000038", "relaciones": [{"pais": "GBR", "orientacion": "neutra", "tipo": "otro", "motivo": "Medidas de adaptación al Reino Unido como Estado tercero"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000047", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:SIN/0040d3e6b5", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000462", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000041", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000020", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000134", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Apoyo ante la invasión rusa de Ucrania"}, {"pais": "RUS", "orientacion": "negativa", "tipo": "condena", "motivo": "Condena de la invasión que agrava la crisis"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000978", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Apoyo por la invasión rusa de Ucrania"}, {"pais": "RUS", "orientacion": "negativa", "tipo": "condena", "motivo": "Invasión rusa encarece los costes de producción"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000091", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000087", "relaciones": [{"pais": "ARE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo bilateral de transporte aéreo"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000084", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000117", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000083", "relaciones": [{"pais": "COL", "orientacion": "positiva", "tipo": "comercio", "motivo": "Protección recíproca de inversiones"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:122/000176", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000079", "relaciones": [{"pais": "HND", "orientacion": "positiva", "tipo": "migracion", "motivo": "Regulación de los flujos migratorios laborales"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000854", "relaciones": [{"pais": "MAR", "orientacion": "negativa", "tipo": "migracion", "motivo": "Suspensión de visados por no readmitir migrantes"}, {"pais": "DZA", "orientacion": "negativa", "tipo": "migracion", "motivo": "Suspensión de visados por no readmitir migrantes"}, {"pais": "TUN", "orientacion": "negativa", "tipo": "migracion", "motivo": "Suspensión de visados por no readmitir migrantes"}, {"pais": "MRT", "orientacion": "negativa", "tipo": "migracion", "motivo": "Suspensión de visados por no readmitir migrantes"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000078", "relaciones": [{"pais": "PRT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo sobre actividad pesquera en aguas comunes"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000100", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000122", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:130/000007", "relaciones": [{"pais": "UKR", "orientacion": "neutra", "tipo": "conflicto", "motivo": "Medidas ante consecuencias del conflicto en Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:SIN/5f33d5a8c5", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000257", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000250", "relaciones": [{"pais": "MAR", "orientacion": "neutra", "tipo": "cooperacion", "motivo": "Compromisos pendientes de la reunión de alto nivel con Marruecos"}, {"pais": "ESH", "orientacion": "neutra", "tipo": "soberania", "motivo": "Situación del Sáhara Occidental"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000031", "relaciones": [{"pais": "MEX", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de cooperación científica y técnica con México"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000030", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de cooperación en seguridad aérea con EE.UU."}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000025", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000027", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000029", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000168", "relaciones": [{"pais": "PSE", "orientacion": "positiva", "tipo": "ayuda", "motivo": "Apoyo a la labor de UNRWA con refugiados palestinos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:122/000072", "relaciones": [{"pais": "ESH", "orientacion": "positiva", "tipo": "migracion", "motivo": "Concesión de nacionalidad española a saharauis"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:122/000085", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000032", "relaciones": [{"pais": "ARE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección mutua de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:SIN/2d2aee54dd", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000026", "relaciones": [{"pais": "GBR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo sobre participación electoral de nacionales residentes"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000017", "relaciones": [{"pais": "JPN", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de Asociación Estratégica entre la UE y Japón"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000223", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000010", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000003", "relaciones": [{"pais": "MAR", "orientacion": "negativa", "tipo": "soberania", "motivo": "Delimitación marítima que afecta a Canarias y al Sáhara Occidental"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:162/000133", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000001", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "condena", "motivo": "Crítica a los compromisos con el régimen de Maduro"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000005", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Donación de la propiedad del Gran Teatro Cervantes de Tánger"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000003", "relaciones": [{"pais": "GBR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo fiscal y financiero en relación con Gibraltar"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:122/000262", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000112", "relaciones": [{"pais": "PRT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Tratado de amistad y cooperación"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000170", "relaciones": [{"pais": "RUS", "orientacion": "negativa", "tipo": "conflicto", "motivo": "Invasión rusa de Ucrania"}, {"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Apoyo político ante la invasión rusa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000110", "relaciones": [{"pais": "DNK", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:SIN/2218fd2970", "relaciones": [{"pais": "AND", "orientacion": "positiva", "tipo": "soberania", "motivo": "Investigación de intromisión en su soberanía"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000108", "relaciones": [{"pais": "SWE", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Adhesión de Suecia a la OTAN"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000109", "relaciones": [{"pais": "FIN", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Adhesión de Finlandia a la OTAN"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000107", "relaciones": [{"pais": "AZE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de intercambio de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:130/000083", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000159", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:173/000161", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000106", "relaciones": [{"pais": "MRT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Tratado de amistad, buena vecindad y cooperación"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000003", "relaciones": [{"pais": "HRV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Autoriza la participación de Croacia en el EEE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:11:162/000031", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "derechos", "motivo": "Insta a liberar a los presos políticos venezolanos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000229", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/001298", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000185", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:200/000004", "relaciones": [{"pais": "GRC", "orientacion": "positiva", "tipo": "ayuda", "motivo": "Contribución española al tercer rescate financiero de Grecia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000162", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000183", "relaciones": [{"pais": "BRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección mutua de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/ee3ee66cb8", "relaciones": [{"pais": "LBY", "orientacion": "neutra", "tipo": "conflicto", "motivo": "Operación militar naval en aguas frente a Libia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000182", "relaciones": [{"pais": "COL", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Convenio marco de cooperación bilateral con Colombia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000181", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Enmienda del convenio de cooperación para la defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/ad589fed73", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000088", "relaciones": [{"pais": "GHA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de asociación económica entre Ghana y la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:SIN/39681ef4d1", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000087", "relaciones": [{"pais": "PRY", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Convenio de cooperación en seguridad ciudadana con Paraguay"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000085", "relaciones": [{"pais": "TUN", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Convenio de cooperación en seguridad y lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000091", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000093", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000084", "relaciones": [{"pais": "VEN", "orientacion": "neutra", "tipo": "cooperacion", "motivo": "Papel de España ante las crisis que afectan a Venezuela"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000073", "relaciones": [{"pais": "MAR", "orientacion": "negativa", "tipo": "otro", "motivo": "Crítica a prospecciones petrolíferas en la cuenca de Tan Tan"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000068", "relaciones": [{"pais": "AND", "orientacion": "positiva", "tipo": "otro", "motivo": "Acuerdo sobre actividad laboral de familiares de diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000064", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000062", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:162/000490", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:14:110/000002", "relaciones": [{"pais": "MKD", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Adhesión de Macedonia del Norte a la OTAN"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:162/000961", "relaciones": [{"pais": "VEN", "orientacion": "positiva", "tipo": "soberania", "motivo": "Reconocimiento del presidente legítimo de Venezuela"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000131", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:SIN/0040d3e6b5", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000124", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000097", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000098", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000117", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000101", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:162/000761", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "condena", "motivo": "Condena de la dictadura de Venezuela"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000092", "relaciones": [{"pais": "CPV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio para evitar la doble imposición fiscal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:130/000033", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000217", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000177", "relaciones": [{"pais": "CHL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de cooperación en seguridad y lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/001242", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000214", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000173", "relaciones": [{"pais": "AND", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio para evitar la doble imposición fiscal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000205", "relaciones": [{"pais": "USA", "orientacion": "neutra", "tipo": "comercio", "motivo": "Acuerdo comercial transatlántico entre la UE y Estados Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000167", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo sobre transporte internacional por carretera"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/bf0c7df75f", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/001208", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000202", "relaciones": [{"pais": "USA", "orientacion": "neutra", "tipo": "seguridad", "motivo": "Bases militares de uso conjunto con Estados Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000163", "relaciones": [{"pais": "UZB", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de cooperación contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000162", "relaciones": [{"pais": "OMN", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio para evitar la doble imposición fiscal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/543074c22f", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/946165f623", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000109", "relaciones": [{"pais": "ISR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación del acuerdo euromediterráneo de aviación con Israel"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000118", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000072", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000108", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Prórroga del acuerdo de cooperación científica con Estados Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000106", "relaciones": [{"pais": "GBR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio con Reino Unido para evitar la doble imposición"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000061", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/32189c17ce", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000720", "relaciones": [{"pais": "MAR", "orientacion": "neutra", "tipo": "comercio", "motivo": "Pronunciamiento sobre el acuerdo de pesca con Marruecos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000102", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo fiscal con Estados Unidos sobre cuentas extranjeras"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000097", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/001060", "relaciones": [{"pais": "PSE", "orientacion": "positiva", "tipo": "soberania", "motivo": "Reconocimiento del Estado de Palestina"}, {"pais": "ISR", "orientacion": "negativa", "tipo": "soberania", "motivo": "El reconocimiento de Palestina perjudica a Israel"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000137", "relaciones": [{"pais": "MEX", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de cooperación contra la delincuencia organizada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000135", "relaciones": [{"pais": "BHR", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Acuerdo de cooperación en materia de defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:122/000168", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000133", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000132", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000107", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000130", "relaciones": [{"pais": "RUS", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de colaboración sobre adopción de menores"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000131", "relaciones": [{"pais": "TUR", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Acuerdo de protección de información clasificada de defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000129", "relaciones": [{"pais": "MDG", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de asociación económica con la Unión Europea"}, {"pais": "MUS", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de asociación económica con la Unión Europea"}, {"pais": "SYC", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de asociación económica con la Unión Europea"}, {"pais": "ZWE", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de asociación económica con la Unión Europea"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000128", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio para evitar la doble imposición fiscal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000127", "relaciones": [{"pais": "SMR", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de cooperación y unión aduanera con la UE"}, {"pais": "HRV", "orientacion": "positiva", "tipo": "comercio", "motivo": "Extensión a Croacia del acuerdo de unión aduanera"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000156", "relaciones": [{"pais": "GRD", "orientacion": "positiva", "tipo": "migracion", "motivo": "Acuerdo de supresión recíproca de visados diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/001173", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "derechos", "motivo": "Gestiones para liberar al opositor Leopoldo López"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/344aa2632f", "relaciones": [{"pais": "AFG", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Participación militar en la operación Resolute Support"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000151", "relaciones": [{"pais": "SAU", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Convenio de cooperación en seguridad y lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000124", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000148", "relaciones": [{"pais": "KOR", "orientacion": "positiva", "tipo": "comercio", "motivo": "Protocolo adicional del acuerdo de libre comercio UE-Corea"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000141", "relaciones": [{"pais": "SVN", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Intercambio y protección de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000142", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de Asociación entre la Unión Europea y Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000140", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/001073", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "comercio", "motivo": "Apoyo a acuerdo de libre comercio e inversión con la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000139", "relaciones": [{"pais": "SAU", "orientacion": "positiva", "tipo": "comercio", "motivo": "Promoción y protección recíproca de inversiones"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/43d3bbdd0f", "relaciones": [{"pais": "IRQ", "orientacion": "positiva", "tipo": "conflicto", "motivo": "Coalición militar contra el Estado Islámico en Irak"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000097", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000051", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000683", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000684", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000096", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000047", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000090", "relaciones": [{"pais": "ARM", "orientacion": "positiva", "tipo": "tratado", "motivo": "Aceptación de la adhesión de Armenia al Convenio de La Haya"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/8d8ec75c51", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000088", "relaciones": [{"pais": "EGY", "orientacion": "positiva", "tipo": "migracion", "motivo": "Exención recíproca de visados para pasaportes diplomáticos y de servicio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000592", "relaciones": [{"pais": "CYP", "orientacion": "neutra", "tipo": "otro", "motivo": "Posición sobre el rescate financiero de Chipre"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000087", "relaciones": [{"pais": "ETH", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo bilateral sobre transporte aéreo con Etiopía"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000086", "relaciones": [{"pais": "KAZ", "orientacion": "positiva", "tipo": "tratado", "motivo": "Tratado de extradición entre España y Kazajstán"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:SIN/24d78b8b5a", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000056", "relaciones": [{"pais": "JPN", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de vacaciones y actividades laborales esporádicas"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000046", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000055", "relaciones": [{"pais": "MRT", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Convenio de cooperación en materia de seguridad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000043", "relaciones": [{"pais": "CUB", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Acuerdo de diálogo político y cooperación"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:162/000396", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "condena", "motivo": "Crisis institucional en Venezuela"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000034", "relaciones": [{"pais": "CAN", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo Económico y Comercial Global (CETA)"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:SIN/0b855efb04", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000017", "relaciones": [{"pais": "SAU", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Acuerdo de protección de información clasificada en defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000013", "relaciones": [{"pais": "MNE", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Adhesión de Montenegro a la OTAN"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:173/000009", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:12:110/000002", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000059", "relaciones": [{"pais": "AUS", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "FIN", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "FRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "DEU", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "ITA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "SWE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "GBR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}, {"pais": "USA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratifica enmienda a memorando de comunicaciones militares"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000056", "relaciones": [{"pais": "COL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acepta la adhesión de Colombia al convenio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000054", "relaciones": [{"pais": "BRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Aprueba convenio de seguridad social con Brasil"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000052", "relaciones": [{"pais": "MNE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acepta la adhesión de Montenegro al convenio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000051", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:130/000027", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000048", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000049", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000047", "relaciones": [{"pais": "KOR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Aprueba convenio de seguridad social con Corea"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000045", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000046", "relaciones": [{"pais": "MRT", "orientacion": "positiva", "tipo": "migracion", "motivo": "Suprime visados en pasaportes diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000035", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000074", "relaciones": [{"pais": "CHN", "orientacion": "positiva", "tipo": "tratado", "motivo": "Traslado de personas condenadas con Hong Kong"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000075", "relaciones": [{"pais": "CMR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo con Camerún"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000068", "relaciones": [{"pais": "GNQ", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo con Guinea Ecuatorial"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000069", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación para la defensa con Estados Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000070", "relaciones": [{"pais": "PHL", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Acuerdo marco de colaboración con Filipinas"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000066", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "migracion", "motivo": "Supresión recíproca de visados en pasaportes de servicio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000067", "relaciones": [{"pais": "ARE", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación en materia de defensa con Emiratos Árabes Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000065", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Protocolo del acuerdo euromediterráneo de aviación"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000062", "relaciones": [{"pais": "CIV", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Cooperación contra la delincuencia con Costa de Marfil"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000063", "relaciones": [{"pais": "VNM", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Acuerdo marco de asociación con Vietnam"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000060", "relaciones": [{"pais": "IRQ", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Acuerdo de colaboración y cooperación con Iraq"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000058", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000126", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000125", "relaciones": [{"pais": "MDA", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Convenio de cooperación en seguridad y lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000961", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000147", "relaciones": [{"pais": "USA", "orientacion": "neutra", "tipo": "comercio", "motivo": "Fijar posición ante el acuerdo comercial UE-Estados Unidos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000122", "relaciones": [{"pais": "SRB", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección recíproca de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/3965b3ef81", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:122/000156", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/d7eab84fcc", "relaciones": [{"pais": "CAF", "orientacion": "positiva", "tipo": "conflicto", "motivo": "Participación en operación militar de la UE para estabilizar el país"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000138", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000887", "relaciones": [{"pais": "VEN", "orientacion": "negativa", "tipo": "derechos", "motivo": "Reclama respeto a la democracia y los derechos humanos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000117", "relaciones": [{"pais": "RUS", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de protección mutua de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/98da9854b6", "relaciones": [{"pais": "CAF", "orientacion": "positiva", "tipo": "conflicto", "motivo": "Apoyo militar a la misión de la ONU de estabilización"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000007", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio bilateral de extradición con Marruecos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000001", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000130", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "comercio", "motivo": "Apoyo a renovar el protocolo de pesca con Marruecos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000044", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000043", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000042", "relaciones": [{"pais": "KAZ", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de asistencia judicial en materia penal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000040", "relaciones": [{"pais": "HRV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio de lucha contra la delincuencia y seguridad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000356", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000039", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Aceptación de la adhesión de Ucrania al Convenio"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000013", "relaciones": [{"pais": "HRV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Ratificación del Tratado de adhesión de Croacia a la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000010", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000031", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000028", "relaciones": [{"pais": "KWT", "orientacion": "positiva", "tipo": "migracion", "motivo": "Supresión recíproca de visados en pasaportes diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000029", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000030", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:173/000020", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000022", "relaciones": [{"pais": "KOR", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo de libre comercio con la UE"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000023", "relaciones": [{"pais": "NOR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Cooperación en sistema de navegación por satélite"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000025", "relaciones": [{"pais": "AZE", "orientacion": "positiva", "tipo": "migracion", "motivo": "Supresión de visados para pasaportes diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000026", "relaciones": [{"pais": "AUT", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Centro de diálogo interreligioso e intercultural"}, {"pais": "SAU", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Centro de diálogo interreligioso e intercultural"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000027", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000021", "relaciones": [{"pais": "ARM", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de transporte aéreo"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000020", "relaciones": [{"pais": "GRC", "orientacion": "positiva", "tipo": "tratado", "motivo": "Préstamo de la eurozona a Grecia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000019", "relaciones": [{"pais": "AUS", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Protección de información clasificada de defensa"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000017", "relaciones": [{"pais": "AUT", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Intercambio de información clasificada"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000018", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Adhesión a convenio de obtención de pruebas"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000016", "relaciones": [{"pais": "AND", "orientacion": "positiva", "tipo": "tratado", "motivo": "Adhesión a convenio sobre sustracción de menores"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000085", "relaciones": [{"pais": "COL", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo comercial de la UE con Colombia"}, {"pais": "PER", "orientacion": "positiva", "tipo": "comercio", "motivo": "Acuerdo comercial de la UE con Perú"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000082", "relaciones": [{"pais": "KAZ", "orientacion": "positiva", "tipo": "tratado", "motivo": "Tratado bilateral de traslado de condenados"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000084", "relaciones": [{"pais": "MDA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de zona de aviación común"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000081", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000079", "relaciones": [{"pais": "CPV", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio bilateral de seguridad social"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000080", "relaciones": [{"pais": "DOM", "orientacion": "positiva", "tipo": "tratado", "motivo": "Convenio para evitar la doble imposición"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:121/000036", "relaciones": [{"pais": "IRL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Protocolo sobre preocupaciones del pueblo irlandés"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000076", "relaciones": [{"pais": "CHE", "orientacion": "positiva", "tipo": "tratado", "motivo": "Protocolo que modifica convenio de doble imposición"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000077", "relaciones": [{"pais": "GRC", "orientacion": "positiva", "tipo": "tratado", "motivo": "Asistencia financiera a Grecia mediante préstamo"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000078", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:SIN/15315cd78e", "relaciones": [{"pais": "MLI", "orientacion": "positiva", "tipo": "conflicto", "motivo": "Despliegue militar español en crisis de Mali"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000073", "relaciones": [{"pais": "HKG", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo de asistencia judicial penal"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000014", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000015", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:162/000215", "relaciones": [{"pais": "MAR", "orientacion": "negativa", "tipo": "comercio", "motivo": "Impacto agrario y posible restricción a importaciones"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000009", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000010", "relaciones": [{"pais": "KAZ", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000011", "relaciones": [{"pais": "USA", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Cooperación científica y tecnológica para seguridad nacional"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000012", "relaciones": [{"pais": "QAT", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación en materia de seguridad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000013", "relaciones": [{"pais": "ALB", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Actividades remuneradas para familiares de diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000008", "relaciones": [{"pais": "BEL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "DEU", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "EST", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "IRL", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "GRC", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "FRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "ITA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}, {"pais": "CYP", "orientacion": "positiva", "tipo": "tratado", "motivo": "Suscriptor del Mecanismo Europeo de Estabilidad"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000002", "relaciones": [{"pais": "MLT", "orientacion": "positiva", "tipo": "tratado", "motivo": "Aceptación de adhesión al Convenio de La Haya"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000005", "relaciones": [{"pais": "CMR", "orientacion": "positiva", "tipo": "seguridad", "motivo": "Cooperación en lucha contra la delincuencia"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:10:110/000006", "relaciones": [{"pais": "MAR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Asistencia judicial en materia penal"}], "_modelo": "deepseek:deepseek-flash"}

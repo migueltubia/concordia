@@ -28,9 +28,20 @@ def _slug(t):
 
 
 def partes(titulo):
-    """«Finance (No. 2) Bill: Report Stage New Clause 7» -> («Finance (No. 2) Bill», «Report Stage New Clause 7»)."""
+    """Separa el asunto de la fase que se vota:
+
+    «Finance (No. 2) Bill: Report Stage New Clause 7», «Energy Bill [Lords] Report Stage: New Clause 3»,
+    «Nationality and Borders Bill (Report): Amendment 116» o «Trade Bill report stage amendment 25» ->
+    (proyecto de ley, fase). Las enmiendas al discurso de la Corona van juntas en «Queen's/King's Speech».
+    """
     t = re.sub(r"\s+", " ", titulo or "").strip()
-    m = re.match(r"(.+?\b(?:Bill|Motion|Regulations|Order|Order \d{4}|Rules|Treaty|Estimates)(?: \[[^\]]*\])?(?: \d{4})?)\s*[:\-–]\s*(.+)$", t)
+    m = re.match(r"^(.*?\bBill\b(?:\s*[\[(](?:Lords|HL)[\])])?)\s*[:;,\-–]?\s*(.*)$", t, re.I)
+    if m and m.group(1).strip().lower() not in ("bill", "the bill"):
+        return m.group(1).strip(), (m.group(2).strip(" :;-–") or None)
+    m = re.match(r"^(?:the )?((?:queen|king)['’]?s speech)\b\s*[:\-–]?\s*(.*)$", t, re.I)
+    if m:
+        return m.group(1).replace("’", "'").title().replace("'S", "'s"), m.group(2).strip(" :;-–()") or None
+    m = re.match(r"(.+?\b(?:Motion|Regulations|Order|Rules|Treaty|Estimates)(?: \[[^\]]*\])?(?: \d{4})?)\s*[:\-–]\s*(.+)$", t)
     if m:
         return m.group(1).strip(), m.group(2).strip()
     return t, None
@@ -44,6 +55,8 @@ def tipo_asunto(nombre):
     n = nombre.lower()
     if any(k in n for k in PROCEDIMIENTO):
         return "procedimiento"
+    if "speech" in n:
+        return "mocion"
     if "treaty" in n:
         return "tratado"
     if re.search(r"\bbill\b", n):
@@ -74,7 +87,10 @@ def tipo_votacion(fase, tipo_a):
 
 
 def _division(ctx, did):
-    return ctx.json(f"{API}/division/{did}.json")
+    try:
+        return ctx.json(f"{API}/division/{did}.json")
+    except Exception:
+        return None
 
 
 def recoger(ctx):
@@ -95,13 +111,18 @@ def recoger(ctx):
     ctx.log(f"   {len(ids)} divisiones desde {inicio}")
     with ThreadPoolExecutor(6) as ex:
         for i in range(0, len(ids), 120):
-            detalles = list(ex.map(lambda d: _division(ctx, d), ids[i:i + 120]))
+            raw = list(ex.map(lambda d: _division(ctx, d), ids[i:i + 120]))
+            fallidos = [ids[i + j] for j, d in enumerate(raw) if d is None]
+            if fallidos:
+                ctx.log(f"   ! {len(fallidos)} divisiones no encontradas: {fallidos[:5]}{' …' if len(fallidos) > 5 else ''}")
+            detalles = [d for d in raw if d is not None]
             asuntos, votaciones = {}, []
             for d in detalles:
                 fecha = d["Date"][:10]
                 nombre, fase = partes(d.get("Title"))
                 tipo_a = tipo_asunto(nombre)
-                aid = f"gbr:{fecha[:4]}:{_slug(nombre)}" if fase else f"gbr:div{d['DivisionId']}"
+                agrupa = fase or re.search(r"\b(bill|speech)\b", nombre, re.I)
+                aid = f"gbr:{fecha[:4]}:{_slug(nombre)}" if agrupa else f"gbr:div{d['DivisionId']}"
                 asuntos.setdefault(aid, Asunto(id=aid, titulo=nombre[:400], tipo=tipo_a, fecha=fecha))
                 votos = []
                 for lista, sentido in (("Ayes", "si"), ("Noes", "no"), ("NoVoteRecorded", "no_vota")):

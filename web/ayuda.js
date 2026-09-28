@@ -102,8 +102,9 @@ VISTAS.ayuda = {
 
 function pintarAyuda(qq) {
   const secciones = [
-    ["que", "Qué es"], ["mapa", "Cómo se lee el mapa"], ["fuentes", "Fuentes y cobertura"], ["calculo", "Cómo se calcula"],
+    ["que", "Qué es"], ["glosario", "Glosario"], ["mapa", "Cómo se lee el mapa"], ["fuentes", "Fuentes y cobertura"], ["calculo", "Cómo se calcula"],
     ["paises", "Qué datos hay de cada país"], ["actualizar", "Actualización"], ["limites", "Limitaciones"]];
+  const termino = (t, def) => [el("dt", {}, t), el("dd", {}, def)];
   const ir = (id) => { const n = document.getElementById("ay-" + id); if (n) n.scrollIntoView({ behavior: "smooth" }); };
   const cobertura = Object.values(CAT.fuentes).filter((f) => f.votaciones).map((f) => {
     const filas = CAT.cobertura.filter((c) => c.fuente === f.codigo);
@@ -126,21 +127,37 @@ function pintarAyuda(qq) {
   buscador.addEventListener("input", pintarPaises);
   pintarPaises();
   const nodo = el("div", { class: "ayuda" },
-    el("h2", {}, "Ayuda"),
-    el("div", { class: "subnav" }, secciones.map(([id, t]) => el("a", { onclick: () => ir(id) }, t))),
+    el("nav", { class: "ayuda-indice", "aria-label": "Secciones de la ayuda" },
+      el("h2", {}, "Ayuda"),
+      el("div", { class: "subnav" }, secciones.map(([id, t]) => el("a", { onclick: () => ir(id) }, t)))),
+    el("div", { class: "ayuda-cuerpo" },
     el("section", { class: "ayuda-seccion card", id: "ay-que" }, el("h3", {}, "Qué es"),
-      el("p", {}, "Concordia reúne votaciones parlamentarias de varios países y el voto de cada Estado en la Asamblea General de la ONU, con una ficha de cada asunto votado (resumen neutro, tema y qué otros países son objeto del asunto y en qué sentido). Es la versión mundial de ", enlace("https://migueltubia.github.io/escrutinio/", "Escrutinio"), ", que hace lo mismo con el Congreso y las instituciones españolas; de España aquí solo se usa el Congreso."),
-      el("p", {}, "Tiene dos partes: el mapa de relaciones entre países (pestaña Mundo) y las vistas de cada país (Resumen, Votaciones, Partidos y En la ONU), que usan el país y los años elegidos en la cabecera. Todo se filtra por años naturales: cada país tiene legislaturas distintas.")),
+      el("p", {}, "Concordia enseña qué vota cada país sobre los demás: lo que aprueba su parlamento sobre otros países (sanciones, tratados, ayuda, condenas…) y cómo vota cada Estado en la Asamblea General de la ONU. Cada asunto tiene una ficha: un resumen neutro, su tema y de qué países trata y en qué sentido."),
+      el("p", {}, "Tiene dos partes: el mapa de relaciones entre países (pestaña Mundo) y las vistas de cada país (Resumen, Votaciones, Partidos y En la ONU), que usan el país y los años elegidos arriba. Todo se filtra por años naturales, porque cada país tiene legislaturas distintas."),
+      el("p", {}, "Es hermana de ", enlace("https://migueltubia.github.io/escrutinio/", "Escrutinio"), ", que hace lo mismo con el Congreso y otras instituciones españolas; de España, aquí solo se usa el Congreso.")),
+    el("section", { class: "ayuda-seccion card", id: "ay-glosario" }, el("h3", {}, "Glosario"),
+      el("dl", { class: "glosario" },
+        termino("Origen y destino", "El país que vota (origen) y el país del que trata lo votado (destino). En el mapa, la flecha va del primero al segundo."),
+        termino("Relación", "Cada asunto aprobado por un parlamento que trata de otro país, o cada voto de un Estado en la ONU sobre una resolución que trata de otro."),
+        termino("Sentido: positiva, negativa, neutra", "Positiva si favorece al otro país (ayuda, acuerdos, apoyo, reconocimiento, o votar a su favor en la ONU); negativa si lo perjudica (sanciones, condenas, restricciones, o votar en su contra); neutra si solo lo nombra."),
+        termino("Saldo", "El balance entre relaciones positivas y negativas: decide el color de la flecha (azul, casi todo positivo; rojo, casi todo negativo; gris, repartido)."),
+        termino("Asunto", "Lo que se vota: una ley, un tratado, una moción, una proposición no de ley o una resolución de la ONU. Un asunto puede tener varias votaciones (enmiendas, puntos por separado, cada cámara)."),
+        termino("Moción y proposición no de ley", "Iniciativas del Congreso que piden al Gobierno que haga algo o fijan una postura. No son leyes: no obligan, pero dicen qué opina la mayoría."),
+        termino("Votación final", "La que decide si un asunto sale adelante. Las listas usan esa; las enmiendas y los trámites se ven al abrir el asunto."),
+        termino("Abstención", "Ni sí ni no. En la ONU, no votar es distinto de abstenerse."),
+        termino("Afinidad o coincidencia", "En qué porcentaje de las votaciones dos países (o dos partidos) votan lo mismo. 100 %: siempre igual; 0 %: siempre lo contrario."),
+        termino("Ficha", "El resumen, el tema y los países de cada asunto. La hace una IA o, si no la hay, una clasificación automática por palabras del título. Las dos pueden equivocarse: lo oficial es el voto y el texto enlazado."),
+        termino("Votación clave (EE. UU.)", "Las votaciones de la ONU que el Departamento de Estado de EE. UU. señala como importantes en su informe anual."))),
     el("section", { class: "ayuda-seccion card", id: "ay-mapa" }, el("h3", {}, "Cómo se lee el mapa"),
       el("ul", {},
-        el("li", {}, el("b", {}, "Una flecha de A a B"), " reúne lo que A ha votado sobre B en esos años: los asuntos aprobados por el parlamento de A que tratan de B (vía «leyes») y el voto de A en las resoluciones de la ONU sobre B (vía «ONU»)."),
+        el("li", {}, el("b", {}, "Una flecha de A a B"), " reúne lo que A ha votado sobre B en esos años: los asuntos aprobados por el parlamento de A que tratan de B y el voto de A en las resoluciones de la ONU sobre B."),
         el("li", {}, el("b", {}, "El color es el saldo"), ": azul si casi todo es positivo (acuerdos, ayuda, cooperación, reconocimiento, votar a favor de B en la ONU), rojo si casi todo es negativo (sanciones, condenas, restricciones, votar contra B), gris si está repartido o es neutro. El grosor, cuántos asuntos o votos hay."),
         el("li", {}, el("b", {}, "Origen y destino"), ": se eligen en los filtros o pulsando países en el mapa (el botón «Al pulsar un país» dice qué hace el clic). Sin origen ni destino se dibujan las relaciones más frecuentes del mundo."),
         el("li", {}, el("b", {}, "Afinidad en la ONU"), ": colorea cada país según cuánto coincide su voto con el del país de referencia y dibuja flechas hacia los más y los menos afines."),
         el("li", {}, "Pulsa una flecha o una fila de la tabla para ver los asuntos que hay detrás, con su resumen, su enlace a la fuente y quién decidió la orientación (la IA o las reglas)."),
         el("li", {}, el("b", {}, "Línea de tiempo"), ": debajo del mapa, «Todo el periodo» suma todos los años elegidos; «Año a año» enseña uno solo y «Acumulado», desde el primero hasta el elegido. El botón ▶ lo reproduce. Las barras dicen cuántas relaciones positivas, neutras y negativas hay cada año, y el grosor de las flechas es comparable entre años."),
         el("li", {}, el("b", {}, "El mapa se centra en el origen"), " (o en el país de referencia) para que las flechas vayan por el camino corto: desde EEUU, Asia queda a la izquierda. «Mapa fijo» lo deja con Europa en el centro."),
-        el("li", {}, "La rueda del ratón amplía y reduce donde está el puntero; doble clic amplía (con Mayúsculas, reduce); en el móvil, pellizca. Arrastra para moverte. Al pasar por un país o una flecha se resaltan sus relaciones."))),
+        el("li", {}, "Para ampliar: Ctrl (o ⌘) + rueda del ratón, doble clic (con Mayúsculas, reduce) o los botones + y −; en el móvil, pellizca. La rueda sola desplaza la página. Arrastra para moverte. Al pasar por un país o una flecha se resaltan sus relaciones. Con un origen y un destino elegidos, el mapa se acerca a ellos."))),
     el("section", { class: "ayuda-seccion card", id: "ay-fuentes" }, el("h3", {}, "Fuentes y cobertura"),
       el("div", { class: "tabla-scroll" }, el("table", { class: "tabla" },
         el("thead", {}, el("tr", {}, ["Fuente", "Años", "Votaciones", "Asuntos", "Con ficha IA", "Relaciones", "Detalle", "Licencia"].map((t) => el("th", {}, t)))),
@@ -154,9 +171,12 @@ function pintarAyuda(qq) {
         el("li", {}, el("b", {}, "Votación decisiva"), ": la votación final de cada asunto en cada cámara (paso de un proyecto, votación de conjunto, resolución). Las listas y la relación entre países usan esa; las enmiendas y los trámites se ven al abrir un asunto."),
         el("li", {}, el("b", {}, "Ficha"), ": resumen neutro en español, tema (23 temas cerrados, los mismos de Escrutinio) y relaciones con otros países, hechos por una IA (DeepSeek) solo a partir del título y los metadatos, sin ver votos ni resultados, y validados contra listas cerradas. Mientras no hay ficha de la IA se usan reglas: tema por palabras clave (o los temas del dataset de la ONU) y países nombrados en el título, con orientación por palabras como «sanctions», «agreement», «condena», «convenio»… La ficha dice siempre de dónde sale."),
         el("li", {}, el("b", {}, "Relación por ley"), ": asuntos del parlamento del país de origen cuya ficha nombra otro país, con la orientación del asunto hacia él. Por defecto solo cuentan los aprobados en su votación decisiva (en EEUU, en al menos una cámara)."),
-        el("li", {}, el("b", {}, "Relación por la ONU"), ": en cada resolución sobre un país, votar sí a una resolución negativa para él (por ejemplo, sobre la situación de los derechos humanos en su territorio) cuenta como relación negativa; votar no, como positiva. Las abstenciones y ausencias no cuentan."),
+        el("li", {}, el("b", {}, "Conflictos conocidos"), ": las reglas saben quién es la víctima y quién el agresor en unos pocos conflictos (Rusia y Ucrania, Rusia y Georgia, Israel y Palestina). Un título que condena el secuestro de niños ucranianos, la ocupación de Crimea o el genocidio en Gaza es favorable a Ucrania o a Palestina y contrario a Rusia o a Israel, aunque este no se nombre; la ficha lo indica. Los títulos sobre Hamás o Hezbolá no cuentan como relación con Palestina o el Líbano."),
+        el("li", {}, el("b", {}, "Relación por la ONU"), ": en cada resolución sobre un país, votar sí a una resolución negativa para él (por ejemplo, sobre la situación de los derechos humanos en su territorio) cuenta como relación negativa; votar no, como positiva. Las abstenciones y ausencias no cuentan. El detalle de cada flecha dice qué votó el país."),
         el("li", {}, el("b", {}, "Afinidad en la ONU"), ": en las votaciones finales de cada año, 1 punto si dos Estados votan igual, medio si uno se abstiene y el otro no, 0 si votan lo contrario; las ausencias no cuentan. Es la medida habitual en los estudios sobre la Asamblea."),
-        el("li", {}, el("b", {}, "Afinidad entre partidos"), ": porcentaje de votaciones (salvo trámites) en que dos partidos adoptan la misma posición, que es la de al menos dos tercios de sus miembros; si no la hay, el partido está dividido."))),
+        el("li", {}, el("b", {}, "Afinidad entre partidos"), ": porcentaje de votaciones (salvo trámites) en que dos partidos adoptan la misma posición, que es la de al menos dos tercios de sus miembros; si no la hay, el partido está dividido. La matriz ordena los partidos por bloques: los dos grandes que menos coinciden van a los extremos y cada uno de los demás, más cerca del que más se le parece."),
+        el("li", {}, el("b", {}, "Partidos y otros países"), ": en cada votación final de un asunto con sentido claro hacia otro país, un partido vota a favor de ese país si vota sí a lo que lo favorece o no a lo que lo perjudica. El porcentaje es a favor / (a favor + en contra); las abstenciones no cuentan."),
+        el("li", {}, el("b", {}, "A favor, por tema"), ": por defecto, la diferencia entre el porcentaje de síes del partido en ese tema y su porcentaje en todos los temas. El porcentaje a secas depende sobre todo de quién propone: un partido del Gobierno vota no a casi todas las mociones de la oposición."))),
     el("section", { class: "ayuda-seccion card", id: "ay-paises" }, el("h3", {}, "Qué datos hay de cada país"),
       el("p", {}, "Resumen del estudio de fuentes que acompaña al proyecto: qué detalle de voto publica cada parlamento y lo difícil que es sacarlo (1: API o descarga masiva; 5: no hay datos o hay que leer PDF escaneados). Son los candidatos a los próximos conectores. Los parlamentos no competitivos solo interesan por el texto de sus leyes."),
       buscador, el("div", { class: "tabla-scroll" }, el("table", { class: "tabla" },
@@ -170,7 +190,8 @@ function pintarAyuda(qq) {
         el("li", {}, "Solo cuenta lo que se vota con votación registrada: lo que se aprueba por consenso o a mano alzada no aparece (en la ONU, la mayoría de las resoluciones se adoptan sin votación)."),
         el("li", {}, "La orientación sale del título del asunto: la IA puede equivocarse con títulos poco informativos y las reglas solo ven lo que el título dice. Cada relación dice quién la decidió y enlaza al texto oficial."),
         el("li", {}, "Los títulos de Polonia están en polaco: sin ficha de la IA no tienen relaciones."),
-        el("li", {}, "Un voto en la ONU o una ley no es toda la relación entre dos países: es lo que queda registrado en votaciones."))));
+        el("li", {}, "Los títulos de EE. UU., el Reino Unido y la ONU están en inglés: mientras no tengan ficha de la IA, no hay resumen en español."),
+        el("li", {}, "Un voto en la ONU o una ley no es toda la relación entre dos países: es lo que queda registrado en votaciones. Por ejemplo, el reconocimiento de Palestina por España (2024) lo decidió el Gobierno y no pasó por una votación del Congreso.")))));
   if (qq.sec) setTimeout(() => ir(qq.sec), 50);
   return nodo;
 }

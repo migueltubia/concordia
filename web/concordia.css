@@ -116,6 +116,9 @@ tr.actual td { background: var(--surface-2); font-weight: 600; }
 .ms-buscar { font: inherit; font-size: 14px; width: 100%; padding: 6px 8px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface-1); color: var(--ink); margin-bottom: 6px; }
 .segmentos .muted { align-self: center; }
 section.card + section.card { margin-top: 16px; }
+/* En una rejilla las tarjetas ya están separadas: sin esto, la segunda columna bajaba 16px. */
+.grid > .card + .card, .grid > section.card + section.card { margin-top: 0; }
+.grid.arriba { align-items: start; }
 .movil .barra-movil { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .movil header.top h1 { font-size: 16px; }
 .movil .boton-sel { max-width: 36vw; padding: 6px 10px; }
@@ -162,3 +165,117 @@ section.card + section.card { margin-top: 16px; }
 .movil .mapa-zoom { top: 6px; right: 6px; gap: 3px; }
 .movil .mapa-zoom .boton { width: 30px; height: 30px; min-height: 0; font-size: 15px; }
 .movil .lt-play { width: 38px; height: 34px; min-height: 0; }
+
+/* ------------------------------------------------------------------ mejoras de lectura (sept. 2026) */
+/* Escala divergente: rojo (poco o en contra) · gris · azul (mucho o a favor). Mapa de afinidad y matrices. */
+:root { --div-1: #e34948; --div-2: #f0a3a2; --div-3: #f8d3d2; --div-4: #dedcd4; --div-5: #cde2fb; --div-6: #9ec5f4; --div-7: #2a78d6; }
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) { --div-1: #e66767; --div-2: #8f4545; --div-3: #5a2e2e; --div-4: #45443f; --div-5: #1b3656; --div-6: #1c5cab; --div-7: #3987e5; }
+}
+:root[data-theme="dark"] { --div-1: #e66767; --div-2: #8f4545; --div-3: #5a2e2e; --div-4: #45443f; --div-5: #1b3656; --div-6: #1c5cab; --div-7: #3987e5; }
+
+/* Cabecera de las vistas de país: sección como antetítulo y botón para cambiar de país */
+.antetitulo { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-top: 4px; }
+.cab-pais h2 { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; }
+.boton-cambiar { font-size: 13px; font-weight: 500; letter-spacing: 0; border: 1px solid var(--border); background: var(--surface-1); color: var(--ink-2);
+  border-radius: 999px; padding: 2px 10px; cursor: pointer; align-self: center; }
+.boton-cambiar:hover { border-color: var(--axis); color: var(--ink); }
+
+/* Portada: preguntas para empezar */
+.preguntas { background: var(--surface-1); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius);
+  padding: 10px 14px 12px; margin: 4px 0 14px; }
+.preguntas-cab { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.preguntas-lista { display: flex; flex-wrap: wrap; gap: 8px; }
+.pregunta { font: inherit; font-size: 14px; text-align: left; background: var(--surface-2); border: 1px solid transparent; border-radius: 10px;
+  padding: 7px 12px; cursor: pointer; color: var(--ink); }
+button.pregunta:hover { border-color: var(--accent); }
+.pregunta-compuesta { cursor: default; display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.pregunta-pais { font: inherit; font-size: 14px; padding: 3px 6px; border-radius: 6px; border: 1px solid var(--accent); background: var(--surface-1); color: var(--ink); max-width: 200px; }
+.boton-cerrar { background: none; border: 0; color: var(--muted); cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 6px; flex: none; }
+.boton-cerrar:hover { background: var(--surface-2); color: var(--ink); }
+
+/* Avisos que se pueden cerrar */
+.aviso-cerrable { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; font-size: 14px; padding: 6px 8px 6px 12px; }
+.aviso-cerrable .boton-cerrar { color: inherit; }
+.enlace-ayuda { white-space: nowrap; }
+
+/* Mapa: aviso de Ctrl + rueda */
+.mapa-aviso { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); background: rgba(11, 11, 11, .78); color: #fff;
+  padding: 10px 16px; border-radius: 10px; font-size: 15px; pointer-events: none; opacity: 0; transition: opacity .2s; }
+.mapa-aviso.visible { opacity: 1; }
+
+/* Leyendas con rótulos de grupo */
+.leyenda-mapa { align-items: center; row-gap: 6px; }
+.leyenda-titulo { font-weight: 600; color: var(--ink); }
+.leyenda-sentidos { margin: 0; }
+.leyenda-sentidos b.s.si { color: var(--si); } .leyenda-sentidos b.s.no { color: var(--no); } .leyenda-sentidos b.s { color: var(--muted); }
+
+/* Puntos sobre escala recortada (afinidades muy parecidas) */
+.puntosh { display: grid; grid-template-columns: minmax(110px, 200px) 1fr; gap: 6px 12px; align-items: center; }
+.ph-escala { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-right: 42px; border-bottom: 1px solid var(--grid); }
+.ph-pista { position: relative; height: 18px; margin-right: 42px; }
+.ph-pista.clic { cursor: pointer; }
+.ph-pista.clic:hover { background: var(--surface-2); border-radius: 4px; }
+.ph-linea { position: absolute; left: 0; top: 8px; height: 2px; opacity: .35; }
+.ph-punto { position: absolute; top: 3px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; border: 2px solid var(--surface-1); }
+.ph-pista b { position: absolute; right: -42px; top: 0; font-size: 12px; font-variant-numeric: tabular-nums; min-width: 38px; text-align: right; }
+.nota-grafico { margin-top: 4px; }
+
+/* Línea de tiempo: un rótulo bajo cada año */
+.lt-escala { display: grid; padding: 0 .9%; }
+.lt-escala span { text-align: center; white-space: nowrap; }
+.lt-escala span:first-child { text-align: left; } .lt-escala span:last-child { text-align: right; }
+.sin-barras .lt-pista { margin-top: 2px; }
+
+/* Matrices de partidos: la tabla y, al lado, cómo leerla */
+.heat-caja { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+.heat-caja > .heat { flex: 0 1 auto; max-width: 100%; }
+.heat-lateral { flex: 1 1 240px; max-width: 420px; }
+.heat-lateral h4 { margin: 12px 0 4px; font-size: 13px; }
+.leyenda-celdas { display: flex; align-items: center; gap: 2px; font-size: 12px; color: var(--ink-2); margin-bottom: 8px; }
+.leyenda-celdas i { display: inline-block; width: 22px; height: 12px; border-radius: 2px; }
+.leyenda-celdas span:first-child { margin-right: 6px; } .leyenda-celdas span:last-child { margin-left: 6px; }
+.lista-pares { margin: 0; padding-left: 18px; font-size: 13px; }
+.lista-pares li { margin: 2px 0; }
+.siglas { margin-top: 10px; }
+.siglas summary, .rel-motivos summary { cursor: pointer; }
+.heat tr.fila-media td.media { background: var(--surface-2); font-weight: 600; }
+.heat tr.fila-media th { font-weight: 600; }
+.heat tr.clic { cursor: pointer; }
+.heat tr.clic:hover th { color: var(--accent); }
+
+/* Lista de votaciones: recuento y leyenda encima */
+.lista-cab { display: flex; justify-content: space-between; align-items: center; gap: 8px 16px; flex-wrap: wrap; margin: 0 0 8px; }
+.badge.varias { background: transparent; border: 1px solid var(--axis); }
+.badge.voto-onu { font-weight: 600; }
+.badge.voto-onu.si { color: var(--si); } .badge.voto-onu.no { color: var(--no); }
+
+/* Panel de detalle: copiar enlace y cerrar, siempre a mano */
+.panel-acciones { position: sticky; top: 0; float: right; display: flex; gap: 6px; z-index: 2; margin-left: 12px; }
+.panel .panel-acciones .cerrar { position: static; float: none; }
+.copiar-enlace { font-size: 13px; padding: 4px 10px; }
+
+/* Ayuda: índice fijo a la izquierda y el texto al lado */
+.ayuda { max-width: none; display: grid; grid-template-columns: 200px minmax(0, 860px); gap: 24px; align-items: start; }
+.ayuda-indice { position: sticky; top: 72px; }
+.ayuda-indice .subnav { flex-direction: column; flex-wrap: nowrap; }
+.ayuda-indice .subnav a { border-radius: 8px; }
+.ayuda-cuerpo > .ayuda-seccion:first-child { margin-top: 0; }
+.glosario { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 8px 16px; margin: 0; }
+.glosario dt { font-weight: 600; }
+.glosario dd { margin: 0; color: var(--ink-2); }
+@media (max-width: 900px) {
+  .ayuda { grid-template-columns: 1fr; }
+  .ayuda-indice { position: static; }
+  .ayuda-indice .subnav { flex-direction: row; flex-wrap: wrap; }
+  .glosario { grid-template-columns: 1fr; gap: 2px; }
+  .glosario dd { margin-bottom: 8px; }
+}
+.movil .ayuda-indice .subnav { flex-wrap: nowrap; }
+.movil .puntosh { grid-template-columns: minmax(84px, 36%) 1fr; gap: 6px 8px; }
+.movil .preguntas { padding: 8px 10px 10px; }
+.movil .preguntas-lista { flex-direction: column; gap: 4px; }
+.movil .pregunta { width: 100%; padding: 5px 10px; font-size: 14px; background: none; border: 0; border-bottom: 1px solid var(--grid); border-radius: 0; color: var(--accent); }
+.movil .pregunta-compuesta { color: var(--ink); }
+.movil .pregunta-pais { font-size: 15px; }
+.movil .heat-lateral { max-width: none; }

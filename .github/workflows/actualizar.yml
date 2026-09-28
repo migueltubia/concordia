@@ -48,13 +48,19 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Instalar dependencias
+        run: |
+          pip install playwright
+          playwright install chromium --with-deps
+          sudo apt-get install -y xvfb
+
       - name: Actualizar
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL }}
           PYTHONUNBUFFERED: "1"
         run: |
-          python -m concordia actualizar \
+          xvfb-run --auto-servernum python -m concordia actualizar \
             --limite-fichas "${{ inputs.limite_fichas || '300' }}" \
             ${{ inputs.fuente && format('--fuente {0}', inputs.fuente) || '' }}
 

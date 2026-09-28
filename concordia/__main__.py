@@ -43,6 +43,7 @@ def main(argv=None):
     s = sub.add_parser("fichas-deepseek", help="Fichas IA (resumen, tema y relaciones con otros países) con DeepSeek")
     s.add_argument("--limite", type=int, default=300)
     s.add_argument("--fuente")
+    s.add_argument("--hilos", type=int, default=4, help="Llamadas a la vez")
 
     s = sub.add_parser("fichas-exportar", help="Deja en data/llm/pendientes/ los asuntos sin ficha, para otro LLM o agente")
     s.add_argument("--limite", type=int, default=500)
@@ -97,7 +98,7 @@ def main(argv=None):
 
         if not deepseek.disponible():
             sys.exit("Falta DEEPSEEK_API_KEY (en el entorno o en .env)")
-        tocados = deepseek.generar_fichas(con, limite=a.limite, fuentes=_lista(a.fuente), log=log)
+        tocados = deepseek.generar_fichas(con, limite=a.limite, fuentes=_lista(a.fuente), log=log, hilos=a.hilos)
         procesar(con, tocados, log=log)
     elif a.cmd == "fichas-exportar":
         from .llm import fichas_io
