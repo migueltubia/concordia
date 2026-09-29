@@ -164,7 +164,10 @@ def _trocear(completa, tmp):
         web.executescript(esquema.replace("CREATE TABLE ", "CREATE TABLE d.").replace("CREATE INDEX ", "CREATE INDEX d."))
         h = hashlib.sha256(esquema.encode())
         for tabla, where in tablas:
-            pk = ", ".join(r[1] for r in sorted(web.execute(f"PRAGMA table_info({tabla})"), key=lambda r: r[5]) if r[5]) or "rowid"
+            cols = sorted(web.execute(f"PRAGMA table_info({tabla})"), key=lambda r: r[5])
+            # Sin clave primaria (relacion), por todas las columnas: por rowid la huella dependería del orden de
+            # inserción, y el mismo contenido saldría como fichero nuevo según cómo se construyó la base.
+            pk = ", ".join(r[1] for r in cols if r[5]) or ", ".join(r[1] for r in cols)
             for fila in web.execute(f"SELECT * FROM main.{tabla} WHERE {where} ORDER BY {pk}", args):
                 h.update(repr(fila).encode())
             web.execute(f"INSERT INTO d.{tabla} SELECT * FROM main.{tabla} WHERE {where} ORDER BY {pk}", args)

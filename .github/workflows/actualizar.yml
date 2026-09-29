@@ -47,7 +47,9 @@ concurrency:
 
 jobs:
   actualizar:
-    runs-on: ubuntu-latest
+    # Versión fija: Playwright (--with-deps) y Python 3.12 están probados aquí. ubuntu-latest pasa a
+    # Ubuntu 26 desde el 19 de octubre de 2026; cambiarlo cuando se haya probado.
+    runs-on: ubuntu-24.04
     timeout-minutes: 150
     env:
       COMPLETA: ${{ github.event_name != 'schedule' || github.event.schedule == '10 5 * * 0' }}
