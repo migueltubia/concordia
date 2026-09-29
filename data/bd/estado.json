@@ -1,7 +1,7 @@
 {
  "arg": {
   "error": null,
-  "ultimo_ok": "2026-09-28T21:34:53+00:00"
+  "ultimo_ok": "2026-09-29T07:55:17+00:00"
  },
  "bra": {
   "cerrados": [
@@ -13,7 +13,11 @@
    2024,
    2025
   ],
-  "error": null,
+  "error": {
+   "detalle": "RuntimeError: No se pudo descargar https://legis.senado.leg.br/dadosabertos/votacao?dataInicio=2026-08-20&dataFim=2026-09-29: HTTP Error 503: Service Unavailable",
+   "fecha": "2026-09-29T07:36:03+00:00",
+   "motivo": "error"
+  },
   "ultimo_ok": "2026-09-28T21:06:14+00:00"
  },
  "can": {
@@ -45,7 +49,7 @@
     "hasta": "2026-09-23"
    }
   },
-  "ultimo_ok": "2026-09-28T21:03:58+00:00"
+  "ultimo_ok": "2026-09-29T07:34:56+00:00"
  },
  "che": {
   "error": null,
@@ -91,7 +95,7 @@
    5213,
    5214
   ],
-  "ultimo_ok": "2026-09-28T20:55:34+00:00"
+  "ultimo_ok": "2026-09-29T07:34:55+00:00"
  },
  "chl": {
   "camara_cerrados": [
@@ -106,7 +110,7 @@
   "camara_pendientes": [],
   "error": null,
   "senado_hasta": "2026-09-29",
-  "ultimo_ok": "2026-09-28T23:51:27+00:00"
+  "ultimo_ok": "2026-09-29T07:58:48+00:00"
  },
  "cze": {
   "cerradas": [
@@ -114,15 +118,15 @@
    9
   ],
   "error": null,
-  "ultimo_ok": "2026-09-28T21:33:11+00:00"
+  "ultimo_ok": "2026-09-29T07:51:37+00:00"
  },
  "deu": {
   "error": null,
-  "ultimo_ok": "2026-09-28T22:10:43+00:00"
+  "ultimo_ok": "2026-09-29T07:56:09+00:00"
  },
  "dnk": {
   "error": null,
-  "ultimo_ok": "2026-09-28T21:30:12+00:00"
+  "ultimo_ok": "2026-09-29T07:37:44+00:00"
  },
  "esp": {
   "error": null,
@@ -134,20 +138,20 @@
    "congreso/leg14": "2ce4ec4d73ad18ca7bfa889869191e563c2a63a34440634f9f173815f899d86e",
    "congreso/leg15": "549a2e52578a1c9051465e66b6722cb145a44bde515cbac94479e78431438a7a"
   },
-  "ultimo_ok": "2026-09-28T17:16:22+00:00"
+  "ultimo_ok": "2026-09-29T07:34:45+00:00"
  },
  "est": {
   "error": null,
-  "ultimo_ok": "2026-09-28T23:17:59+00:00"
+  "ultimo_ok": "2026-09-29T07:55:42+00:00"
  },
  "eup": {
   "error": null,
-  "ultimo_ok": "2026-09-29T06:25:42+00:00",
+  "ultimo_ok": "2026-09-29T07:59:24+00:00",
   "version": "2026-09-26T00:00:00+00:00"
  },
  "fin": {
   "error": null,
-  "ultimo_ok": "2026-09-28T21:55:32+00:00"
+  "ultimo_ok": "2026-09-29T07:55:18+00:00"
  },
  "fra": {
   "cerradas": [
@@ -160,19 +164,15 @@
    "16": 4105,
    "17": 8434
   },
-  "ultimo_ok": "2026-09-28T21:10:18+00:00"
+  "ultimo_ok": "2026-09-29T07:37:24+00:00"
  },
  "gbr": {
-  "error": {
-   "detalle": "RuntimeError: No se pudo descargar https://commonsvotes-api.parliament.uk/data/divisions.json/search?queryParameters.startDate=2026-08-28&queryParameters.skip=0&queryParameters.take=25: HTTP Error 429: Too Many Requests",
-   "fecha": "2026-09-28T19:57:55+00:00",
-   "motivo": "error"
-  },
-  "ultimo_ok": "2026-09-28T19:06:17+00:00"
+  "error": null,
+  "ultimo_ok": "2026-09-29T07:34:41+00:00"
  },
  "irl": {
   "error": null,
-  "ultimo_ok": "2026-09-28T20:47:31+00:00"
+  "ultimo_ok": "2026-09-29T07:34:48+00:00"
  },
  "mex": {
   "error": null,
@@ -204,7 +204,7 @@
    "/Gaceta/Votaciones/66/vot66_a2primero.html",
    "/Gaceta/Votaciones/66/vot66_a2segundo.html"
   ],
-  "ultimo_ok": "2026-09-28T22:32:38+00:00"
+  "ultimo_ok": "2026-09-29T07:58:52+00:00"
  },
  "nld": {
   "error": null,
@@ -302,7 +302,7 @@
    "2026-07",
    "2026-08"
   ],
-  "ultimo_ok": "2026-09-28T21:21:57+00:00"
+  "ultimo_ok": "2026-09-29T07:37:37+00:00"
  },
  "nor": {
   "error": null,
@@ -943,7 +943,7 @@
    "2023-2024",
    "2024-2025"
   ],
-  "ultimo_ok": "2026-09-29T03:27:04+00:00"
+  "ultimo_ok": "2026-09-29T07:59:24+00:00"
  },
  "onu": {
   "cow_iso3": {
@@ -1148,7 +1148,11 @@
    "987": "FSM",
    "990": "WSM"
   },
-  "error": null,
+  "error": {
+   "detalle": "Bloqueada: Biblioteca Digital sin CSV (WAF; Playwright no lo ha conseguido): descárgalo de https://digitallibrary.un.org/record/4060887 y déjalo en data/raw/onu/undl/",
+   "fecha": "2026-09-29T07:34:35+00:00",
+   "motivo": "bloqueada"
+  },
   "ultimo_ok": "2026-09-28T19:55:29+00:00",
   "voeten": "https://dataverse.harvard.edu/api/access/datafile/9656257"
  },
@@ -1300,7 +1304,7 @@
    "9:81",
    "9:9"
   ],
-  "ultimo_ok": "2026-09-28T17:16:21+00:00"
+  "ultimo_ok": "2026-09-29T07:34:45+00:00"
  },
  "swe": {
   "cerrados": [
@@ -1313,11 +1317,11 @@
    "2024/25"
   ],
   "error": null,
-  "ultimo_ok": "2026-09-28T21:08:42+00:00"
+  "ultimo_ok": "2026-09-29T07:36:25+00:00"
  },
  "ukr": {
   "error": null,
-  "ultimo_ok": "2026-09-28T22:34:52+00:00"
+  "ultimo_ok": "2026-09-29T07:59:20+00:00"
  },
  "usa": {
   "cerrados": [
@@ -1335,6 +1339,6 @@
    118
   ],
   "error": null,
-  "ultimo_ok": "2026-09-28T17:16:14+00:00"
+  "ultimo_ok": "2026-09-29T07:34:39+00:00"
  }
 }
