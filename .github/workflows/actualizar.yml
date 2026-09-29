@@ -11,10 +11,12 @@ run-name: >-
 # los domingos, y al lanzarlo a mano, también la base troceada (data/bd) y los datos de la web (web/datos),
 # para que el historial de git no sume cada día una copia binaria.
 #
-# Por eso de lunes a sábado cada ejecución parte de la base del último domingo y vuelve a traer lo de la
-# semana (las fichas ya hechas se reutilizan desde data/llm). Una recogida larga por tandas (Noruega para a
-# los 40 minutos y sigue en la siguiente) solo avanza en las ejecuciones que guardan data/bd: para ponerse
-# al día, lanzarlo a mano o recoger en local y subir data/bd.
+# Entre un guardado y otro, la base de trabajo (data/concordia.sqlite) pasa de una ejecución a la siguiente
+# en la caché de Actions: cada una sigue donde lo dejó la anterior, sin volver a traer lo de la semana (y una
+# recogida por tandas, como la de Noruega, avanza cada día). La clave lleva la huella de data/bd y de db.py:
+# cuando cambian (el guardado del domingo, datos subidos desde un equipo, un esquema nuevo), la base se
+# reconstruye desde data/bd, para no pisar lo subido con una base vieja. Si no hay caché (GitHub la borra a
+# los 7 días sin uso), se parte del último data/bd guardado y se vuelve a traer lo de desde entonces.
 #
 # Si la actualización falla o se pasa de tiempo, se guardan igualmente las fichas hechas (data/llm), que
 # ya están pagadas, pero no la base ni la web, que podrían estar a medias, y no se publica.
@@ -62,6 +64,18 @@ jobs:
           pip install playwright
           playwright install chromium --with-deps
 
+      # La clave se calcula antes de actualizar, con data/bd tal como está en git: la actualización lo reescribe.
+      - name: Clave de la caché
+        id: cache
+        run: echo "clave=base-${{ hashFiles('data/bd/manifiesto.json', 'data/bd/estado.json', 'concordia/db.py') }}" >> "$GITHUB_OUTPUT"
+
+      - name: Recuperar la base de trabajo de la ejecución anterior
+        uses: actions/cache/restore@v6
+        with:
+          path: data/concordia.sqlite*
+          key: ${{ steps.cache.outputs.clave }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: ${{ steps.cache.outputs.clave }}-
+
       # Con su propio límite, por debajo del del trabajo: si se pasa, el paso falla (no se cancela el
       # trabajo) y el siguiente guarda las fichas hechas hasta entonces.
       - name: Actualizar
@@ -83,6 +97,15 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: web
+
+      # Solo una base completa, y no cuando se guarda data/bd: entonces la huella cambia y la próxima
+      # ejecución la reconstruye desde lo guardado (una caché con la clave vieja no le serviría).
+      - name: Guardar la base de trabajo para la próxima ejecución
+        if: ${{ steps.actualizar.outcome == 'success' && env.COMPLETA != 'true' }}
+        uses: actions/cache/save@v6
+        with:
+          path: data/concordia.sqlite*
+          key: ${{ steps.cache.outputs.clave }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Guardar cambios en el repositorio
         if: ${{ !cancelled() }}

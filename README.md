@@ -260,7 +260,7 @@ quién lo lance: GitHub Actions cada día o cualquiera con el repositorio clonad
 
 | Workflow | Cuándo | Qué hace |
 | --- | --- | --- |
-| `actualizar.yml` | Cada día a las 05:10 UTC; el domingo, además, guarda la base | `actualizar`, commit de `data/llm` (y los domingos y a mano, de `data/bd` y `web/datos`) y publicación de la web con los datos del día |
+| `actualizar.yml` | Cada día a las 05:10 UTC; el domingo, además, guarda la base | `actualizar`, commit de `data/llm` (y los domingos y a mano, de `data/bd` y `web/datos`) y publicación de la web con los datos del día. Entre semana la base de trabajo pasa de un día al siguiente en la caché de Actions; se reconstruye desde `data/bd` cuando este cambia |
 | `pages.yml` | Al subir cambios de `web/` y a mano | Publica `web/` en GitHub Pages |
 
 Configuración, una vez: *Settings > Pages > Source*: **GitHub Actions**; *Settings > Secrets and

@@ -65,3 +65,4 @@ def actualizar(fuentes=None, limite_fichas=300, ia=True, log=print):
         for f, a in fallos.items():
             log(f"  {f}: {a['motivo']} ({a['detalle'][:160]}); últimos datos del {a.get('ultimos_datos')}")
             print(f"::warning title=Fuente sin actualizar: {f}::{a['detalle'][:200]}")
+    con.close()  # vuelca el WAL: la base queda en un solo fichero, que es lo que guarda la caché de Actions
