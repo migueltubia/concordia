@@ -44,6 +44,10 @@ CENTROIDES = {"TUV": (-8.52, 179.2)}
 REGIONES = {"TWN": ("Asia", "Asia oriental"), "XKK": ("Europa", "Europa meridional")}
 # Geometrías sin código numérico en world-atlas.
 SIN_CODIGO = {"Kosovo": "XKK", "Somaliland": "SOM", "N. Cyprus": "CYP"}
+# Organismos con parlamento propio (el Parlamento Europeo): solo son origen de relaciones, nunca destino, y
+# no tienen alias para que las reglas no los busquen en los títulos. Se dibujan como un punto, como los
+# microestados (la Unión Europea, en Estrasburgo, sede del pleno). EUU es el código del Banco Mundial.
+ORGANISMOS = {"EUU": ("EU", "Unión Europea", "European Union", "Europa", "Europa occidental", 48.6, 7.77)}
 
 # Nombres en español más cortos o más habituales que los de la lista ISO.
 NOMBRE_ES = {
@@ -257,6 +261,11 @@ def main():
             "iso3": iso3, "iso2": None, "num": None, "nombre": nes, "nombre_en": nen, "region": reg[0], "subregion": reg[1],
             "lat": c[0] if c else lat, "lon": c[1] if c else lon, "sucesor": suc, "en_mapa": int(iso3 in en_mapa),
             "alias_en": [nen], "alias_es": [nes],
+        })
+    for iso3, (iso2, nes, nen, reg, subreg, lat, lon) in ORGANISMOS.items():
+        paises.append({
+            "iso3": iso3, "iso2": iso2, "num": None, "nombre": nes, "nombre_en": nen, "region": reg, "subregion": subreg,
+            "lat": lat, "lon": lon, "sucesor": None, "en_mapa": 0, "organismo": 1, "alias_en": [], "alias_es": [],
         })
     faltan = [p["iso3"] for p in paises if p["lat"] is None]
     if faltan:

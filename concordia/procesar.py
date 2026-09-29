@@ -3,7 +3,8 @@
 1. Voto por partido, totales y resultado de cada votación (si la fuente no los da).
 2. Votación decisiva de cada asunto en cada cámara (la última votación final) y resultado del asunto.
 3. Ficha por reglas de los asuntos que no tienen ficha de la IA: tema provisional y relaciones con
-   otros países (relaciones.py). Las de la IA nunca se tocan.
+   otros países (relaciones.py), del título y de los países que la fuente asocia al asunto
+   (asunto.extra["paises"]). Las de la IA nunca se tocan.
 4. Relaciones dirigidas entre países (tabla relacion):
    - vía «ley»: lo que vota el parlamento de un país sobre otro (origen: el país de la cámara), en la
      votación decisiva del asunto;
@@ -122,7 +123,8 @@ def fichas_reglas(con, fuente, anios):
         extra = json.loads(extra) if extra else {}
         if tipo in TIPOS_CON_RELACION:
             texto_regla = texto if f.codigo == "onu" and texto and texto != titulo else None
-            rs = reglas.relaciones(titulo, f.idioma, origen=f.pais, es_onu=f.codigo == "onu", texto=texto_regla)
+            rs = reglas.relaciones(titulo, f.idioma, origen=f.pais, es_onu=f.codigo == "onu", texto=texto_regla,
+                                   paises_fuente=extra.get("paises"))
         else:
             rs = []
         if origen is None:

@@ -44,15 +44,22 @@ def _item(r, fuente):
     extra = json.loads(r["extra"]) if r["extra"] else {}
     if extra.get("etiqueta") and extra["etiqueta"].lower() not in r["titulo"].lower():
         item["etiqueta"] = extra["etiqueta"]
+    if extra.get("paises"):  # los que la fuente asocia al asunto (HowTheyVote en el Parlamento Europeo)
+        item["paises_fuente"] = extra["paises"]
     return item
 
 
+# Los años más recientes primero y, dentro de cada año, por turnos entre fuentes (un asunto de cada una,
+# luego el segundo de cada una…), con los tratados delante: así una fuente con miles de mociones al año no
+# se queda todo el cupo diario.
 _CONSULTA = """
-    SELECT a.id, a.fuente, a.titulo, a.tipo, a.fecha, a.codigo, a.extra, fi.resumen, fi.tema_principal,
-           (SELECT v.texto FROM votacion v WHERE v.asunto_id=a.id AND v.decisiva=1 LIMIT 1) AS votado
-    FROM asunto a LEFT JOIN ficha fi ON fi.asunto_id=a.id
-    WHERE {cond} AND a.tipo NOT IN ('procedimiento', 'nombramiento') {fuentes}
-    ORDER BY substr(a.fecha, 1, 4) DESC, a.fuente, a.fecha DESC LIMIT ?"""
+    SELECT p.*, (SELECT v.texto FROM votacion v WHERE v.asunto_id=p.id AND v.decisiva=1 LIMIT 1) AS votado
+    FROM (SELECT a.id, a.fuente, a.titulo, a.tipo, a.fecha, a.codigo, a.extra, fi.resumen, fi.tema_principal,
+                 ROW_NUMBER() OVER (PARTITION BY a.fuente, substr(a.fecha, 1, 4)
+                                    ORDER BY a.tipo = 'tratado' DESC, a.fecha DESC) AS turno
+          FROM asunto a LEFT JOIN ficha fi ON fi.asunto_id=a.id
+          WHERE {cond} AND a.tipo NOT IN ('procedimiento', 'nombramiento') {fuentes}) p
+    ORDER BY substr(p.fecha, 1, 4) DESC, p.turno, p.fuente LIMIT ?"""
 
 
 def items_pendientes(con, limite=300, fuentes=None):
@@ -134,9 +141,14 @@ def importar_todo(con, log=print):
     for carpeta, completa in ((FICHAS_DIR, True), (RELACIONES_DIR, False)):
         ultima = {}  # si un asunto se repite, vale la última línea (los ficheros van por mes)
         for ruta in sorted(carpeta.glob("*/*.jsonl"), key=lambda r: (r.stem, r.parent.name)):
-            for linea in ruta.read_text(encoding="utf-8").splitlines():
+            for i, linea in enumerate(ruta.read_text(encoding="utf-8").splitlines(), 1):
                 if linea.strip():
-                    d = json.loads(linea)
+                    try:
+                        d = json.loads(linea)
+                    except json.JSONDecodeError:
+                        # Una ejecución cortada a medio escribir (en Actions se guardan igualmente las fichas).
+                        log(f"  ! {ruta.relative_to(carpeta).as_posix()}:{i}: línea incompleta, se salta")
+                        continue
                     ultima[d["id"]] = d
         por_modelo = defaultdict(list)
         for d in ultima.values():

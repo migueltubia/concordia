@@ -8,7 +8,7 @@ base.
 
 import importlib
 
-MODULOS = ["onu", "usa", "gbr", "pol", "esp"]
+MODULOS = ["onu", "usa", "gbr", "pol", "esp", "irl", "che", "can", "bra", "swe", "fra", "nld", "dnk", "cze", "arg", "fin", "est", "deu", "chl", "mex", "ukr", "nor", "isr", "eup"]
 
 FUENTES = {}
 _MODULO = {}

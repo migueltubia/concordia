@@ -7,10 +7,14 @@ Dos vías, la primera se carga una sola vez:
    título de cada resolución y sus temas (Oriente Próximo, nuclear, desarme, derechos humanos,
    colonialismo, desarrollo), que sirven de tema provisional.
 2. Desde entonces: el fichero oficial de la Biblioteca Digital de la ONU («General Assembly voting
-   data», https://digitallibrary.un.org/record/4060887), que se actualiza de forma continua.
-   La web usa AWS WAF que bloquea las peticiones de Python (tanto la página HTML como el endpoint
-   JSON de Invenio). Para obtener datos más recientes, descarga el CSV con un navegador y déjalo en
-   data/raw/onu/undl/.
+   data», https://digitallibrary.un.org/record/4060887), que se actualiza de forma continua. Se
+   importa lo posterior a septiembre de 2023, por este orden:
+   - Los CSV que haya en data/raw/onu/undl/ (descargados a mano con un navegador) tienen prioridad.
+   - Si no hay, se intenta la descarga directa (endpoint JSON de Invenio o página HTML).
+   - La web usa AWS WAF, que bloquea las peticiones de Python: entonces se abre un Chrome real con
+     Playwright (dependencia opcional; en Linux sin pantalla, con xvfb-run), se saca el enlace al CSV
+     y sus cookies, y se descarga con ellas. Si no hay Playwright o falla, la fuente queda como
+     bloqueada (la web y el resumen de la ejecución lo avisan) y la ONU se queda como estaba.
 """
 
 import csv
@@ -18,7 +22,7 @@ import io
 import re
 from collections import defaultdict
 
-from .. import paises
+from .. import http_util, paises
 from ..config import RAW_DIR
 from .modelo import Asunto, Fuente, Votacion
 
@@ -276,8 +280,8 @@ def recoger(ctx):
         return
     texto = _playwright_undl(ctx)
     if texto is None:
-        ctx.log(f"   ! No se pudo descargar el CSV de la Biblioteca Digital."
-                f" Descárgalo manualmente desde {UNDL_URL} y déjalo en data/raw/onu/undl/")
-        return
+        # Se lanza para que quede anotada como bloqueada: si no, pasaría por actualizada sin traer nada.
+        raise http_util.Bloqueada(f"Biblioteca Digital sin CSV (WAF; Playwright no lo ha conseguido): "
+                                  f"descárgalo de {UNDL_URL} y déjalo en data/raw/onu/undl/")
     n = importar_undl(ctx, texto)
     ctx.log(f"   Biblioteca Digital (Playwright): {n} votaciones posteriores a {VOETEN_HASTA}")

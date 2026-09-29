@@ -4,6 +4,8 @@ run-name: >-
 
 # Publica la carpeta web/ en GitHub Pages tal cual: es estática y no hay que compilar nada.
 # Requisito, una sola vez: Settings > Pages > Build and deployment > Source: «GitHub Actions».
+# Publica los datos que hay en git (web/datos se guarda los domingos): entre semana la web vuelve a esos datos
+# hasta la siguiente «Actualizar datos». Tras cambiar la web, lanzarla a mano la deja al día.
 
 on:
   push:

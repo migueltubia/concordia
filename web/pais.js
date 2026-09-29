@@ -10,13 +10,25 @@ const aniosOnu = () => { const [a, b] = aniosActuales(); return [a, Math.min(b, 
 const nombresOnu = () => nombresFuente("onu", aniosOnu());
 
 // Cabecera de las vistas de un país: la sección como antetítulo, el país y un atajo para cambiarlo.
+// Sin país (iso3 null), «Todos los países».
 function cabeceraPais(iso3, subtitulo, seccion) {
   const p = CAT.paises[iso3] || {};
   return el("div", { class: "cab-pais" },
     seccion ? el("div", { class: "antetitulo" }, seccion) : null,
-    el("h2", {}, p.nombre || iso3, el("span", { class: "muted small" }, ` · ${[p.subregion, p.region].filter(Boolean).join(", ")}`),
-      el("button", { type: "button", class: "boton-cambiar", onclick: abrirSelectorPais }, "Cambiar de país")),
+    el("h2", {}, iso3 ? p.nombre || iso3 : "Todos los países",
+      iso3 ? el("span", { class: "muted small" }, ` · ${[p.subregion, p.region].filter(Boolean).join(", ")}`) : null,
+      el("button", { type: "button", class: "boton-cambiar", onclick: abrirSelectorPais }, iso3 ? "Cambiar de país" : "Elegir un país")),
     subtitulo ? el("p", { class: "sub" }, subtitulo) : null);
+}
+
+// Votaciones y Partidos son de un parlamento: sin país elegido, se elige uno.
+function elegirParlamento(seccion) {
+  const paises = Object.keys(CAT.fuentesDe).sort((a, b) => nombrePais(a).localeCompare(nombrePais(b), "es"));
+  return el("div", {}, cabeceraPais(null, null, seccion),
+    el("section", { class: "card" }, el("h3", {}, "Elige un parlamento"),
+      el("p", { class: "muted small" }, "Cada parlamento vota sus propios asuntos con sus propios partidos, así que aquí no hay vista de conjunto. Lo que votan todos sobre otros países está en el mapa y en Resumen."),
+      el("div", { class: "pais-grupo" }, paises.map((i) => el("button", { type: "button", class: "pais-op", onclick: () => elegirPais(i) },
+        el("span", {}, nombrePais(i)), el("span", { class: "badge ok" }, camarasDe(i)))))));
 }
 
 // Autores de las iniciativas del Congreso (códigos de los grupos parlamentarios).
@@ -35,7 +47,7 @@ function sinParlamento(iso3) {
     info ? el("p", {}, `Según el estudio de fuentes: ${info.voto}.${info.fuente !== "—" ? ` ${info.fuente}.` : ""} `,
       /^\d/.test(info.dificultad) ? `Dificultad ${info.dificultad} de 5.` : "Excluido: su parlamento no es competitivo o no publica votos.")
       : el("p", {}, "El estudio de fuentes no encontró datos abiertos de voto de su parlamento, o su parlamento no es competitivo."),
-    el("p", { class: "muted small" }, "Sí están su voto en la Asamblea General de la ONU (1946–2023) y lo que otros parlamentos y Estados votan sobre él."),
+    el("p", { class: "muted small" }, `Sí están su voto en la Asamblea General de la ONU${CAT.fuentes.onu ? ` (${CAT.fuentes.onu.anio_min}–${CAT.fuentes.onu.anio_max})` : ""} y lo que otros parlamentos y Estados votan sobre él.`),
     el("p", {}, el("a", { href: hashDe("ayuda", { p: iso3 }) + "", onclick: (e) => { e.preventDefault(); irA("ayuda", { sec: "paises" }); } }, "Qué datos hay de cada país")));
 }
 
@@ -80,8 +92,46 @@ function barrasSaldo(filas, alClicar, { etiqueta = (r) => nombrePais(r.pais), va
 const leyendaSaldo = () => el("div", { class: "legend" }, el("span", {}, el("i", { style: "background:var(--si)" }), "positivas"),
   el("span", {}, el("i", { style: "background:var(--abs)" }), "neutras"), el("span", {}, el("i", { style: "background:var(--no)" }), "negativas"));
 
+// Sin país elegido: los parlamentos con datos, y de qué países tratan más sus leyes y las resoluciones de la ONU.
+function pintarResumenGlobal() {
+  const anios = aniosActuales(), [ao, bo] = aniosOnu();
+  const sobreOtros = Object.fromEntries(q(`SELECT origen, COUNT(DISTINCT asunto_id) AS n FROM relacion
+                                           WHERE via='ley' AND aprobado=1 AND anio BETWEEN ? AND ? GROUP BY origen`, anios).map((r) => [r.origen, r.n]));
+  const parlamentos = Object.entries(CAT.fuentesDe).map(([iso3, fs]) => {
+    const cs = CAT.cobertura.filter((c) => fs.some((f) => f.codigo === c.fuente) && c.anio >= anios[0] && c.anio <= anios[1]);
+    return { iso3, votaciones: cs.reduce((s, c) => s + c.votaciones, 0), asuntos: cs.reduce((s, c) => s + c.asuntos, 0), sobreOtros: sobreOtros[iso3] || 0 };
+  }).sort((a, b) => b.votaciones - a.votaciones || nombrePais(a.iso3).localeCompare(nombrePais(b.iso3), "es"));
+  // n: asuntos (o resoluciones) distintos; el color, el sentido de cada relación.
+  const destinos = (via, [a, b]) => q(`SELECT destino AS pais, SUM(orientacion>0) AS pos, SUM(orientacion<0) AS neg, SUM(orientacion=0) AS neu,
+                                         COUNT(DISTINCT asunto_id) AS n FROM relacion
+                                       WHERE via=? AND anio BETWEEN ? AND ? AND (via='onu' OR aprobado=1) GROUP BY destino ORDER BY n DESC LIMIT 12`, [via, a, b]);
+  const alMapa = (r) => irA("mundo", { o: "", d: r.pais }, { arriba: true });
+  return el("div", {},
+    cabeceraPais(null, `La foto de conjunto · ${textoAnios(anios)}. Elige un país para ver lo suyo.`, "Resumen"),
+    el("div", { class: "segmentos" },
+      el("button", { class: "boton", onclick: () => irA("mundo", { o: "", d: "" }) }, "Mapa: lo que vota cada país sobre otros"),
+      el("button", { class: "boton", onclick: () => irA("mundo", { modo: "afinidad" }) }, "Mapa: con quién vota igual cada país en la ONU")),
+    el("section", { class: "card" }, el("h3", {}, "Parlamentos con datos"),
+      el("p", { class: "muted small" }, `Votaciones recogidas en ${textoAnios(anios)}. «Sobre otros países»: asuntos aprobados que tratan de otro país. Pulsa uno para ver su resumen.`),
+      el("div", { class: "tabla-scroll" }, el("table", { class: "tabla" },
+        el("thead", {}, el("tr", {}, el("th", {}, "País"), el("th", {}, "Cámara"), el("th", { class: "num" }, "Votaciones"),
+          el("th", { class: "num" }, "Asuntos"), el("th", { class: "num" }, "Sobre otros países"))),
+        el("tbody", {}, parlamentos.map((r) => el("tr", { class: "clic", onclick: () => irA("resumen", { p: r.iso3 }, { arriba: true }) },
+          el("td", {}, nombrePais(r.iso3)), el("td", { class: "small muted" }, camarasDe(r.iso3)), el("td", { class: "num" }, fmt(r.votaciones)),
+          el("td", { class: "num" }, fmt(r.asuntos)), el("td", { class: "num" }, fmt(r.sobreOtros)))))))),
+    el("div", { class: "grid g2 arriba", style: "margin-top:16px" },
+      el("section", { class: "card" }, el("h3", {}, "De qué países tratan más las leyes"),
+        el("p", { class: "muted small" }, `Asuntos aprobados por los parlamentos con datos que tratan de cada país (${textoAnios(anios)}), con su sentido. Pulsa una barra para verlo en el mapa.`),
+        leyendaSaldo(), barrasSaldo(destinos("ley", anios), alMapa)),
+      el("section", { class: "card" }, el("h3", {}, "De qué países tratan más las resoluciones de la ONU"),
+        ao <= bo ? [el("p", { class: "muted small" }, `Resoluciones votadas en la Asamblea General que tratan de cada país (${textoAnios([ao, bo])}); el color, cómo votaron los Estados. Pulsa una barra para verlo en el mapa.`),
+          leyendaSaldo(), barrasSaldo(destinos("onu", [ao, bo]), alMapa)]
+          : el("p", { class: "muted" }, `La ONU tiene datos hasta ${ONU_HASTA}: elige años anteriores.`))));
+}
+
 function pintarResumen() {
   const iso3 = paisActual();
+  if (!iso3) return pintarResumenGlobal();
   const anios = aniosActuales();
   const fs = fuentesPais(iso3);
   const bloques = [];
@@ -104,7 +154,7 @@ function pintarResumen() {
       // «Sin tema» no es un tema: va al final, en gris.
       const conTema = temas.filter((r) => r.tema).slice(0, 12), sinTema = temas.find((r) => !r.tema);
       const camaras = Object.values(CAT.camaras).filter((c) => c.fuente === f.codigo).map((c) => c.nombre).join(" y ");
-      const legislador = f.codigo === "esp" ? "diputado" : "legislador";
+      const legislador = { esp: "diputado", eup: "eurodiputado" }[f.codigo] || "legislador";
       bloques.push(
         el("section", {}, el("h3", {}, f.nombre),
           el("p", { class: "muted small" }, unirPartes([camaras, f.detalle === "nominal" ? `voto de cada ${legislador}` : f.detalle,
@@ -132,16 +182,20 @@ function pintarResumen() {
   const panel = (o, d) => panelArista(o, d, {});
   const conDatos = Object.keys(CAT.fuentesDe).filter((i) => i !== iso3).map(nombrePais).join(", ");
   bloques.push(el("div", { class: "grid g2 arriba", style: "margin-top:16px" },
-    el("section", { class: "card" }, el("h3", {}, `Lo que el parlamento de ${nombrePais(iso3)} vota sobre otros países`),
+    el("section", { class: "card" }, el("h3", {}, `Lo que ${organo(iso3)} vota sobre otros países`),
       fs.length && salen.length ? [el("p", { class: "muted small" }, "Asuntos aprobados, por país del que tratan y su sentido. Pulsa una barra para ver cuáles."), leyendaSaldo(),
         barrasSaldo(salen, (r) => panel(iso3, r.pais))]
         : el("p", { class: "muted" }, fs.length ? `Ningún asunto aprobado sobre otros países en ${textoAnios(anios)}.` : "No se recogen todavía las votaciones de su parlamento.")),
-    el("section", { class: "card" }, el("h3", {}, `Lo que otros parlamentos votan sobre ${nombrePais(iso3)}`),
+    // La Unión Europea no es destino de nada (no es un Estado): en su lugar, las delegaciones nacionales.
+    esOrganismo(iso3) ? el("section", { class: "card" }, el("h3", {}, "Las delegaciones nacionales"),
+      el("p", {}, "El partido de cada eurodiputado es su grupo europeo (Votaciones y Partidos). Cómo vota la delegación de cada país, con qué otras coincide y cada uno de sus eurodiputados está en «En el PE»."),
+      el("p", {}, el("button", { class: "boton", onclick: () => irA("pe") }, "Comparar las delegaciones nacionales")))
+    : el("section", { class: "card" }, el("h3", {}, `Lo que otros parlamentos votan sobre ${nombrePais(iso3)}`),
       entran.length ? [el("p", { class: "muted small" }, `Solo de los parlamentos con datos (${conDatos}).`), leyendaSaldo(),
         barrasSaldo(entran, (r) => panel(r.pais, iso3))]
         : el("p", { class: "muted" }, `Ningún parlamento con datos (${conDatos}) ha aprobado nada sobre ${nombrePais(iso3)} en ${textoAnios(anios)}.`))));
   const [ao, bo] = aniosOnu();
-  if (ao <= bo) {
+  if (ao <= bo && !esOrganismo(iso3)) {
     const afines = afinidadCon(iso3, [ao, bo]).sort((a, b) => b.pct - a.pct);
     const aFavor = ordenarSaldo(onuSobre, 1), enContra = ordenarSaldo(onuSobre, -1);
     const verDetalle = (r) => panel(r.pais, iso3);
@@ -165,10 +219,15 @@ function pintarResumen() {
   }
   return el("div", {},
     cabeceraPais(iso3, fs.length ? null : "Sin votaciones de su parlamento: su perfil sale de la ONU y de lo que votan los demás.", "Resumen"),
-    el("div", { class: "segmentos" },
-      el("button", { class: "boton", onclick: () => irA("mundo", { o: iso3, d: "" }) }, `Mapa: lo que vota ${nombrePais(iso3)} sobre otros`),
-      el("button", { class: "boton", onclick: () => irA("mundo", { d: iso3, o: "" }) }, `Mapa: lo que otros votan sobre ${nombrePais(iso3)}`),
-      el("button", { class: "boton", onclick: () => irA("onu") }, "Su voto en la ONU")),
+    esOrganismo(iso3)
+      ? el("div", { class: "segmentos" },
+        el("button", { class: "boton", onclick: () => irA("mundo", { o: iso3, d: "" }) }, `Mapa: lo que vota ${organo(iso3)} sobre otros países`),
+        el("button", { class: "boton", onclick: () => irA("pe") }, "Las delegaciones nacionales"))
+      : el("div", { class: "segmentos" },
+        el("button", { class: "boton", onclick: () => irA("mundo", { o: iso3, d: "" }) }, `Mapa: lo que vota ${nombrePais(iso3)} sobre otros`),
+        el("button", { class: "boton", onclick: () => irA("mundo", { d: iso3, o: "" }) }, `Mapa: lo que otros votan sobre ${nombrePais(iso3)}`),
+        el("button", { class: "boton", onclick: () => irA("onu") }, "Su voto en la ONU"),
+        eurodiputados(iso3, anios) ? el("button", { class: "boton", onclick: () => irA("pe") }, "Sus eurodiputados") : null),
     bloques);
 }
 
@@ -241,6 +300,7 @@ function filaVotacion(v, fuente, alClicar) {
 
 function pintarVotaciones(qq) {
   const iso3 = paisActual();
+  if (!iso3) return elegirParlamento("Votaciones");
   const fs = fuentesPais(iso3);
   if (!fs.length) {
     return el("div", {}, cabeceraPais(iso3, null, "Votaciones"), sinParlamento(iso3),
@@ -326,6 +386,7 @@ function panelVotacion(id) {
   const rels = jsonDe(fi.relaciones, []);
   const fuente = CAT.fuentes[v.fuente];
   const esOnu = v.fuente === "onu";
+  const esPe = v.fuente === "eup";
   const resumen = limpiarResumen(fi.resumen);
   const relReglas = !fi.relaciones_origen || /reglas/.test(fi.relaciones_origen);
   const quienResume = !fi.origen || /reglas/.test(fi.origen) ? null : fi.origen.startsWith("escrutinio") ? "la IA de Escrutinio" : "una IA";
@@ -358,8 +419,11 @@ function panelVotacion(id) {
     el("div", { class: "g" }, el("h4", {}, el("span", { class: "sw", style: `display:inline-block;width:10px;height:10px;border-radius:2px;background:${colorPartido(v.fuente, p)}` }),
       partido(v.fuente, p).nombre || p, el("span", { class: "muted" }, ` (${ms.length})`)),
     ms.sort((a, b) => a.nombre.localeCompare(b.nombre, "es")).map((m) => el("div", { class: "d" },
-      esOnu ? el("a", { href: "#", onclick: (e) => { e.preventDefault(); cerrarPanel(); irA("onu", { p: m.iso3 }); } }, m.nombre) : el("span", {}, m.nombre),
+      esOnu ? el("a", { href: "#", onclick: (e) => { e.preventDefault(); cerrarPanel(); irA("onu", { p: m.iso3 }); } }, m.nombre)
+        : el("span", {}, m.nombre, esPe ? el("span", { class: "muted small" }, ` · ${nombrePais(paisDeMiembro(m.iso3))}`) : null),
       el("span", { class: `v ${m.sentido}` }, SENTIDO[m.sentido][1])))))) : null;
+  // Parlamento Europeo: cómo votan los eurodiputados de cada país (el país va en el id de cada uno).
+  const tablaPaises = esPe && nominal ? tablaPaisesPe(nominal) : null;
   const camara = CAT.camaras[v.camara]?.nombre || "";
   const fuenteNombre = fuente?.nombre || v.fuente;
   abrirPanel(el("div", {},
@@ -373,14 +437,15 @@ function panelVotacion(id) {
       el("div", { class: "badges" }, badgeResultado(v.resultado), v.mayoria ? el("span", { class: "badge" }, `mayoría ${v.mayoria}`) : null,
         v.url ? enlace(v.url, "Votación en la fuente ↗") : null),
       el("div", { style: "max-width:420px;margin-top:8px" }, barraVotos(v))),
-    tablaGrupos ? el("section", {}, el("h3", {}, esOnu ? "Por región" : "Por partido"), el("div", { class: "tabla-scroll" }, tablaGrupos)) : null,
+    tablaGrupos ? el("section", {}, el("h3", {}, esOnu ? "Por región" : esPe ? "Por grupo europeo" : "Por partido"), el("div", { class: "tabla-scroll" }, tablaGrupos)) : null,
+    tablaPaises ? el("section", {}, el("h3", {}, "Por país de los eurodiputados"), el("div", { class: "tabla-scroll" }, tablaPaises)) : null,
     otras.length > 1 ? el("section", {}, el("h3", {}, `Todas las votaciones del asunto (${otras.length})`),
       el("div", { class: "tabla-scroll" }, el("table", { class: "tabla" }, el("tbody", {}, otras.map((o) =>
         el("tr", { class: "clic" + (o.id === id ? " actual" : ""), onclick: () => panelVotacion(o.id) },
           el("td", {}, fecha(o.fecha)), el("td", {}, CAT.camaras[o.camara]?.corto || ""), el("td", {}, TIPOS_VOTACION[o.tipo]),
           el("td", {}, recortar(unirPartes([o.texto]), 90)), el("td", {}, badgeResultado(o.resultado)),
           el("td", { class: "num", title: "Sí – No" }, `${fmt(o.a_favor)}–${fmt(o.en_contra)}`))))))) : null,
-    nominalNodo ? el("section", {}, el("h3", {}, esOnu ? "Voto de cada Estado" : "Voto de cada legislador"), nominalNodo) : null),
+    nominalNodo ? el("section", {}, el("h3", {}, esOnu ? "Voto de cada Estado" : esPe ? "Voto de cada eurodiputado" : "Voto de cada legislador"), nominalNodo) : null),
   { v: id });
 }
 
@@ -401,8 +466,17 @@ function leyendaCeldas(rampa, izquierda, derecha) {
     rampa.map((v) => el("i", { style: `background:var(${v})` })), el("span", {}, derecha));
 }
 
+// Aviso para cuando faltan relaciones: las reglas solo leen títulos en inglés y en español; en las demás
+// lenguas, las relaciones con otros países salen de la ficha de la IA, que se hace poco a poco.
+function sinFichaIA(fuente, a, b) {
+  const filas = CAT.cobertura.filter((c) => c.fuente === fuente.codigo && c.anio >= a && c.anio <= b);
+  const asuntos = filas.reduce((s, c) => s + (c.asuntos || 0), 0), fichas = filas.reduce((s, c) => s + (c.fichas_ia || 0), 0);
+  return asuntos && fichas < asuntos ? ` (${fmt(asuntos - fichas)} de ${fmt(asuntos)} asuntos aún no tienen ficha de la IA)` : "";
+}
+
 function pintarPartidos(qq) {
   const iso3 = paisActual();
+  if (!iso3) return elegirParlamento("Partidos");
   const fs = fuentesPais(iso3);
   if (!fs.length) return el("div", {}, cabeceraPais(iso3, null, "Partidos"), sinParlamento(iso3));
   const fuente = fs.find((f) => f.codigo === qq.f) || fs[0];
@@ -527,7 +601,7 @@ function pintarPartidos(qq) {
     el("tbody", {}, paisesTop.map((pais) => el("tr", { class: "clic", title: `Ver las votaciones sobre ${nombrePais(pais)}`, onclick: () => irA("votaciones", { con: pais }) },
       el("th", { style: "text-align:right;white-space:nowrap" }, nombrePais(pais), el("span", { class: "muted" }, ` (${votosPais[pais].size})`)),
       partidos.map((p) => celdaPais(pais, p)))))))
-    : el("p", { class: "muted" }, `Ningún asunto de estos años trata de otros países con un sentido claro${fuente.codigo === "pol" ? " (los títulos del Sejm están en polaco y aún no tienen ficha de la IA)" : ""}.`);
+    : el("p", { class: "muted" }, `Ningún asunto de estos años trata de otros países con un sentido claro${sinFichaIA(fuente, a, b)}.`);
 
   return el("div", {},
     cabeceraPais(iso3, `${fuente.nombre} · ${textoAnios([a, b])}.`, "Partidos"),
@@ -556,13 +630,67 @@ VISTAS.onu = {
   pintar: pintarOnu,
 };
 
+// Sin país elegido: todas las resoluciones con su resultado, sin el voto de ningún Estado en concreto.
+function pintarOnuGlobal(qq) {
+  const [a, b] = aniosOnu();
+  if (a > b) {
+    return el("div", {}, cabeceraPais(null, null, "En la ONU"), el("div", { class: "vacio" }, `La ONU tiene datos hasta ${ONU_HASTA}: elige años anteriores.`));
+  }
+  const base = "FROM votacion v JOIN asunto s ON s.id=v.asunto_id LEFT JOIN ficha fi ON fi.asunto_id=s.id";
+  const w = ["v.fuente='onu'", "v.anio BETWEEN ? AND ?"], args = [a, b];
+  if (qq.todas !== "1") w.push("v.tipo='final'");
+  const temas = lista(qq.tema);
+  if (temas.length) { w.push(`fi.tema_principal IN (${marcas(temas)})`); args.push(...temas); }
+  if (qq.imp === "1") w.push("v.importante=1");
+  for (const palabra of (qq.q || "").split(/\s+/).filter(Boolean)) {
+    w.push("(s.titulo LIKE ? OR fi.resumen LIKE ? OR s.codigo LIKE ?)");
+    args.push(...Array(3).fill(`%${palabra}%`));
+  }
+  const where = w.join(" AND ");
+  const t = q1(`SELECT COUNT(*) AS n, SUM(v.a_favor) AS si, SUM(v.en_contra) AS no, SUM(v.abstenciones) AS abst,
+                  SUM(COALESCE(v.en_contra, 0)=0) AS sin_no ${base} WHERE ${where}`, args);
+  const emitidos = (t.si || 0) + (t.no || 0) + (t.abst || 0);
+  const pagina = Math.max(1, +(qq.pagina || 1));
+  const filas = q(`SELECT v.*, s.titulo, s.codigo, fi.resumen, fi.tema_principal, fi.relaciones ${base} WHERE ${where}
+                   ORDER BY v.fecha DESC, v.numero DESC LIMIT ? OFFSET ?`, [...args, TAM_PAGINA, (pagina - 1) * TAM_PAGINA]);
+  const cambiar = (c) => irA("onu", { ...c, pagina: "" });
+  return el("div", {},
+    cabeceraPais(null, `Votaciones de la Asamblea General de la ONU · ${textoAnios([a, b])}${b < aniosActuales()[1] ? ` (los datos llegan a ${ONU_HASTA})` : ""}. Elige un país para ver cómo votó y con quién coincide.`, "En la ONU"),
+    el("div", { class: "grid g4" },
+      stat("Votaciones", fmt(t.n), qq.todas === "1" ? "todas" : "votaciones finales de resoluciones"),
+      stat("Sí", `${pct(t.si, emitidos)} %`, "de todos los votos emitidos"), stat("No", `${pct(t.no, emitidos)} %`, "de todos los votos emitidos"),
+      stat("Sin ningún no", `${pct(t.sin_no, t.n)} %`, `${cuenta(t.sin_no, "votación", "votaciones")} sin votos en contra`)),
+    el("div", { class: "segmentos", style: "margin-top:16px" },
+      el("button", { class: "boton", onclick: () => irA("mundo", { modo: "afinidad" }) }, "Mapa: con quién vota igual cada país")),
+    el("h3", { style: "margin-top:20px" }, "Cada resolución, con su resultado"),
+    filaFiltros([
+      buscarFiltro("q", qq.q, "Buscar resolución…"),
+      multiSelect("tema", CAT.temas.map((x) => [x.codigo, x.nombre]), qq.tema, "Todos los temas", "temas"),
+      Object.assign(checkFiltro("imp", "Solo las votaciones clave (según EE. UU.)", qq.imp),
+        { title: "Votaciones que el Departamento de Estado de EE. UU. considera clave en su informe anual sobre la ONU" }),
+      checkFiltro("todas", "Incluir enmiendas y párrafos", qq.todas),
+    ], cambiar),
+    filas.length ? el("div", { class: "lista" }, filas.map((v) => el("div", { class: "fila", onclick: () => panelVotacion(v.id) },
+      el("div", {}, el("div", { class: "fecha" }, fecha(v.fecha)), el("div", { class: "muted small" }, v.codigo || "")),
+      el("div", {}, el("div", { class: "titulo" }, recortar(v.titulo, 200)),
+        limpiarResumen(v.resumen) ? el("div", { class: "resumen" }, limpiarResumen(v.resumen)) : null,
+        el("div", { class: "badges" }, v.tema_principal ? el("span", { class: "badge" }, temaNombre(v.tema_principal)) : null,
+          v.tipo !== "final" ? el("span", { class: "badge" }, TIPOS_VOTACION[v.tipo]) : null,
+          jsonDe(v.relaciones, []).slice(0, 4).map((r) => chipRelacion(r)))),
+      el("div", {}, barraVotos(v)))))
+      : el("div", { class: "vacio" }, "Ninguna votación con estos filtros."),
+    t.n > TAM_PAGINA ? paginacion(t.n, pagina, TAM_PAGINA, (p) => irA("onu", { pagina: p })) : null);
+}
+
 function pintarOnu(qq) {
   const iso3 = paisActual();
+  if (!iso3) return pintarOnuGlobal(qq);
   const [a, b] = aniosOnu();
   const p = CAT.paises[iso3] || {};
   if (a > b || !p.onu_desde) {
     return el("div", {}, cabeceraPais(iso3, null, "En la ONU"), el("div", { class: "vacio" },
-      !p.onu_desde ? `${nombrePais(iso3)} no tiene votos registrados en la Asamblea General.` : `La ONU tiene datos hasta ${ONU_HASTA}: elige años anteriores.`));
+      esOrganismo(iso3) ? `${nombrePais(iso3)} no es un Estado: no vota en la Asamblea General. Sí votan cada uno de sus miembros.`
+        : !p.onu_desde ? `${nombrePais(iso3)} no tiene votos registrados en la Asamblea General.` : `La ONU tiene datos hasta ${ONU_HASTA}: elige años anteriores.`));
   }
   const base = `FROM votacion v JOIN asunto s ON s.id=v.asunto_id LEFT JOIN ficha fi ON fi.asunto_id=s.id
                 JOIN plantilla pl ON pl.fuente='onu' AND pl.anio=v.anio AND pl.miembro_id=?
@@ -594,7 +722,7 @@ function pintarOnu(qq) {
   const cambiar = (c) => irA("onu", { ...c, pagina: "" });
   const opPaises = Object.values(CAT.paises).filter((x) => x.onu_desde).sort((x, y) => x.nombre.localeCompare(y.nombre, "es")).map((x) => [x.iso3, x.nombre]);
   return el("div", {},
-    cabeceraPais(iso3, `Voto de ${nombrePais(iso3)} en la Asamblea General de la ONU · ${textoAnios([a, b])}${b < aniosActuales()[1] ? ` (los datos llegan a septiembre de ${ONU_HASTA})` : ""}.`, "En la ONU"),
+    cabeceraPais(iso3, `Voto de ${nombrePais(iso3)} en la Asamblea General de la ONU · ${textoAnios([a, b])}${b < aniosActuales()[1] ? ` (los datos llegan a ${ONU_HASTA})` : ""}.`, "En la ONU"),
     el("div", { class: "grid g4" },
       stat("Votaciones", fmt(t.n), qq.todas === "1" ? "todas" : "votaciones finales de resoluciones"),
       stat("Sí", `${pct(t.si, t.n)} %`, cuenta(t.si, "votación", "votaciones")), stat("No", `${pct(t.no, t.n)} %`, cuenta(t.no, "votación", "votaciones")),

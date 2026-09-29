@@ -4,12 +4,20 @@ run-name: >-
   || github.event.schedule == '10 5 * * 0' && 'Actualizar datos · semanal'
   || 'Actualizar datos · diaria' }}
 
-# Cada día: trae las votaciones nuevas de cada fuente (ONU, EEUU, Reino Unido, Polonia y el Congreso de
+# Cada día: trae las votaciones nuevas de cada fuente (la ONU, 20 parlamentos nacionales y el Congreso de
 # España vía Escrutinio), hace con DeepSeek las fichas de lo nuevo (resumen, tema y relaciones con otros
 # países), recalcula relaciones y afinidades y publica la web con los datos del día. En el repositorio
 # guarda cada día solo las fichas (data/llm, texto pequeño), que es lo que no se puede volver a descargar;
 # los domingos, y al lanzarlo a mano, también la base troceada (data/bd) y los datos de la web (web/datos),
 # para que el historial de git no sume cada día una copia binaria.
+#
+# Por eso de lunes a sábado cada ejecución parte de la base del último domingo y vuelve a traer lo de la
+# semana (las fichas ya hechas se reutilizan desde data/llm). Una recogida larga por tandas (Noruega para a
+# los 40 minutos y sigue en la siguiente) solo avanza en las ejecuciones que guardan data/bd: para ponerse
+# al día, lanzarlo a mano o recoger en local y subir data/bd.
+#
+# Si la actualización falla o se pasa de tiempo, se guardan igualmente las fichas hechas (data/llm), que
+# ya están pagadas, pero no la base ni la web, que podrían estar a medias, y no se publica.
 #
 # Configuración en Settings > Secrets and variables > Actions:
 #   Secret   DEEPSEEK_API_KEY   clave de la API de DeepSeek (sin ella se actualiza todo menos las fichas IA)
@@ -48,21 +56,28 @@ jobs:
         with:
           python-version: "3.12"
 
+      # --with-deps instala también xvfb, que hace falta para abrir Chrome con ventana (ONU).
       - name: Instalar dependencias
         run: |
           pip install playwright
           playwright install chromium --with-deps
-          sudo apt-get install -y xvfb
 
+      # Con su propio límite, por debajo del del trabajo: si se pasa, el paso falla (no se cancela el
+      # trabajo) y el siguiente guarda las fichas hechas hasta entonces.
       - name: Actualizar
+        id: actualizar
+        timeout-minutes: 130
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           DEEPSEEK_MODEL: ${{ vars.DEEPSEEK_MODEL }}
           PYTHONUNBUFFERED: "1"
+          LIMITE_FICHAS: ${{ inputs.limite_fichas || '300' }}
+          FUENTE: ${{ inputs.fuente }}
         run: |
-          xvfb-run --auto-servernum python -m concordia actualizar \
-            --limite-fichas "${{ inputs.limite_fichas || '300' }}" \
-            ${{ inputs.fuente && format('--fuente {0}', inputs.fuente) || '' }}
+          args=(--limite-fichas "$LIMITE_FICHAS")
+          fuente="${FUENTE// /}"   # «onu, usa» -> «onu,usa»
+          if [ -n "$fuente" ]; then args+=(--fuente "$fuente"); fi
+          xvfb-run --auto-servernum python -m concordia actualizar "${args[@]}"
 
       # La web se publica con los datos recién calculados, también los días que no se guardan en git.
       - uses: actions/upload-pages-artifact@v5
@@ -70,11 +85,18 @@ jobs:
           path: web
 
       - name: Guardar cambios en el repositorio
+        if: ${{ !cancelled() }}
+        env:
+          RESULTADO: ${{ steps.actualizar.outcome }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/llm
-          if [ "$COMPLETA" = "true" ]; then git add data/bd web/datos; fi
+          if [ "$RESULTADO" != "success" ]; then
+            echo "::warning title=Actualización incompleta::se guardan solo las fichas IA (data/llm)"
+          elif [ "$COMPLETA" = "true" ]; then
+            git add data/bd web/datos
+          fi
           if git diff --cached --quiet; then
             echo "Sin cambios que guardar"
           else

@@ -76,6 +76,7 @@ const ANIO_ACTUAL = new Date().getFullYear();
 let SQL = null;
 let DB = null;
 let CAT = null;          // catálogo de comun.js: países, fuentes, partidos, temas, cobertura
+let ONU_HASTA = null;    // último año con votaciones de la ONU (del catálogo)
 const CARGADOS = new Set();
 
 function b64aBytes(b64) {
@@ -113,6 +114,9 @@ const q1 = (sql, params) => q(sql, params)[0] || {};
 const marcas = (xs) => xs.map(() => "?").join(",");
 
 async function abrirBase() {
+  // El índice cambia con cada publicación de datos: se pide siempre de nuevo, para no mezclar un índice viejo
+  // de la caché con ficheros nuevos (en file:// no hay caché que saltar).
+  await cargarScript(`datos/indice.js${location.protocol.startsWith("http") ? `?v=${Date.now()}` : ""}`).catch(() => {});
   if (!INDICE()) throw new Error("Falta web/datos/indice.js. Genéralo con: python -m concordia web");
   SQL = await initSqlJs({ wasmBinary: b64aBytes(window.SQL_WASM_B64) });
   delete window.SQL_WASM_B64;
@@ -138,10 +142,17 @@ function leerCatalogo() {
     tiposRel: Object.fromEntries(q("SELECT * FROM tipo_relacion").map((t) => [t.codigo, t.nombre])),
     camaras: Object.fromEntries(q("SELECT * FROM camara").map((c) => [c.codigo, c])),
     cobertura: q("SELECT * FROM cobertura ORDER BY fuente, anio"),
+    // Eurodiputados de cada país por año: [{fuente, anio, pais, miembros}] (datos anteriores al Parlamento Europeo: vacío).
+    delegaciones: q("SELECT name FROM sqlite_master WHERE name='delegacion'").length ? q("SELECT * FROM delegacion") : [],
     anioMin: anios.a || 1946, anioMax: Math.max(anios.b || 0, new Date().getFullYear()),
     ficheros: Object.fromEntries(INDICE().ficheros.map((f) => [f.nombre, f])),
   };
+  ONU_HASTA = fuentes.onu?.anio_max || CAT.anioMax;
 }
+// La Unión Europea está en el catálogo de países para ser origen de lo que vota el Parlamento Europeo, pero no es un Estado.
+const esOrganismo = (iso3) => !!CAT.paises[iso3]?.organismo;
+// Eurodiputados de un país en unos años (0 si no era de la UE).
+const eurodiputados = (iso3, [a, b]) => Math.max(0, ...CAT.delegaciones.filter((d) => d.pais === iso3 && d.anio >= a && d.anio <= b).map((d) => d.miembros));
 
 // Descarga (si hace falta) y junta en la base los ficheros pedidos.
 async function asegurar(nombres, avisar = () => {}) {
@@ -233,11 +244,15 @@ function marcarEnUrl(cambios) {
   const r = leerRuta();
   history.replaceState(null, "", hashDe(r.vista, { ...r.q, ...cambios }));
 }
+// El país de la URL o, si no hay, el último elegido en este navegador. Con p=todos, o si nunca se ha
+// elegido ninguno, devuelve null: la foto global.
+const TODOS = "todos";
 function paisActual() {
   const r = leerRuta();
+  if (r.q.p === TODOS) return null;
   if (r.q.p && CAT.paises[r.q.p]) return r.q.p;
   try { const g = localStorage.getItem(CLAVE_PAIS); if (g && CAT.paises[g]) return g; } catch { /* sin almacenamiento */ }
-  return "ESP";
+  return null;
 }
 function aniosActuales() {
   const r = leerRuta();
@@ -254,7 +269,7 @@ const textoAnios = ([a, b]) => (a === b ? String(a) : `${a}–${b}`);
 
 function pintarCabecera() {
   const iso = paisActual();
-  $("#botonPais .sel-texto").textContent = nombrePais(iso);
+  $("#botonPais .sel-texto").textContent = iso ? nombrePais(iso) : "Todos los países";
   $("#botonAnios .sel-texto").textContent = textoAnios(aniosActuales());
   const r = leerRuta();
   for (const a of document.querySelectorAll("[data-tab]")) {
@@ -277,16 +292,46 @@ function cerrarDialogo() {
   $("#dialogo").setAttribute("aria-hidden", "true");
 }
 
+// iso3 null: ningún país (la foto global).
 function elegirPais(iso3) {
-  try { localStorage.setItem(CLAVE_PAIS, iso3); } catch { /* sin almacenamiento */ }
+  const p = iso3 || TODOS;
+  try { localStorage.setItem(CLAVE_PAIS, p); } catch { /* sin almacenamiento */ }
   cerrarDialogo();
   const r = leerRuta();
   if (r.vista === "mundo") {
-    // En el mapa, el país elegido pasa a ser el origen (o la referencia, en el modo de afinidad).
-    location.hash = hashDe("mundo", r.q.modo === "afinidad" ? { ...r.q, p: iso3, ref: iso3 } : { ...r.q, p: iso3, o: iso3, d: "" });
+    // En el mapa, el país elegido pasa a ser el origen (o la referencia, en el modo de afinidad); sin país, se ve todo.
+    location.hash = hashDe("mundo", r.q.modo === "afinidad" ? { ...r.q, p, ref: iso3 || "" } : { ...r.q, p, o: iso3 || "", d: "" });
     return;
   }
-  location.hash = hashDe(r.vista === "ayuda" ? "resumen" : r.vista, { p: iso3, a: r.q.a });
+  location.hash = hashDe(r.vista === "ayuda" ? "resumen" : r.vista, { p, a: r.q.a });
+}
+
+// Nombre propio de lo que vota en cada fuente, con su artículo, para las frases sobre un país concreto
+// («lo que vota el Bundestag…»). Un conector nuevo sin entrada aquí sale como «el parlamento de <país>».
+const ORGANOS = {
+  usa: "el Congreso", gbr: "la Cámara de los Comunes", pol: "el Sejm", esp: "el Congreso de los Diputados",
+  irl: "el Oireachtas", che: "el Consejo Nacional", can: "la Cámara de los Comunes", bra: "el Congreso Nacional",
+  swe: "el Riksdag", fra: "la Asamblea Nacional", nld: "la Tweede Kamer", dnk: "el Folketing",
+  cze: "la Cámara de Diputados", arg: "el Congreso", fin: "el Eduskunta", est: "el Riigikogu", deu: "el Bundestag",
+  chl: "el Congreso Nacional", mex: "la Cámara de Diputados", ukr: "la Verjovna Rada", nor: "el Storting", isr: "la Knesset",
+  eup: "el Parlamento Europeo",
+};
+// «el Bundestag», «el Bundestag de Alemania» (conPais) o «Bundestag» (sinArticulo, para etiquetas).
+function organo(iso3, { conPais = false, sinArticulo = false } = {}) {
+  const propio = ORGANOS[(CAT.fuentesDe[iso3] || [])[0]?.codigo];
+  // Un organismo (la Unión Europea) no lleva «de <país>»: «el Parlamento Europeo», no «… de Unión Europea».
+  const texto = propio ? (conPais && !esOrganismo(iso3) ? `${propio} de ${nombrePais(iso3)}` : propio) : `el parlamento de ${nombrePais(iso3)}`;
+  if (!sinArticulo) return texto;
+  const sin = (propio || "el parlamento").replace(/^(el|la) /, "");
+  return sin[0].toUpperCase() + sin.slice(1);
+}
+
+// Nombre de las cámaras con datos de un país: «Bundestag», «Congreso de los Diputados», «Cámara y Senado»...
+function camarasDe(iso3) {
+  return (CAT.fuentesDe[iso3] || []).map((f) => {
+    const cs = Object.values(CAT.camaras).filter((c) => c.fuente === f.codigo);
+    return cs.length === 1 ? cs[0].nombre.replace(/\s*\(.*\)$/, "") : cs.map((c) => c.corto || c.nombre).join(" y ");
+  }).join(" · ");
 }
 
 function abrirSelectorPais() {
@@ -297,7 +342,7 @@ function abrirSelectorPais() {
   const listaNodo = el("div", { class: "pais-lista" });
   const fila = (p) => el("button", { type: "button", class: "pais-op" + (p.iso3 === actual ? " activo" : ""), onclick: () => elegirPais(p.iso3) },
     el("span", {}, p.nombre),
-    CAT.fuentesDe[p.iso3] ? el("span", { class: "badge ok" }, "parlamento") : null,
+    CAT.fuentesDe[p.iso3] ? el("span", { class: "badge ok", title: CAT.fuentesDe[p.iso3].map((f) => f.nombre).join(" · ") }, camarasDe(p.iso3)) : null,
     p.sucesor ? el("span", { class: "muted small" }, `hasta ${p.onu_hasta}`) : null);
   const pintar = (texto) => {
     const t = texto.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
@@ -308,7 +353,10 @@ function abrirSelectorPais() {
     const grupos = Object.entries(regiones).sort(([a], [b]) => a.localeCompare(b, "es")).map(([reg, ps]) =>
       el("div", { class: "pais-grupo" }, el("h4", {}, reg), ps.map(fila)));
     listaNodo.replaceChildren(
-      ...(!t ? [el("div", { class: "pais-grupo" }, el("h4", {}, "Con votaciones de su parlamento"),
+      ...(!t ? [el("div", { class: "pais-grupo" },
+        el("button", { type: "button", class: "pais-op" + (!actual ? " activo" : ""), onclick: () => elegirPais(null) },
+          el("span", {}, "Todos los países"), el("span", { class: "badge" }, "foto global, sin ninguno elegido"))),
+      el("div", { class: "pais-grupo" }, el("h4", {}, "Con votaciones de su parlamento"),
         conParlamento.map((i) => fila(CAT.paises[i])))] : []),
       ...grupos,
       ...(!grupos.length ? [el("p", { class: "muted" }, "Ningún país con ese nombre.")] : []));
@@ -316,7 +364,7 @@ function abrirSelectorPais() {
   const buscador = el("input", { type: "search", placeholder: "Buscar país…", class: "pais-buscar", oninput: (e) => pintar(e.target.value) });
   pintar("");
   abrirDialogo(el("div", {},
-    el("p", { class: "muted small" }, "Los países con parlamento tienen sus votaciones; todos tienen su voto en la ONU (1946–2023) y lo que otros votan sobre ellos."),
+    el("p", { class: "muted small" }, `Junto a cada país, la cámara de la que se recogen las votaciones; todos tienen su voto en la ONU (1946–${ONU_HASTA}) y lo que otros votan sobre ellos.`),
     buscador, listaNodo), "Elegir país");
   setTimeout(() => buscador.focus(), 50);
 }
@@ -336,7 +384,7 @@ function abrirSelectorAnios() {
       atajo("Últimos 10", max - 9, max), atajo("Desde 2001", 2001, max), atajo("Guerra Fría (1946–1991)", 1946, 1991), atajo("Todo", CAT.anioMin, max)),
     el("div", { class: "filtros" }, el("label", {}, "Desde ", desde), el("label", {}, "Hasta ", hasta),
       el("button", { type: "button", class: "boton primario", onclick: () => aplicar(+desde.value, +hasta.value) }, "Aplicar")),
-    el("p", { class: "muted small" }, "Cada país legisla por legislaturas distintas, así que todo se filtra por años naturales. La ONU tiene datos de 1946 a septiembre de 2023; los parlamentos, desde el año de la tabla de cobertura.")),
+    el("p", { class: "muted small" }, `Cada país legisla por legislaturas distintas, así que todo se filtra por años naturales. La ONU tiene datos de 1946 a ${ONU_HASTA}; los parlamentos, desde el año de la tabla de cobertura.`)),
   "Años");
 }
 

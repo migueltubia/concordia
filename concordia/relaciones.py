@@ -222,7 +222,7 @@ def _orientacion_de(tramo, neg, pos):
     return -1 if neg.search(tramo) else 1 if pos.search(tramo) else 0
 
 
-def relaciones(titulo, idioma="en", origen=None, es_onu=False, texto=None):
+def _del_titulo(titulo, idioma="en", origen=None, es_onu=False, texto=None):
     """Relaciones con otros países que se deducen del título (y del texto de lo votado)."""
     if idioma not in ("en", "es"):
         return []
@@ -299,3 +299,17 @@ def relaciones(titulo, idioma="en", origen=None, es_onu=False, texto=None):
         for propio in paises.propios(origen):
             salida.pop(propio, None)
     return list(salida.values())[:8]
+
+
+def relaciones(titulo, idioma="en", origen=None, es_onu=False, texto=None, paises_fuente=()):
+    """Relaciones del título y, detrás, las de los países que la propia fuente asocia al asunto (HowTheyVote en el
+    Parlamento Europeo). Esos entran aunque el título no los nombre o los nombre de forma ambigua («Georgia»), como
+    neutros: la fuente dice de qué país trata el asunto, no en qué sentido. El título manda si también lo nombra."""
+    salida = _del_titulo(titulo, idioma, origen, es_onu, texto)
+    vistos = {r["pais"] for r in salida} | (paises.propios(origen) if origen else set())
+    for iso3 in paises_fuente or ():
+        if iso3 in vistos or iso3 not in paises.por_iso3() or paises.solo_origen(iso3):
+            continue  # ya está, es el propio país, o no es un Estado del catálogo («EUR», la Antártida)
+        vistos.add(iso3)
+        salida.append(_rel(iso3, 0, "otro", "regla: la fuente lo asocia al asunto; el título no dice en qué sentido"))
+    return salida[:8]

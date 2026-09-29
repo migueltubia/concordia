@@ -16,7 +16,6 @@ const CLASES_SALDO = [
 ];
 const claseSaldo = (s) => CLASES_SALDO.find(([u]) => s >= u)[1];
 const saldoDe = (e) => (e.pos - e.neg) / Math.max(1, e.pos + e.neg + e.neu);
-const ONU_HASTA = 2023;
 const CENTRO_FIJO = 10; // meridiano central del mapa «fijo»: América a la izquierda y Asia a la derecha
 
 VISTAS.mundo = {
@@ -66,20 +65,31 @@ const COMO_AMPLIAR = () => (esMovil() ? "Pellizca para ampliar." : "Amplía con 
 function preguntasInicio() {
   const iso3 = paisActual(), nombre = nombrePais(iso3);
   const cerrar = () => { try { localStorage.setItem("concordia.preguntas", "no"); } catch { /* sin almacenamiento */ } caja.remove(); };
-  const otro = el("select", { class: "pregunta-pais", "aria-label": "Otro país" },
-    el("option", { value: "" }, "elige un país…"),
-    opcionesPaises().filter(([i]) => i !== iso3).map(([i, t]) => el("option", { value: i }, t)));
-  otro.addEventListener("change", () => { if (otro.value) irA("mundo", { o: iso3, d: otro.value, modo: "" }, { arriba: true }); });
+  const selectPais = (alElegir) => {
+    const s = el("select", { class: "pregunta-pais", "aria-label": "País" },
+      el("option", { value: "" }, "elige un país…"),
+      opcionesPaises().filter(([i]) => i !== iso3).map(([i, t]) => el("option", { value: i }, t)));
+    s.addEventListener("change", () => { if (s.value) alElegir(s.value); });
+    return s;
+  };
   const boton = (texto, accion) => el("button", { type: "button", class: "pregunta", onclick: accion }, texto);
+  // Sin país elegido, las preguntas llevan su propio selector.
+  const preguntas = iso3 ? [
+    el("div", { class: "pregunta pregunta-compuesta" }, `¿Qué ha votado ${nombre} sobre `, selectPais((v) => irA("mundo", { o: iso3, d: v, modo: "" }, { arriba: true })), "?"),
+    boton(`¿Qué votan otros países sobre ${nombre}?`, () => irA("mundo", { d: iso3, o: "", modo: "" }, { arriba: true })),
+    boton(`¿Con qué países vota igual ${nombre} en la ONU?`, () => irA("mundo", { modo: "afinidad", ref: iso3 }, { arriba: true })),
+    CAT.fuentesDe[iso3] ? boton(`¿Qué ha votado cada partido en ${organo(iso3, { conPais: true })}?`, () => irA("votaciones", {})) : null,
+    boton("Cambiar de país", abrirSelectorPais),
+  ] : [
+    el("div", { class: "pregunta pregunta-compuesta" }, "¿Qué ha votado ", selectPais((v) => irA("mundo", { o: v, d: "", modo: "" }, { arriba: true })), " sobre otros países?"),
+    el("div", { class: "pregunta pregunta-compuesta" }, "¿Qué votan los demás sobre ", selectPais((v) => irA("mundo", { d: v, o: "", modo: "" }, { arriba: true })), "?"),
+    el("div", { class: "pregunta pregunta-compuesta" }, "¿Con quién vota igual ", selectPais((v) => irA("mundo", { modo: "afinidad", ref: v }, { arriba: true })), " en la ONU?"),
+    boton("Elegir un país", abrirSelectorPais),
+  ];
   const caja = el("section", { class: "preguntas" },
     el("div", { class: "preguntas-cab" }, el("b", {}, "Empieza por una pregunta"),
       el("button", { type: "button", class: "boton-cerrar", title: "No volver a mostrar", "aria-label": "Cerrar", onclick: cerrar }, "✕")),
-    el("div", { class: "preguntas-lista" },
-      el("div", { class: "pregunta pregunta-compuesta" }, `¿Qué ha votado ${nombre} sobre `, otro, "?"),
-      boton(`¿Qué votan otros países sobre ${nombre}?`, () => irA("mundo", { d: iso3, o: "", modo: "" }, { arriba: true })),
-      boton(`¿Con qué países vota igual ${nombre} en la ONU?`, () => irA("mundo", { modo: "afinidad", ref: iso3 }, { arriba: true })),
-      CAT.fuentesDe[iso3] ? boton(`¿Qué ha votado cada partido en el parlamento de ${nombre}?`, () => irA("votaciones", {})) : null,
-      boton("Cambiar de país", abrirSelectorPais)));
+    el("div", { class: "preguntas-lista" }, preguntas));
   return caja;
 }
 const mostrarPreguntas = () => { try { return localStorage.getItem("concordia.preguntas") !== "no"; } catch { return true; } };
@@ -201,13 +211,13 @@ function lineaTiempo({ desde, hasta, modo, anio, barras, alCambiar, modos, etiqu
 function pintarOrientacion(qq0, cab) {
   const [desde, hasta] = aniosActuales();
   // Sin nada en la URL, el origen es el país elegido; «todos» (o vaciar el selector) quita el filtro.
-  const qq = { ...qq0, o: qq0.o === undefined && qq0.d === undefined ? paisActual() : qq0.o === "todos" ? "" : qq0.o || "" };
+  const qq = { ...qq0, o: qq0.o === undefined && qq0.d === undefined ? paisActual() || "" : qq0.o === "todos" ? "" : qq0.o || "" };
   const cambiar = (c) => irA("mundo", { ...c, ...(c.o === "" ? { o: "todos" } : {}) });
   const paisesOp = opcionesPaises();
   const filtros = filaFiltros([
     multiSelect("o", paisesOp, qq.o, "Origen: todos", "países", { buscar: true }),
     multiSelect("d", paisesOp, qq.d, "Destino: todos", "países", { buscar: true }),
-    selectFiltro("via", [["", "Leyes y ONU"], ["ley", "Solo leyes nacionales"], ["onu", "Solo votos en la ONU"]], qq.via),
+    selectFiltro("via", [["", "Leyes y ONU"], ["ley", "Solo lo que votan los parlamentos"], ["onu", "Solo votos en la ONU"]], qq.via),
     selectFiltro("ori", [["", "Toda orientación"], ["pos", "Solo positivas"], ["neg", "Solo negativas"], ["neu", "Solo neutras"]], qq.ori),
     multiSelect("tema", CAT.temas.map((t) => [t.codigo, t.nombre]), qq.tema, "Todos los temas", "temas"),
     multiSelect("tipo", Object.entries(CAT.tiposRel), qq.tipo, "Todo tipo de relación", "tipos"),
@@ -296,7 +306,7 @@ function pintarOrientacion(qq0, cab) {
         desde: e.origen, hasta: e.destino, n: e.n, clase: claseSaldo(saldoDe(e)),
         tip: () => [`${nombrePais(e.origen)} → ${nombrePais(e.destino)}`,
           `${textoAnios(fr.anios)}: ${textoSaldo(e.pos, e.neg, e.neu)}`,
-          unirPartes([e.leyes ? `Parlamento: ${cuenta(e.leyes, "asunto", "asuntos")}` : "", e.onu ? `ONU: ${cuenta(e.onu, "voto", "votos")}` : "", "pulsa para ver el detalle"])],
+          unirPartes([e.leyes ? `${organo(e.origen, { sinArticulo: true })}: ${cuenta(e.leyes, "asunto", "asuntos")}` : "", e.onu ? `ONU: ${cuenta(e.onu, "voto", "votos")}` : "", "pulsa para ver el detalle"])],
         alClicar: () => panelArista(e.origen, e.destino, qq, fr.anios),
       })),
       maxN: fr.modo === "anio" ? maxAnio : maxTotal,
@@ -337,12 +347,18 @@ function pintarOrientacion(qq0, cab) {
   });
 
   const avisoOnu = hasta > ONU_HASTA && qq.via !== "ley" ? avisoCerrable("onu",
-    `La ONU solo tiene datos hasta septiembre de ${ONU_HASTA}: después, las flechas son solo de leyes nacionales. `, enlaceAyuda("fuentes", "Por qué")) : null;
+    `La ONU solo tiene datos hasta ${ONU_HASTA}: después, las flechas son solo de lo que votan los parlamentos. `, enlaceAyuda("fuentes", "Por qué")) : null;
   // Un parlamento con datos pero sin relaciones por ley en esos años (Polonia: títulos en polaco sin ficha de la IA).
   const sinFiltros = !qq.via && !qq.ori && !qq.tema && !qq.tipo;
   const sinLeyes = sinFiltros ? [...o].filter((i) => CAT.fuentesDe[i] && !filas.some((f) => f.origen === i && f.leyes)) : [];
+  const organos = sinLeyes.map((i) => organo(i, { conPais: true })).join(" y ");
+  // Lo que queda son sus votos en la ONU, si los hay en esos años (después de ONU_HASTA no hay ninguno).
+  const conOnu = sinLeyes.filter((i) => filas.some((f) => f.origen === i && f.onu));
+  const sinOnu = sinLeyes.filter((i) => !conOnu.includes(i));
   const avisoLeyes = sinLeyes.length ? el("p", { class: "aviso-lectura" },
-    `${sinLeyes.map(nombrePais).join(" y ")}: su parlamento todavía no tiene relaciones por ley con otros países en ${textoAnios([desde, hasta])}${sinLeyes.includes("POL") ? " (sus títulos están en polaco y aún no tienen ficha de la IA)" : ""}. Las flechas que se ven son sus votos en la ONU.`) : null;
+    `${organos[0].toUpperCase()}${organos.slice(1)} todavía no ${sinLeyes.length > 1 ? "tienen" : "tiene"} relaciones por ley con otros países en ${textoAnios([desde, hasta])}${sinLeyes.includes("POL") ? " (los títulos polacos aún no tienen ficha de la IA)" : ""}.`,
+    conOnu.length ? ` Las flechas que salen de ${conOnu.map(nombrePais).join(" y ")} son sus votos en la ONU.` : "",
+    sinOnu.length ? ` No sale ninguna flecha de ${sinOnu.map(nombrePais).join(" ni de ")}${desde > ONU_HASTA ? `, porque la ONU solo tiene datos hasta ${ONU_HASTA}` : ""}.` : "") : null;
   const leyenda = el("div", { class: "legend leyenda-mapa" },
     el("span", { class: "leyenda-titulo" }, "Color de la flecha:"),
     CLASES_SALDO.map(([, c, t]) => el("span", {}, el("i", { class: `fl-${c}` }), t)),
@@ -356,9 +372,9 @@ function pintarOrientacion(qq0, cab) {
     el("span", { class: "muted small" }, "Al pulsar un país:"),
     ...[["o", "origen"], ["d", "destino"], ["p", "ver el país"]].map(([v, t]) =>
       el("button", { type: "button", class: "boton" + (clic === v ? " activo" : ""), onclick: () => cambiar({ clic: v === "o" ? "" : v }) }, t)),
-    el("span", { class: "muted small" }, "·"),
-    el("button", { type: "button", class: "boton", onclick: () => cambiar({ o: paisActual(), d: "" }) }, `Desde ${nombrePais(paisActual())}`),
-    el("button", { type: "button", class: "boton", onclick: () => cambiar({ d: paisActual(), o: "" }) }, `Hacia ${nombrePais(paisActual())}`),
+    paisActual() || o.size || d.size ? el("span", { class: "muted small" }, "·") : null,
+    paisActual() ? el("button", { type: "button", class: "boton", onclick: () => cambiar({ o: paisActual(), d: "" }) }, `Desde ${nombrePais(paisActual())}`) : null,
+    paisActual() ? el("button", { type: "button", class: "boton", onclick: () => cambiar({ d: paisActual(), o: "" }) }, `Hacia ${nombrePais(paisActual())}`) : null,
     (o.size || d.size) ? el("button", { type: "button", class: "boton", onclick: () => cambiar({ o: "", d: "" }) }, "Todo el mundo") : null);
   return el("div", {}, cab, filtros, accesos, avisoOnu, avisoLeyes, mapa.nodo, tiempo, leyenda, resumenNodo, tablaNodo);
 }
@@ -395,7 +411,7 @@ function tablaAristas(filas, qq, anios, { conOrigen = true, conDestino = true } 
         conOrigen ? el("td", {}, nombrePais(e.origen)) : null, conDestino ? el("td", {}, nombrePais(e.destino)) : null, el("td", { class: "num" }, fmt(e.n)),
         el("td", { class: "num" }, fmt(e.pos)), el("td", { class: "num" }, fmt(e.neg)), el("td", { class: "num" }, fmt(e.neu)),
         el("td", { style: "min-width:120px" }, barra(e)),
-        el("td", { class: "small muted" }, unirPartes([e.leyes ? `Parlamento: ${fmt(e.leyes)}` : "", e.onu ? `ONU: ${fmt(e.onu)}` : ""]))))))));
+        el("td", { class: "small muted" }, unirPartes([e.leyes ? `${organo(e.origen, { sinArticulo: true })}: ${fmt(e.leyes)}` : "", e.onu ? `ONU: ${fmt(e.onu)}` : ""]))))))));
 }
 
 // Quién decidió qué países trata un asunto y en qué sentido, dicho para cualquiera.
@@ -443,7 +459,7 @@ function panelArista(origen, destino, qq, anios = aniosActuales()) {
   abrirPanel(el("div", {},
     el("h2", {}, `${O} → ${D}`),
     el("p", { class: "sub" }, `${textoAnios(anios)} · ${cuenta(filas.length, "relación", "relaciones")}: ${textoSaldo(pos, neg, neu)}.`),
-    leyes.length ? el("section", {}, el("h3", {}, `Lo que vota el parlamento de ${O} sobre ${D}`),
+    leyes.length ? el("section", {}, el("h3", {}, `Lo que vota ${organo(origen, { conPais: true })} sobre ${D}`),
       el("p", { class: "muted small" }, `Cada asunto, con su sentido hacia ${D} (positivo: ayuda, acuerdo, apoyo; negativo: sanción, condena, restricción) y el resultado de su votación final.`), leyes.map(item)) : null,
     onu.length ? el("section", {}, el("h3", {}, `Cómo vota ${O} en la ONU las resoluciones sobre ${D}`),
       el("p", { class: "muted small" }, `Positiva: ${O} votó a favor de ${D} (sí a una resolución que lo favorece, o no a una que lo condena). Negativa, al revés. Las abstenciones no cuentan.`),
@@ -474,6 +490,15 @@ function pintarAfinidad(qq, cab) {
   ], (c) => cambiar(c), { plegable: false });
   if (desde > hastaOnu) {
     return el("div", {}, cab, controles, el("div", { class: "vacio" }, `La ONU tiene datos hasta ${ONU_HASTA}: elige años anteriores.`));
+  }
+  // Sin país elegido: el mapa espera a que se elija uno.
+  if (!ref) {
+    const conVotos = (iso3) => !!CAT.paises[iso3]?.onu_desde;
+    const mapa = crearMapa({ centro: CENTRO_FIJO, rellenar: () => null, flechas: [], maxN: 1, origenes: new Set(), etiquetas: [],
+      tipPais: (iso3) => [nombrePais(iso3), conVotos(iso3) ? "Pulsa para ver con quién vota igual" : "Sin votos en la ONU"],
+      alClicarPais: (iso3) => { if (conVotos(iso3)) cambiar({ ref: iso3 }); } });
+    return el("div", {}, cab, controles,
+      el("p", { class: "aviso-lectura" }, "Elige un país de referencia, en el selector o pulsándolo en el mapa, para ver con quién vota igual en la ONU."), mapa.nodo);
   }
   // Por año y país: los fotogramas se agregan en el navegador.
   const filas = q(`SELECT anio, CASE WHEN a=?1 THEN b ELSE a END AS otro, suma AS s, total AS t FROM afinidad_onu
@@ -537,7 +562,7 @@ function pintarAfinidad(qq, cab) {
     el("span", { class: "leyenda-titulo" }, "de los votos."),
     n ? el("span", {}, el("i", { class: "fl-p2" }), "flecha: de los más afines") : null, n ? el("span", {}, el("i", { class: "fl-n2" }), "de los menos afines") : null,
     enlaceAyuda("glosario"));
-  const aviso = hasta > ONU_HASTA ? avisoCerrable("afinidad", `La ONU tiene datos hasta septiembre de ${ONU_HASTA}: aquí se usan ${textoAnios([desde, hastaOnu])}.`) : null;
+  const aviso = hasta > ONU_HASTA ? avisoCerrable("afinidad", `La ONU tiene datos hasta ${ONU_HASTA}: aquí se usan ${textoAnios([desde, hastaOnu])}.`) : null;
   const listas = el("div");
   const pintarListas = () => {
     const puntos = (xs, color) => puntosH(xs.map((r) => ({ etiqueta: nombrePais(r.otro), valor: r.pct, tip: `${cuenta(r.t, "votación", "votaciones")} en común · pulsa para compararlo con todos`, iso3: r.otro })),

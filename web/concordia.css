@@ -119,7 +119,7 @@ section.card + section.card { margin-top: 16px; }
 /* En una rejilla las tarjetas ya están separadas: sin esto, la segunda columna bajaba 16px. */
 .grid > .card + .card, .grid > section.card + section.card { margin-top: 0; }
 .grid.arriba { align-items: start; }
-.movil .barra-movil { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.movil .barra-movil { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .movil header.top h1 { font-size: 16px; }
 .movil .boton-sel { max-width: 36vw; padding: 6px 10px; }
 .movil .boton-sel svg, .movil .boton-sel .sel-flecha { display: none; }

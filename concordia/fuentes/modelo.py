@@ -37,7 +37,7 @@ class Asunto:
     codigo: str | None = None   # «H.R. 815», «A/RES/77/7», «druk 123»...
     autor: str | None = None
     url: str | None = None
-    extra: dict | None = None
+    extra: dict | None = None   # «paises»: ISO3 que la fuente asocia al asunto (van a las relaciones como neutros)
 
 
 @dataclass

@@ -4,7 +4,8 @@ Igual que en Escrutinio, la base va en SQLite comprimida con gzip y en base64 de
 la página carga con <script> (los navegadores no dejan leer ficheros locales con fetch); en el navegador,
 sql.js la abre en memoria. Va troceada para que solo se descargue lo que se mira:
 
-- datos/comun.js: países, fuentes, cámaras, temas, partidos y la cobertura de cada fuente por año.
+- datos/comun.js: países, fuentes, cámaras, temas, partidos, la cobertura de cada fuente por año y cuántos
+  eurodiputados tiene cada país cada año (para saber sin descargar el Parlamento Europeo quién tiene).
 - datos/<fuente>/<año>.js: lo de un año de una fuente (votaciones, voto por partido, voto nominal compacto,
   asuntos, fichas, afinidad entre partidos). Es lo que usan las vistas de país.
 - datos/mundo/<año>.js: la capa del mapa: relaciones entre países de ese año (de todas las fuentes), con
@@ -23,13 +24,15 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+from . import paises
 from .config import WEB_DIR
 from .recoger import avisos
 
 ESQUEMA = """
 CREATE TABLE meta(clave TEXT PRIMARY KEY, valor TEXT);
 CREATE TABLE pais(iso3 TEXT PRIMARY KEY, iso2 TEXT, nombre TEXT, region TEXT, subregion TEXT, lat REAL, lon REAL,
-  sucesor TEXT, en_mapa INTEGER, onu_desde INTEGER, onu_hasta INTEGER);
+  sucesor TEXT, en_mapa INTEGER, onu_desde INTEGER, onu_hasta INTEGER, organismo INTEGER);
+CREATE TABLE delegacion(fuente TEXT, anio INTEGER, pais TEXT, miembros INTEGER, PRIMARY KEY(fuente, anio, pais));
 CREATE TABLE fuente(codigo TEXT PRIMARY KEY, pais TEXT, nombre TEXT, corto TEXT, tipo TEXT, detalle TEXT, web TEXT,
   licencia TEXT, desde INTEGER, notas TEXT, orden INTEGER, anio_min INTEGER, anio_max INTEGER, votaciones INTEGER);
 CREATE TABLE camara(codigo TEXT PRIMARY KEY, fuente TEXT, nombre TEXT, corto TEXT, escanos INTEGER);
@@ -64,7 +67,9 @@ CREATE TABLE asunto_mundo(id TEXT PRIMARY KEY, fuente TEXT, fecha TEXT, titulo T
   resumen TEXT, tema TEXT, resultado TEXT, anio INTEGER, relaciones TEXT);
 CREATE TABLE afinidad_onu(anio INTEGER, a TEXT, b TEXT, suma REAL, total INTEGER, PRIMARY KEY(anio, a, b)) WITHOUT ROWID;
 """
-TABLAS_COMUN = ("meta", "pais", "fuente", "camara", "tema", "tipo_relacion", "partido", "cobertura")
+TABLAS_COMUN = ("meta", "pais", "fuente", "camara", "tema", "tipo_relacion", "partido", "cobertura", "delegacion")
+# Fuentes cuyos miembros son de varios países, con el país en el id («eup:ESP:257043»).
+PLURINACIONALES = ("eup",)
 _VOT = "votacion_id IN (SELECT id FROM votacion WHERE fuente=:f AND anio=:a)"
 TABLAS_FUENTE = (
     ("asunto", "id IN (SELECT asunto_id FROM votacion WHERE fuente=:f AND anio=:a)"),
@@ -97,10 +102,16 @@ def construir(con, destino, log=print):
             web.executemany(f"INSERT OR IGNORE INTO {tabla} VALUES ({','.join('?' * len(filas[0]))})", [tuple(f) for f in filas])
         return len(filas)
 
-    copiar("pais", """SELECT p.iso3, p.iso2, p.nombre, p.region, p.subregion, p.lat, p.lon, p.sucesor, p.en_mapa,
+    organismos = [p["iso3"] for p in paises.todos() if p.get("organismo")]
+    copiar("pais", f"""SELECT p.iso3, p.iso2, p.nombre, p.region, p.subregion, p.lat, p.lon, p.sucesor, p.en_mapa,
                               (SELECT MIN(v.anio) FROM voto vo JOIN votacion v ON v.id=vo.votacion_id WHERE vo.miembro_id=p.iso3 AND v.fuente='onu'),
-                              (SELECT MAX(v.anio) FROM voto vo JOIN votacion v ON v.id=vo.votacion_id WHERE vo.miembro_id=p.iso3 AND v.fuente='onu')
-                       FROM pais p""")
+                              (SELECT MAX(v.anio) FROM voto vo JOIN votacion v ON v.id=vo.votacion_id WHERE vo.miembro_id=p.iso3 AND v.fuente='onu'),
+                              CASE WHEN p.iso3 IN ({','.join('?' * len(organismos))}) THEN 1 END
+                       FROM pais p""", organismos)
+    # Cuántos miembros de cada país tiene cada año una fuente plurinacional (los eurodiputados de cada Estado).
+    for f in PLURINACIONALES:
+        copiar("delegacion", """SELECT v.fuente, v.anio, substr(vo.miembro_id, length(v.fuente) + 2, 3), COUNT(DISTINCT vo.miembro_id)
+                                FROM voto vo JOIN votacion v ON v.id=vo.votacion_id WHERE v.fuente=? GROUP BY 1, 2, 3""", (f,))
     copiar("fuente", """SELECT f.codigo, f.pais, f.nombre, f.corto, f.tipo, f.detalle, f.web, f.licencia, f.desde, f.notas, f.orden,
                                 MIN(v.anio), MAX(v.anio), COUNT(v.id)
                          FROM fuente f LEFT JOIN votacion v ON v.fuente=f.codigo GROUP BY f.codigo""")

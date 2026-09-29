@@ -5011,5 +5011,21 @@
 "alias_es": [
 "Zanzíbar"
 ]
+},
+{
+"iso3": "EUU",
+"iso2": "EU",
+"num": null,
+"nombre": "Unión Europea",
+"nombre_en": "European Union",
+"region": "Europa",
+"subregion": "Europa occidental",
+"lat": 48.6,
+"lon": 7.77,
+"sucesor": null,
+"en_mapa": 0,
+"organismo": 1,
+"alias_en": [],
+"alias_es": []
 }
 ]

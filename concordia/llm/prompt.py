@@ -9,7 +9,7 @@ import json
 from .. import paises
 from ..catalogos import CODIGOS_TEMA, TEMAS, TIPOS_RELACION
 
-VERSION_PROMPT = "fichas-mundo-v1"
+VERSION_PROMPT = "fichas-mundo-v2"
 ORIENTACIONES = ["positiva", "negativa", "neutra"]
 
 _TEMAS_TXT = "\n".join(f"- {c}: {n} (p. ej. {s})" for c, n, s in TEMAS)
@@ -29,6 +29,9 @@ orientación que el asunto tiene hacia cada uno si sale adelante.
 - No incluyas el país de la cámara que vota. En la ONU, sí cualquier Estado que sea objeto de la resolución.
 - No incluyas países que solo se nombran de paso (la ciudad donde se firmó un convenio, una conferencia) ni
   organizaciones internacionales. Si nada encaja, lista vacía.
+- Si el asunto trae «paises_fuente» (los países que la fuente de los datos asocia al asunto), tómalos como pista:
+  incluye con su orientación los que sean objeto del asunto aunque el título no los nombre (China en una
+  resolución sobre Hong Kong); si no ves el sentido, «neutra».
 - En la Asamblea General de la ONU, la orientación es la de la resolución: «Situación de los derechos humanos
   en X» es negativa para X; «Necesidad de poner fin al embargo impuesto por los Estados Unidos contra Cuba»
   es negativa para USA y positiva para CUB; «Integridad territorial de Ucrania» es positiva para UKR y
@@ -36,6 +39,10 @@ orientación que el asunto tiene hacia cada uno si sale adelante.
   PSE. Usa el conocimiento general solo para saber a qué Estado se refiere algo, no para inventar contenido.
 - En una ley de sanciones, el país sancionado es negativo; en una ley de ayuda militar o de seguridad, el país
   que la recibe es positivo; en un convenio para evitar la doble imposición, el otro país es positivo (tratado).
+- A veces lo que se vota es la propuesta de la comisión de RECHAZAR mociones, proyectos o iniciativas («avslag på
+  motioner», «Ablehnung», «Beschlussempfehlung: Ablehnung», «ikke vedtatt», «vedlegges protokollen», dictamen
+  contrario). Entonces el asunto es ese rechazo: dilo en el resumen, y la orientación es la del rechazo, no la de
+  lo rechazado (rechazar una moción que pide sancionar a X no es negativo para X; como mucho, neutra).
 - Máximo 8 relaciones."""
 
 SYSTEM = f"""Eres un analista neutral de política comparada y de relaciones internacionales. Recibes asuntos votados
@@ -112,7 +119,7 @@ def validar_relaciones(rels, origen=None):
         iso3 = str(r.get("pais") or "").strip().upper()
         if iso3 == "SUN":
             iso3 = "RUS"
-        if iso3 not in validas or (origen and iso3 in paises.propios(origen)) or iso3 in vistos:
+        if iso3 not in validas or paises.solo_origen(iso3) or (origen and iso3 in paises.propios(origen)) or iso3 in vistos:
             continue
         vistos.add(iso3)
         orientacion = r.get("orientacion") if r.get("orientacion") in ORIENTACIONES else "neutra"

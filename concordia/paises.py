@@ -43,6 +43,11 @@ def propios(iso3):
     return {iso3} | DEPENDENCIAS.get(iso3, set())
 
 
+def solo_origen(iso3):
+    """Organismos con parlamento propio (la Unión Europea, EUU): origen de relaciones, nunca destino."""
+    return bool((por_iso3().get(iso3) or {}).get("organismo"))
+
+
 def region(iso3):
     p = por_iso3().get(iso3) or {}
     if p.get("sucesor"):
