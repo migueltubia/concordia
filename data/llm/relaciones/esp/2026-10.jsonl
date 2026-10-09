@@ -1,0 +1,7 @@
+{"id": "esp:15:110/000086", "relaciones": [{"pais": "SAU", "orientacion": "positiva", "tipo": "migracion", "motivo": "Exención recíproca de visados para pasaportes diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000084", "relaciones": [{"pais": "BRA", "orientacion": "positiva", "tipo": "tratado", "motivo": "Acuerdo bilateral sobre transporte aéreo"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000083", "relaciones": [{"pais": "UZB", "orientacion": "positiva", "tipo": "migracion", "motivo": "Exención recíproca de visados diplomáticos"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000082", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "tratado", "motivo": "Comisión internacional de reclamaciones para Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:110/000081", "relaciones": [{"pais": "UKR", "orientacion": "positiva", "tipo": "cooperacion", "motivo": "Cooperación técnica y financiera bilateral con Ucrania"}], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:173/000196", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
+{"id": "esp:15:162/000814", "relaciones": [], "_modelo": "deepseek:deepseek-flash"}
