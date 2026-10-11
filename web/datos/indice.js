@@ -1,12 +1,12 @@
 // Generado por `python -m concordia web`. Ficheros de datos que carga la web.
 window.CONCORDIA_INDICE = {
- "generado": "2026-10-04T11:24:58+00:00",
+ "generado": "2026-10-11T11:47:06+00:00",
  "ficheros": [
   {
    "nombre": "comun",
    "tipo": "comun",
-   "huella": "0140f2767d123b29",
-   "bytes": 63685
+   "huella": "c7f8dea36394684f",
+   "bytes": 63693
   },
   {
    "nombre": "arg/2019",
@@ -69,8 +69,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "arg",
    "anio": 2026,
-   "huella": "479e787226da69c6",
-   "bytes": 180764
+   "huella": "d76af2410714c450",
+   "bytes": 161612
   },
   {
    "nombre": "bra/2019",
@@ -109,32 +109,32 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "bra",
    "anio": 2023,
-   "huella": "5102287eb34f9a7e",
-   "bytes": 397044
+   "huella": "f01308194bf29687",
+   "bytes": 372980
   },
   {
    "nombre": "bra/2024",
    "tipo": "fuente",
    "fuente": "bra",
    "anio": 2024,
-   "huella": "3a971e4f11a66da2",
-   "bytes": 361192
+   "huella": "3ed20aa1c79fa0f3",
+   "bytes": 337036
   },
   {
    "nombre": "bra/2025",
    "tipo": "fuente",
    "fuente": "bra",
    "anio": 2025,
-   "huella": "ddcfdd8637c96e40",
-   "bytes": 498052
+   "huella": "c902c216fdb4ee01",
+   "bytes": 472948
   },
   {
    "nombre": "bra/2026",
    "tipo": "fuente",
    "fuente": "bra",
    "anio": 2026,
-   "huella": "382276c740a0d7e3",
-   "bytes": 235808
+   "huella": "5c022b72cdd439ea",
+   "bytes": 214480
   },
   {
    "nombre": "can/2019",
@@ -197,8 +197,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "can",
    "anio": 2026,
-   "huella": "6a3c32730d0e916b",
-   "bytes": 80764
+   "huella": "fba7fd8718637e66",
+   "bytes": 63480
   },
   {
    "nombre": "che/2019",
@@ -261,8 +261,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "che",
    "anio": 2026,
-   "huella": "5973d7ef35cba3eb",
-   "bytes": 335624
+   "huella": "782b050bcd2f6325",
+   "bytes": 335724
   },
   {
    "nombre": "chl/2019",
@@ -309,8 +309,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2024,
-   "huella": "c682f276c9949063",
-   "bytes": 1025380
+   "huella": "35a80dcbd4a8045b",
+   "bytes": 1003308
   },
   {
    "nombre": "chl/2025",
@@ -325,8 +325,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2026,
-   "huella": "d1292e6c5632cd12",
-   "bytes": 680224
+   "huella": "d33bfb2b029ccc0c",
+   "bytes": 695244
   },
   {
    "nombre": "cze/2019",
@@ -389,8 +389,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "cze",
    "anio": 2026,
-   "huella": "95a4049ffea42b81",
-   "bytes": 469352
+   "huella": "7b9d2079a069d573",
+   "bytes": 469124
   },
   {
    "nombre": "deu/2019",
@@ -445,16 +445,16 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "deu",
    "anio": 2025,
-   "huella": "27645edcd2f4c64f",
-   "bytes": 113100
+   "huella": "440bf70881d8dda0",
+   "bytes": 93432
   },
   {
    "nombre": "deu/2026",
    "tipo": "fuente",
    "fuente": "deu",
    "anio": 2026,
-   "huella": "64a4b249e021b1cc",
-   "bytes": 81132
+   "huella": "6d05e381c9aa62ae",
+   "bytes": 65276
   },
   {
    "nombre": "dnk/2019",
@@ -637,8 +637,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "esp",
    "anio": 2026,
-   "huella": "11dba79e84b25506",
-   "bytes": 196896
+   "huella": "121d75d74d5abf28",
+   "bytes": 181784
   },
   {
    "nombre": "est/2019",
@@ -709,47 +709,47 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2019,
-   "huella": "804a2563960fd6ce",
-   "bytes": 271152
+   "huella": "6558aaf7db14d9e5",
+   "bytes": 260440
   },
   {
    "nombre": "eup/2020",
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2020,
-   "huella": "c0f5926912180101",
-   "bytes": 1465700
+   "huella": "0f3549501f358832",
+   "bytes": 1479316
   },
   {
    "nombre": "eup/2021",
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2021,
-   "huella": "9a17b2d642c4cbb6",
-   "bytes": 1555592
+   "huella": "b269020767a98f64",
+   "bytes": 1607180
   },
   {
    "nombre": "eup/2022",
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2022,
-   "huella": "2fbd422a6ed8ef51",
-   "bytes": 1281744
+   "huella": "c01e32e4200d1a8f",
+   "bytes": 1282988
   },
   {
    "nombre": "eup/2023",
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2023,
-   "huella": "3c4af79c437f4311",
-   "bytes": 1148260
+   "huella": "98e5922b0a7d7701",
+   "bytes": 1148332
   },
   {
    "nombre": "eup/2024",
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2024,
-   "huella": "2ec6290dab2994ee",
+   "huella": "9a0271d468493117",
    "bytes": 1125004
   },
   {
@@ -765,8 +765,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2026,
-   "huella": "63ca45895e136018",
-   "bytes": 993308
+   "huella": "de0ab7d2cd96111d",
+   "bytes": 1076716
   },
   {
    "nombre": "fin/2019",
@@ -829,8 +829,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "fin",
    "anio": 2026,
-   "huella": "8ebd315d1c5fc62b",
-   "bytes": 87576
+   "huella": "ecea15b2973212de",
+   "bytes": 89532
   },
   {
    "nombre": "fra/2019",
@@ -893,8 +893,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "fra",
    "anio": 2026,
-   "huella": "4cc422eac87b8adb",
-   "bytes": 1167340
+   "huella": "e10c24541b843351",
+   "bytes": 1225108
   },
   {
    "nombre": "gbr/2016",
@@ -1045,8 +1045,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "irl",
    "anio": 2026,
-   "huella": "4282f5db730f20d8",
-   "bytes": 129420
+   "huella": "001a875c6f616d46",
+   "bytes": 133336
   },
   {
    "nombre": "mex/2019",
@@ -1101,16 +1101,16 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "mex",
    "anio": 2025,
-   "huella": "8c5c31a3ef9be650",
-   "bytes": 144428
+   "huella": "77d5acd7c707f766",
+   "bytes": 129108
   },
   {
    "nombre": "mex/2026",
    "tipo": "fuente",
    "fuente": "mex",
    "anio": 2026,
-   "huella": "829db6f01ac2c486",
-   "bytes": 106388
+   "huella": "f357c0ccef4c1d3c",
+   "bytes": 93200
   },
   {
    "nombre": "nld/2019",
@@ -1173,8 +1173,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "nld",
    "anio": 2026,
-   "huella": "8a17a0dfa440c9dd",
-   "bytes": 2285380
+   "huella": "1ab6d6069421607b",
+   "bytes": 2450048
   },
   {
    "nombre": "nor/2019",
@@ -1237,8 +1237,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "nor",
    "anio": 2026,
-   "huella": "3ec16241d5147303",
-   "bytes": 357328
+   "huella": "a26758f7601f3821",
+   "bytes": 364660
   },
   {
    "nombre": "onu/1946",
@@ -1933,8 +1933,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "pol",
    "anio": 2026,
-   "huella": "cdcfb1a9d83030e7",
-   "bytes": 524484
+   "huella": "8b8f701a4121604b",
+   "bytes": 550564
   },
   {
    "nombre": "swe/2019",
@@ -2780,22 +2780,22 @@ window.CONCORDIA_INDICE = {
    "nombre": "mundo/2019",
    "tipo": "mundo",
    "anio": 2019,
-   "huella": "2baf37e09c2c2ffd",
-   "bytes": 354190
+   "huella": "df6bf1147dd15dcd",
+   "bytes": 355494
   },
   {
    "nombre": "mundo/2020",
    "tipo": "mundo",
    "anio": 2020,
-   "huella": "b68fbe5db2a79908",
-   "bytes": 356018
+   "huella": "e7094a4c376ba76d",
+   "bytes": 361034
   },
   {
    "nombre": "mundo/2021",
    "tipo": "mundo",
    "anio": 2021,
-   "huella": "269266f74d127bf7",
-   "bytes": 368262
+   "huella": "936a5c95f8f8fb46",
+   "bytes": 374250
   },
   {
    "nombre": "mundo/2022",
@@ -2829,22 +2829,9 @@ window.CONCORDIA_INDICE = {
    "nombre": "mundo/2026",
    "tipo": "mundo",
    "anio": 2026,
-   "huella": "f78805a0580bc6ec",
-   "bytes": 171802
+   "huella": "d362b501026fdd14",
+   "bytes": 183526
   }
  ],
- "avisos": {
-  "can": {
-   "motivo": "error",
-   "detalle": "HTTPError: HTTP Error 403: Forbidden",
-   "fecha": "2026-10-04T11:07:14+00:00",
-   "ultimos_datos": "2026-09-23"
-  },
-  "ukr": {
-   "motivo": "error",
-   "detalle": "RuntimeError: No se pudo descargar https://data.rada.gov.ua/ogd/zal/ppz/skl9/plenary_event_question-skl9.zip: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
-   "fecha": "2026-10-04T11:18:11+00:00",
-   "ultimos_datos": "2026-09-17"
-  }
- }
+ "avisos": {}
 };
