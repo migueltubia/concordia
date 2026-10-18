@@ -124,12 +124,12 @@
   "bytes": 1716224
  },
  "bra/2026": {
-  "huella": "ca4d119501bacb740a815023f3952e5cf93475808b32336254301cacbb6b98a0",
+  "huella": "6bb535dc956dec11471db188a92a875e8dbc8d07ee83839edc1759a61b3b07d2",
   "fuente": "bra",
   "anio": 2026,
-  "votaciones": 233,
-  "asuntos": 145,
-  "bytes": 716800
+  "votaciones": 239,
+  "asuntos": 147,
+  "bytes": 733184
  },
  "can/2019": {
   "huella": "7a1b9ad5bc7d6c2a165284f3d9c8d8f7edfab5397d241dc1aa3f813634233ed2",
@@ -380,12 +380,12 @@
   "bytes": 2445312
  },
  "cze/2026": {
-  "huella": "1653f346542a20976f009f7187ebeaf13570ca95db52aec2ba7945a824e318d9",
+  "huella": "9c1c2efd44ab629aa4f97e81b42b59c319cfdd8ee53ec4555693f4245f090467",
   "fuente": "cze",
   "anio": 2026,
-  "votaciones": 2119,
-  "asuntos": 177,
-  "bytes": 2183168
+  "votaciones": 2312,
+  "asuntos": 207,
+  "bytes": 2400256
  },
  "deu/2019": {
   "huella": "4bd6fe8b37feb5f760af87d7c7c3bcf28529dfd4262948eacf0ed84e66815561",
@@ -444,12 +444,12 @@
   "bytes": 352256
  },
  "deu/2026": {
-  "huella": "c7c8a773dbfb673175b79deb695fa7aa83ff327ed9189ea4833a1760a855a98b",
+  "huella": "81084d13a3a6870ceb4f303b494b835f5b1c7ccdf6c50d0bf1a44369387df712",
   "fuente": "deu",
   "anio": 2026,
-  "votaciones": 43,
-  "asuntos": 38,
-  "bytes": 270336
+  "votaciones": 46,
+  "asuntos": 41,
+  "bytes": 278528
  },
  "dnk/2019": {
   "huella": "6b2900f07deec716faec7394f9406b7ee288df8e030b27940df3248d2c340083",
@@ -676,7 +676,7 @@
   "bytes": 770048
  },
  "est/2024": {
-  "huella": "090ada9a9f01a21dae5c9ff4cf18564ec1a9d9ecbe2bbb14f45ec5ec389bb89a",
+  "huella": "b40632efea72f0407cc04df84a32f9bd2f42399045703109ceec5dad8df8305a",
   "fuente": "est",
   "anio": 2024,
   "votaciones": 692,
@@ -692,12 +692,12 @@
   "bytes": 688128
  },
  "est/2026": {
-  "huella": "eeb68ef0ab4e6e339aa66dd8548e1ab0e8cf9f69fbdbb5309d85a1e69f4e6089",
+  "huella": "f1e40b7ae6510d98fba4219f893fd8ba9b12ff41a09b34b1dfea3f4a12232c1f",
   "fuente": "est",
   "anio": 2026,
-  "votaciones": 311,
-  "asuntos": 199,
-  "bytes": 561152
+  "votaciones": 320,
+  "asuntos": 207,
+  "bytes": 577536
  },
  "eup/2019": {
   "huella": "cc3813fb77603dd32c2aeccb2c5d0d39a833590380515ab0863c29f704b6a80b",
@@ -756,7 +756,7 @@
   "bytes": 7815168
  },
  "eup/2026": {
-  "huella": "20333eb2c5dec33e98998467b2ccc7a347c74b2610bd0149bb1f8f504317725a",
+  "huella": "545d8168c2865869e8b5475e52e3bcfcbfd9653a8fa9135c25120ea90a905e1b",
   "fuente": "eup",
   "anio": 2026,
   "votaciones": 2748,
@@ -820,12 +820,12 @@
   "bytes": 704512
  },
  "fin/2026": {
-  "huella": "85969478c23adead2591ec6de3a565c9c58ea4ea0e48d0fb2ddc76332c15ee8f",
+  "huella": "daf74fa9dcd5a8d672adb4b0ea83c342051f9fd90464b6224e001e9b07c902a5",
   "fuente": "fin",
   "anio": 2026,
-  "votaciones": 229,
-  "asuntos": 80,
-  "bytes": 430080
+  "votaciones": 233,
+  "asuntos": 83,
+  "bytes": 434176
  },
  "fra/2019": {
   "huella": "9e4da2c1bae51b9754a56a90b5a64ea1f3d59d9e48a0eee167413dc72a598f0e",
@@ -884,12 +884,12 @@
   "bytes": 9228288
  },
  "fra/2026": {
-  "huella": "4305588ebaae581b22c4e313ae70c767c22e071b72a4e7bdcc50e8686745a3d8",
+  "huella": "873c4d8a3cfc10d6cd9d4fbb72b6ff1489fe2100efb85a3c0bd75318d2ad2da7",
   "fuente": "fra",
   "anio": 2026,
-  "votaciones": 3725,
-  "asuntos": 121,
-  "bytes": 7737344
+  "votaciones": 3930,
+  "asuntos": 126,
+  "bytes": 8151040
  },
  "gbr/2016": {
   "huella": "36109bf96d21d0079fdc2ff03d943f80e1b13ed5d25c06bf38a5f8fe935e2f88",
@@ -972,12 +972,12 @@
   "bytes": 909312
  },
  "gbr/2026": {
-  "huella": "ddebcd05e739fbcd4348e652d29e530221930b6c402b7638ce88ef1921dae115",
+  "huella": "326252066d840738afdaa38d0434da179b5ff53582ec62ec2f675a2437d41aa3",
   "fuente": "gbr",
   "anio": 2026,
-  "votaciones": 195,
-  "asuntos": 74,
-  "bytes": 626688
+  "votaciones": 209,
+  "asuntos": 83,
+  "bytes": 659456
  },
  "irl/2019": {
   "huella": "0a55d206f19b3ae435d74566a757bf6dad5a6ebc68d64453e93c08ad4f90ccb9",
@@ -1036,11 +1036,11 @@
   "bytes": 692224
  },
  "irl/2026": {
-  "huella": "3ff9c2d7bf7086bc9bab48ba508039f7017fa7eac3f3d6e71467b0fc3b195225",
+  "huella": "37c9583bd1e67b8da4c9d23c59bc9acfa0c848c9026150d2afdadf2d29971cae",
   "fuente": "irl",
   "anio": 2026,
-  "votaciones": 331,
-  "asuntos": 148,
+  "votaciones": 334,
+  "asuntos": 149,
   "bytes": 712704
  },
  "mex/2019": {
@@ -1092,23 +1092,23 @@
   "bytes": 1400832
  },
  "mex/2025": {
-  "huella": "413bce3f0ec4d0d2ca921f2613310d5271d6a6f0040e72399509c9ff71807caf",
+  "huella": "900784e609be58f5e005418f446148310aff7be0a09ca1b4c8f153cad26f2a6c",
   "fuente": "mex",
   "anio": 2025,
-  "votaciones": 161,
-  "asuntos": 120,
-  "bytes": 598016
+  "votaciones": 164,
+  "asuntos": 123,
+  "bytes": 602112
  },
  "mex/2026": {
-  "huella": "1e95c79486b6057bba304abc0eb3850eea782c32cae3b4e437d8e3db0fcf071f",
+  "huella": "d17a073ccbe6c2ca578f6a4886d54313841d60f0af3ac7bebf9db7bdb7321f0f",
   "fuente": "mex",
   "anio": 2026,
-  "votaciones": 85,
-  "asuntos": 75,
-  "bytes": 413696
+  "votaciones": 88,
+  "asuntos": 78,
+  "bytes": 421888
  },
  "nld/2019": {
-  "huella": "1cfbbeb4c565c0517db2d9ae88136e167ba1f2c705289f05c88afe6f565151c6",
+  "huella": "f7f21c6f590be44cd5e15703f453fe5d8a7def3d38e274cff38b9eb95a05c48c",
   "fuente": "nld",
   "anio": 2019,
   "votaciones": 3987,
@@ -1164,12 +1164,12 @@
   "bytes": 9306112
  },
  "nld/2026": {
-  "huella": "f5e93c161bde6ba3626cfb64c7b1090b2e7398fc2e8d248e271ad7b898d0ae3b",
+  "huella": "d724d3d2775a8cf216e106e3ff44fd0b07501a929251329fd4fb507aecaa2e6b",
   "fuente": "nld",
   "anio": 2026,
-  "votaciones": 4331,
-  "asuntos": 3869,
-  "bytes": 9555968
+  "votaciones": 4551,
+  "asuntos": 4082,
+  "bytes": 10031104
  },
  "nor/2019": {
   "huella": "30403ef9dc794fa6fe485efeb57d65dd96d1e83cc6d27ead94e075837a39756c",
@@ -1228,11 +1228,11 @@
   "bytes": 3878912
  },
  "nor/2026": {
-  "huella": "ccf0567d9e7e75fbc608e34e61193d3c7db177993150a49724a60889dd8119c9",
+  "huella": "8f21df1146eaeb2b648eb2e263db1bc4ec4225ab5a50530d54ac22de5389e48f",
   "fuente": "nor",
   "anio": 2026,
-  "votaciones": 1847,
-  "asuntos": 415,
+  "votaciones": 1849,
+  "asuntos": 416,
   "bytes": 2244608
  },
  "onu/1946": {
@@ -1932,7 +1932,7 @@
   "bytes": 3416064
  },
  "swe/2019": {
-  "huella": "31261c2dadbc91040628002b48c14f44863e76a992b499698ba89aa56ab7690d",
+  "huella": "9e150fb3bac0ea23f5034872323a69b19ae5e2e4a75b479922d149b3b5dd1fd1",
   "fuente": "swe",
   "anio": 2019,
   "votaciones": 682,
@@ -1940,7 +1940,7 @@
   "bytes": 2125824
  },
  "swe/2020": {
-  "huella": "c1154c73d80f2821ac97c16d65574a935c0f89697775c04fb9a4940439c5e9dd",
+  "huella": "3424dc0d6eb76b788026c54a788849be337e6c59d02e0d5f679f1e1cbf16b7db",
   "fuente": "swe",
   "anio": 2020,
   "votaciones": 638,
@@ -1948,7 +1948,7 @@
   "bytes": 1912832
  },
  "swe/2021": {
-  "huella": "633d3a105c22ac4a8be39038b7181ee5aaab38ee22166c5ae0dd2d81ede0296e",
+  "huella": "56e221eec5731f5851017e5808ad6896feb2074c705c9059e7f5073e98a5ad63",
   "fuente": "swe",
   "anio": 2021,
   "votaciones": 854,
@@ -1956,7 +1956,7 @@
   "bytes": 2658304
  },
  "swe/2022": {
-  "huella": "cb32c9005fa010bab8ed3044e4f99e62d131f12f48b7e53df1da08ae1e48c083",
+  "huella": "8148723745615ebf78bc5f0192039b6dcbba5b006358d8b9e1f982813cb0bd90",
   "fuente": "swe",
   "anio": 2022,
   "votaciones": 1006,
@@ -1964,7 +1964,7 @@
   "bytes": 3477504
  },
  "swe/2023": {
-  "huella": "de6726d45c9c9d43790b9dc01bf7e3f162cb2d7fb4c08c92cf106430a7fe525b",
+  "huella": "24d146da4b511c055d38e16991194ac4d3168825bb187a693df80adaca8c7c0a",
   "fuente": "swe",
   "anio": 2023,
   "votaciones": 586,
@@ -1972,7 +1972,7 @@
   "bytes": 1716224
  },
  "swe/2024": {
-  "huella": "cea7c3ed3e9decc3e29720b830442fe83bba7b311e9c0a413bad9451b54bc3b8",
+  "huella": "263fd028c6bfa5c1e66bd12ae81815e9cf7f9ff9f100cd00ba2b2a847d0e5f26",
   "fuente": "swe",
   "anio": 2024,
   "votaciones": 619,
@@ -1980,7 +1980,7 @@
   "bytes": 1814528
  },
  "swe/2025": {
-  "huella": "7a7d2e186260b56ece11895639a936372440e6310af5aa3d6e69ab02e1ed49d1",
+  "huella": "d9eef7a42856f70b2a21b8bfbaeb7292d20f00b1c46ca08c792e3fe6db2b86b6",
   "fuente": "swe",
   "anio": 2025,
   "votaciones": 648,
@@ -1988,12 +1988,12 @@
   "bytes": 1912832
  },
  "swe/2026": {
-  "huella": "6d2482d1d6fb3fcf209bbd0ae08ed82e5df33e2ef026b73ba62f19ad17f6e0e1",
+  "huella": "3cd86ac9081a4a0cdb3183f5ff0f994dda6b5021ca21768d12f62a6e340bdcfd",
   "fuente": "swe",
   "anio": 2026,
-  "votaciones": 717,
-  "asuntos": 712,
-  "bytes": 2109440
+  "votaciones": 718,
+  "asuntos": 713,
+  "bytes": 2506752
  },
  "ukr/2019": {
   "huella": "a97aff92e6a7bfa904c5c75fcfaf8f848da78720732061c9593a9275f9277820",
@@ -2036,7 +2036,7 @@
   "bytes": 6201344
  },
  "ukr/2024": {
-  "huella": "ced0c258bfe8a600158a5bbb076061b231c011d375c955a6b7085d786f27e762",
+  "huella": "1599ede4e3369daa1dd65e2c7f065461befbf7b7d86f6b6ef5287184bd16fcba",
   "fuente": "ukr",
   "anio": 2024,
   "votaciones": 2315,
@@ -2044,7 +2044,7 @@
   "bytes": 5210112
  },
  "ukr/2025": {
-  "huella": "999af826d82d04bdd769639efb10bf62f781e8ce3c1fb70869f4495b1c01dbbf",
+  "huella": "0153105c3191c058768e00671adc228771e9c42a5b59da11f50b7e11cd20ed8a",
   "fuente": "ukr",
   "anio": 2025,
   "votaciones": 2278,
@@ -2052,12 +2052,12 @@
   "bytes": 5128192
  },
  "ukr/2026": {
-  "huella": "b3b5e18c7db9f3e671082f033b786bb28be0b38300d88555ebfa647cb73b3aa9",
+  "huella": "8279c84a3afd21d6c6d92c5635f0d996e70cc4475adb8e72502335df3d68163d",
   "fuente": "ukr",
   "anio": 2026,
-  "votaciones": 1041,
-  "asuntos": 370,
-  "bytes": 2457600
+  "votaciones": 1114,
+  "asuntos": 383,
+  "bytes": 2609152
  },
  "usa/2001": {
   "huella": "fc3ceb0892b9a7cc838b44b4ff672e54d0817b17a8ed089f97e4da9395cb1bd4",
