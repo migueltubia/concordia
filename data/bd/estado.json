@@ -1,7 +1,7 @@
 {
  "arg": {
   "error": null,
-  "ultimo_ok": "2026-10-25T10:06:05+00:00"
+  "ultimo_ok": "2026-11-01T12:04:53+00:00"
  },
  "bra": {
   "cerrados": [
@@ -14,14 +14,10 @@
    2025
   ],
   "error": null,
-  "ultimo_ok": "2026-10-25T09:48:08+00:00"
+  "ultimo_ok": "2026-11-01T11:50:18+00:00"
  },
  "can": {
-  "error": {
-   "detalle": "HTTPError: HTTP Error 403: Forbidden",
-   "fecha": "2026-10-25T09:47:59+00:00",
-   "motivo": "error"
-  },
+  "error": null,
   "sesiones": {
    "42-1": {
     "cerrada": true,
@@ -44,12 +40,27 @@
     "hasta": "2024-12-17"
    },
    "45-1": {
+    "cerrada": true,
+    "desde": "2019-01-01",
+    "hasta": "2026-10-28"
+   },
+   "46-1": {
     "cerrada": false,
     "desde": "2019-01-01",
-    "hasta": "2026-10-20"
+    "hasta": "2019-01-01"
+   },
+   "47-1": {
+    "cerrada": false,
+    "desde": "2019-01-01",
+    "hasta": "2019-01-01"
+   },
+   "48-1": {
+    "cerrada": false,
+    "desde": "2019-01-01",
+    "hasta": "2019-01-01"
    }
   },
-  "ultimo_ok": "2026-10-21T10:07:37+00:00"
+  "ultimo_ok": "2026-11-01T11:50:10+00:00"
  },
  "che": {
   "error": null,
@@ -96,7 +107,7 @@
    5214,
    5215
   ],
-  "ultimo_ok": "2026-10-25T09:47:58+00:00"
+  "ultimo_ok": "2026-11-01T11:50:07+00:00"
  },
  "chl": {
   "camara_cerrados": [
@@ -110,8 +121,8 @@
   ],
   "camara_pendientes": [],
   "error": null,
-  "senado_hasta": "2026-10-25",
-  "ultimo_ok": "2026-10-25T10:20:25+00:00"
+  "senado_hasta": "2026-11-01",
+  "ultimo_ok": "2026-11-01T12:31:13+00:00"
  },
  "cze": {
   "cerradas": [
@@ -119,15 +130,15 @@
    9
   ],
   "error": null,
-  "ultimo_ok": "2026-10-25T10:02:29+00:00"
+  "ultimo_ok": "2026-11-01T12:00:41+00:00"
  },
  "deu": {
   "error": null,
-  "ultimo_ok": "2026-10-25T10:17:29+00:00"
+  "ultimo_ok": "2026-11-01T12:28:28+00:00"
  },
  "dnk": {
   "error": null,
-  "ultimo_ok": "2026-10-25T09:49:01+00:00"
+  "ultimo_ok": "2026-11-01T11:51:49+00:00"
  },
  "esp": {
   "error": null,
@@ -137,22 +148,22 @@
    "congreso/leg12": "bf9c46b1c757b56731bcc9ac018d7438ee820c928091192691a6243640454441",
    "congreso/leg13": "0c91b849ebf2933d2cb304a4b0856eafd8379712c475733c60d90bc22382d3cb",
    "congreso/leg14": "2ce4ec4d73ad18ca7bfa889869191e563c2a63a34440634f9f173815f899d86e",
-   "congreso/leg15": "bdec880f196feeed12d18b639e63aa66f77633e1586cc710a4b3551e9f470ff3"
+   "congreso/leg15": "8fb1d6ad4365e53bd4d9b931c88f6e3508d4b0596839d012d167069c3e8f7195"
   },
-  "ultimo_ok": "2026-10-25T09:47:56+00:00"
+  "ultimo_ok": "2026-11-01T11:50:04+00:00"
  },
  "est": {
   "error": null,
-  "ultimo_ok": "2026-10-25T10:16:31+00:00"
+  "ultimo_ok": "2026-11-01T12:27:32+00:00"
  },
  "eup": {
   "error": null,
-  "ultimo_ok": "2026-10-25T10:21:24+00:00",
-  "version": "2026-10-24T00:00:00+00:00"
+  "ultimo_ok": "2026-11-01T12:40:40+00:00",
+  "version": "2026-10-31T00:00:00+00:00"
  },
  "fin": {
   "error": null,
-  "ultimo_ok": "2026-10-25T10:06:06+00:00"
+  "ultimo_ok": "2026-11-01T12:04:55+00:00"
  },
  "fra": {
   "cerradas": [
@@ -163,20 +174,24 @@
   "ultimo": {
    "15": 4419,
    "16": 4105,
-   "17": 9097
+   "17": 9459
   },
-  "ultimo_ok": "2026-10-25T09:48:41+00:00"
+  "ultimo_ok": "2026-11-01T11:51:12+00:00"
  },
  "gbr": {
   "error": null,
-  "ultimo_ok": "2026-10-25T09:47:30+00:00"
+  "ultimo_ok": "2026-11-01T11:49:54+00:00"
  },
  "irl": {
   "error": null,
-  "ultimo_ok": "2026-10-25T09:47:58+00:00"
+  "ultimo_ok": "2026-11-01T11:50:06+00:00"
  },
  "mex": {
-  "error": null,
+  "error": {
+   "detalle": "RuntimeError: No se pudo descargar https://gaceta.diputados.gob.mx/gp_votaciones.html: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>",
+   "fecha": "2026-11-01T12:31:26+00:00",
+   "motivo": "error"
+  },
   "pendientes": [],
   "periodos_cerrados": [
    "/Gaceta/Votaciones/64/vot64_a1extra1.html",
@@ -205,7 +220,7 @@
    "/Gaceta/Votaciones/66/vot66_a2primero.html",
    "/Gaceta/Votaciones/66/vot66_a2segundo.html"
   ],
-  "ultimo_ok": "2026-10-25T10:20:34+00:00"
+  "ultimo_ok": "2026-10-30T11:52:05+00:00"
  },
  "nld": {
   "error": null,
@@ -304,7 +319,7 @@
    "2026-08",
    "2026-09"
   ],
-  "ultimo_ok": "2026-10-25T09:48:54+00:00"
+  "ultimo_ok": "2026-11-01T11:51:42+00:00"
  },
  "nor": {
   "error": null,
@@ -1161,6 +1176,12 @@
     "200472": "2026-10-20",
     "200473": "2026-10-20",
     "200474": "2026-10-20",
+    "200476": "2026-10-22",
+    "200477": "2026-10-22",
+    "200478": "2026-10-22",
+    "200479": "2026-10-22",
+    "200480": "2026-10-22",
+    "200489": "2026-10-28",
     "93233": "2025-10-21",
     "99311": "2025-10-21",
     "99312": "2025-10-21",
@@ -1177,7 +1198,7 @@
    "2023-2024",
    "2024-2025"
   ],
-  "ultimo_ok": "2026-10-25T10:21:24+00:00"
+  "ultimo_ok": "2026-11-01T12:40:40+00:00"
  },
  "onu": {
   "cow_iso3": {
@@ -1383,7 +1404,7 @@
    "990": "WSM"
   },
   "error": null,
-  "ultimo_ok": "2026-10-25T09:47:22+00:00",
+  "ultimo_ok": "2026-11-01T11:49:47+00:00",
   "voeten": "https://dataverse.harvard.edu/api/access/datafile/9656257"
  },
  "pol": {
@@ -1452,6 +1473,7 @@
    "10:64",
    "10:65",
    "10:66",
+   "10:67",
    "10:7",
    "10:8",
    "10:9",
@@ -1535,7 +1557,7 @@
    "9:81",
    "9:9"
   ],
-  "ultimo_ok": "2026-10-25T09:47:55+00:00"
+  "ultimo_ok": "2026-11-01T11:49:56+00:00"
  },
  "swe": {
   "cerrados": [
@@ -1545,18 +1567,19 @@
    "2021/22",
    "2022/23",
    "2023/24",
-   "2024/25"
+   "2024/25",
+   "2025/26"
   ],
   "error": null,
-  "ultimo_ok": "2026-10-25T09:48:36+00:00"
+  "ultimo_ok": "2026-11-01T11:50:38+00:00"
  },
  "ukr": {
   "error": {
-   "detalle": "RuntimeError: No se pudo descargar https://data.rada.gov.ua/ogd/zal/ppz/skl9/plenary_agenda-skl9-csv.zip: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>",
-   "fecha": "2026-10-25T10:21:17+00:00",
+   "detalle": "RuntimeError: No se pudo descargar https://data.rada.gov.ua/ogd/zal/ppz/skl9/dict/mps.json: <urlopen error [Errno 110] Connection timed out>",
+   "fecha": "2026-11-01T12:40:36+00:00",
    "motivo": "error"
   },
-  "ultimo_ok": "2026-10-22T10:44:36+00:00"
+  "ultimo_ok": "2026-10-26T11:53:13+00:00"
  },
  "usa": {
   "cerrados": [
@@ -1574,6 +1597,6 @@
    118
   ],
   "error": null,
-  "ultimo_ok": "2026-10-25T09:47:26+00:00"
+  "ultimo_ok": "2026-11-01T11:49:50+00:00"
  }
 }
