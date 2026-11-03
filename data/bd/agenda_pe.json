@@ -1,0 +1,489 @@
+{
+ "actualizado": "2026-11-02T21:26:46+00:00",
+ "plenos": [
+  {
+   "fecha": "2026-11-11",
+   "lugar": "Bruselas"
+  },
+  {
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas"
+  },
+  {
+   "fecha": "2026-11-23",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-11-26",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-12-14",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-12-15",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-12-16",
+   "lugar": "Estrasburgo"
+  },
+  {
+   "fecha": "2026-12-17",
+   "lugar": "Estrasburgo"
+  }
+ ],
+ "puntos": [
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-52",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-52",
+   "orden": 9.0,
+   "titulo": "Elección de un vicepresidente del Parlamento Europeo (en sustitución de Nicolae Ștefănuță)",
+   "titulo_en": "Election of a Vice-President of the European Parliament (to replace Nicolae Ștefănuță)",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-48",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-48",
+   "orden": 10.0,
+   "titulo": "Modificaciones del Estatuto de los diputados al Parlamento Europeo relativas al voto por delegación",
+   "titulo_en": "Amendments to the Statute for Members of the European Parliament, as regards proxy voting",
+   "informe": "A10-0270/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-14",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-14",
+   "orden": 11.0,
+   "titulo": "Modernización del documento de datos fundamentales",
+   "titulo_en": "Modernisation of the key information document",
+   "informe": "A9-0160/2024",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-13",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-13",
+   "orden": 12.0,
+   "titulo": "Normas de protección de los inversores minoristas en la Unión",
+   "titulo_en": "Union retail investor protection rules",
+   "informe": "A9-0162/2024",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-28",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-28",
+   "orden": 13.0,
+   "titulo": "Agencia Europea de Sustancias y Mezclas Químicas y modificación de Reglamentos",
+   "titulo_en": "European Chemicals Agency and amending regulations",
+   "informe": "A10-0093/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-35",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-35",
+   "orden": 14.0,
+   "titulo": "Indicaciones geográficas: adaptación de las normas de la Unión a los cambios en las disposiciones del Arreglo de Lisboa",
+   "titulo_en": "Geographical indications: aligning EU rules with changes to the provisions under the Lisbon Agreement",
+   "informe": "A10-0211/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-39",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-39",
+   "orden": 15.0,
+   "titulo": "Asociación de los países y territorios de ultramar con la Unión, incluidas las relaciones entre la Unión, Groenlandia y Dinamarca",
+   "titulo_en": "Association of the overseas countries and territories with the EU including EU/Greenland/Denmark relations",
+   "informe": "A10-0275/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": [
+    {
+     "pais": "GRL",
+     "orientacion": "neutra",
+     "tipo": "otro",
+     "motivo": "regla: nombra «Greenland»"
+    },
+    {
+     "pais": "DNK",
+     "orientacion": "neutra",
+     "tipo": "otro",
+     "motivo": "regla: nombra «Denmark»"
+    }
+   ]
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-45",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-45",
+   "orden": 16.0,
+   "titulo": "Política de promoción agroalimentaria de la Unión",
+   "titulo_en": "EU agri-food promotion policy",
+   "informe": "A10-0269/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-46",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-46",
+   "orden": 17.0,
+   "titulo": "Aspectos institucionales de la inteligencia artificial en el contexto de la integración europea",
+   "titulo_en": "Institutional aspects of artificial intelligence in the context of European integration",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-12-OJ-ITM-V-5",
+   "fecha": "2026-11-12",
+   "lugar": "Bruselas",
+   "punto": "V-5",
+   "orden": 18.0,
+   "titulo": "De los prototipos a las capacidades: permitir la expansión de los nuevos agentes de defensa",
+   "titulo_en": "From prototypes to capabilities – enabling new defence actors to scale up",
+   "informe": "A10-0268/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-12_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-69",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-69",
+   "orden": 5.0,
+   "titulo": "Reserva de estabilidad del mercado en el marco del régimen de comercio de derechos de emisión de gases de efecto invernadero de la Unión (RCDE UE): cese de la invalidación de derechos de emisión",
+   "titulo_en": "Market stability reserve for the EU Emissions Trading System (EU ETS): ceasing the invalidation of allowances",
+   "informe": "A10-0230/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-29",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-29",
+   "orden": 6.0,
+   "titulo": "Modificación de determinados Reglamentos en lo que respecta a la ampliación de determinadas medidas de mitigación disponibles para las pequeñas y medianas empresas a las pequeñas empresas de mediana capitalización y otras medidas de simplificación (paquete ómnibus IV)",
+   "titulo_en": "Amending certain Regulations as regards the extension of certain mitigating measures available for small and medium sized enterprises to small mid-cap enterprises and further simplification measures (Omnibus IV)",
+   "informe": "A10-0041/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-30",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-30",
+   "orden": 7.0,
+   "titulo": "Modificación de determinadas Directivas en lo que respecta a la ampliación de determinadas medidas de mitigación disponibles para las pequeñas y medianas empresas a las pequeñas empresas de mediana capitalización y otras medidas de simplificación (paquete ómnibus IV)",
+   "titulo_en": "Amending certain Directives as regards the extension of certain mitigating measures available for small and medium sized enterprises to small mid-cap enterprises and further simplifying measures (Omnibus IV)",
+   "informe": "A10-0034/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-37",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-37",
+   "orden": 8.0,
+   "titulo": "Modificación de determinadas Directivas en lo que respecta a la digitalización y las especificaciones comunes (paquete ómnibus IV)",
+   "titulo_en": "Amending certain Directives as regards digitalisation and common specifications (Omnibus IV)",
+   "informe": "A10-0023/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-36",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-36",
+   "orden": 9.0,
+   "titulo": "Modificación de determinados Reglamentos en lo que respecta a la digitalización y las especificaciones comunes (paquete ómnibus IV)",
+   "titulo_en": "Amending certain Regulations as regards digitalisation and common specifications (Omnibus IV)",
+   "informe": "A10-0024/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-43",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-43",
+   "orden": 10.0,
+   "titulo": "Agilización de las evaluaciones ambientales (paquete ómnibus VIII sobre legislación medioambiental)",
+   "titulo_en": "Speeding-up environmental assessments (Omnibus VIII on environmental legislation)",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-32",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-32",
+   "orden": 11.0,
+   "titulo": "Exención de determinados vehículos eléctricos de la categoría N2 del requisito relativo a la instalación y utilización de un dispositivo de limitación de velocidad (paquete ómnibus IX sobre automoción)",
+   "titulo_en": "Exemption of certain N2 electric vehicles from the requirement to install and use a speed limitation device (Omnibus IX on automotive)",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-75",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-75",
+   "orden": 12.0,
+   "titulo": "Producción orgánica: modificación en lo que respecta a determinadas normas sobre producción, etiquetado y certificación y a determinadas normas sobre el comercio con terceros países",
+   "titulo_en": "Organic production: amending certain production, labelling and certification rules and certain rules on trade with third countries",
+   "informe": "A10-0209/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-24-OJ-ITM-V-74",
+   "fecha": "2026-11-24",
+   "lugar": "Estrasburgo",
+   "punto": "V-74",
+   "orden": 13.0,
+   "titulo": "Plan plurianual para la pesca demersal en el Mediterráneo occidental",
+   "titulo_en": "Multiannual plan for the fisheries exploiting demersal stocks in the western Mediterranean Sea",
+   "informe": "A10-0279/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-24_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-59",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-59",
+   "orden": 21.0,
+   "titulo": "Proyecto de presupuesto rectificativo n.º 3/2026: ajustes en los gastos, actualización de los ingresos y otros ajustes técnicos",
+   "titulo_en": "Draft amending budget No 3/2026: adjustments in expenditure, update of revenues and other technical updates",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-65",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-65",
+   "orden": 22.0,
+   "titulo": "Procedimiento presupuestario 2027: texto conjunto",
+   "titulo_en": "2027 budgetary procedure: joint text",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-61",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-61",
+   "orden": 23.0,
+   "titulo": "Procedimientos de la Unión para la autorización y el control de los medicamentos de uso humano y establecimiento de las normas por las que se rige la Agencia Europea de Medicamentos",
+   "titulo_en": "Union procedures for the authorisation and supervision of medicinal products for human use and rules governing the European Medicines Agency",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-60",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-60",
+   "orden": 24.0,
+   "titulo": "Código de la Unión sobre medicamentos para uso humano",
+   "titulo_en": "Union code relating to medicinal products for human use",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-26",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-26",
+   "orden": 25.0,
+   "titulo": "Marco para reforzar la disponibilidad y la seguridad del suministro de medicamentos esenciales, así como la disponibilidad y accesibilidad de los medicamentos de interés común",
+   "titulo_en": "Framework for strengthening the availability and security of supply of critical medicinal products as well as the availability of, and accessibility of, medicinal products of common interest",
+   "informe": "A10-0272/2025",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-71",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-71",
+   "orden": 26.0,
+   "titulo": "Comercialización de microorganismos modificados genéticamente y procesamiento de órganos",
+   "titulo_en": "Placing on the market of genetically modified micro-organisms and the processing of organs",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-34",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-34",
+   "orden": 27.0,
+   "titulo": "Programa Específico por el que se ejecuta el Programa Marco de Investigación e Innovación «Horizonte Europa» 2028-2034",
+   "titulo_en": "Specific programme implementing Horizon Europe framework programme for research and innovation 2028–2034",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-68",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-68",
+   "orden": 28.0,
+   "titulo": "Fraude en el ámbito del IVA: prórroga del período de aplicación del mecanismo opcional de inversión del sujeto pasivo y del mecanismo de reacción rápida",
+   "titulo_en": "VAT fraud: extension of the application period of the optional reverse charge mechanism and Quick Reaction Mechanism",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-55",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-55",
+   "orden": 29.0,
+   "titulo": "Mecanismo de inversión del sujeto pasivo del IVA",
+   "titulo_en": "VAT reverse-charge mechanism",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-67",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-67",
+   "orden": 30.0,
+   "titulo": "Modificación del Reglamento interno del Parlamento en lo que se refiere al voto por delegación durante el embarazo e inmediatamente después del parto",
+   "titulo_en": "Amendments to Parliament’s Rules of Procedure on proxy voting during pregnancy and immediately after childbirth",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-72",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-72",
+   "orden": 31.0,
+   "titulo": "Amplio paquete de acuerdos entre la Unión y Suiza para consolidar, profundizar y ampliar sus relaciones bilaterales",
+   "titulo_en": "EU-Switzerland broad package of agreements to consolidate, deepen and expand their bilateral relations",
+   "informe": "A10-0236/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": [
+    {
+     "pais": "CHE",
+     "orientacion": "positiva",
+     "tipo": "tratado",
+     "motivo": "regla: nombra «Switzerland»"
+    }
+   ]
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-73",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-73",
+   "orden": 32.0,
+   "titulo": "Amplio paquete de acuerdos entre la Unión y Suiza para consolidar, profundizar y ampliar sus relaciones bilaterales: informe provisional",
+   "titulo_en": "EU-Switzerland broad package of agreements to consolidate, deepen and expand their bilateral relations – interim report",
+   "informe": "A10-0235/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": [
+    {
+     "pais": "CHE",
+     "orientacion": "positiva",
+     "tipo": "tratado",
+     "motivo": "regla: nombra «Switzerland»"
+    }
+   ]
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-40",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-40",
+   "orden": 33.0,
+   "titulo": "Relaciones políticas entre la Unión y Siria",
+   "titulo_en": "EU-Syria political relations",
+   "informe": "A10-0278/2026",
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": [
+    {
+     "pais": "SYR",
+     "orientacion": "neutra",
+     "tipo": "otro",
+     "motivo": "regla: nombra «Syria»"
+    }
+   ]
+  },
+  {
+   "id": "MTG-PL-2026-11-25-OJ-ITM-V-18",
+   "fecha": "2026-11-25",
+   "lugar": "Estrasburgo",
+   "punto": "V-18",
+   "orden": 34.0,
+   "titulo": "Hacia una estrategia de la Unión para proteger y reforzar el sistema de justicia internacional y sus instituciones, mecanismos y socios",
+   "titulo_en": "Towards an EU strategy to protect and strengthen the international justice system and its institutions, mechanisms and partners",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-25_ES.html",
+   "relaciones": []
+  },
+  {
+   "id": "MTG-PL-2026-11-26-OJ-ITM-V-42",
+   "fecha": "2026-11-26",
+   "lugar": "Estrasburgo",
+   "punto": "V-42",
+   "orden": 40.0,
+   "titulo": "Protección de los intereses financieros de la Unión en el marco financiero plurianual posterior a 2027 mediante la revisión de la arquitectura de lucha contra el fraude",
+   "titulo_en": "Protection of the Union’s financial interests in the post-2027 multiannual financial framework through the revision of the anti-fraud architecture",
+   "informe": null,
+   "url": "https://www.europarl.europa.eu/doceo/document/OJQ-10-2026-11-26_ES.html",
+   "relaciones": []
+  }
+ ]
+}

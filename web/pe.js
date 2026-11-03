@@ -139,6 +139,50 @@ function gruposDelegacion(R, v, c) {
     .sort((x, y) => y.si + y.no + y.abstencion - (x.si + x.no + x.abstencion));
 }
 
+// ------------------------------------------------------------------ Próximas votaciones del pleno
+// El orden del día provisional de los próximos plenos (API de datos abiertos del PE, en comun.js): lo que aún no
+// está en HowTheyVote. Cambia hasta el mismo pleno; los puntos ya pasados no se enseñan aunque los datos sean viejos.
+const DIAS_SEMANA = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+const diaSemana = (iso) => DIAS_SEMANA[new Date(`${iso}T12:00:00`).getDay()];
+const masDias = (iso, n) => new Date(Date.parse(`${iso}T12:00:00Z`) + n * 864e5).toISOString().slice(0, 10);
+
+function agendaPe() {
+  if (!q("SELECT name FROM sqlite_master WHERE name='agenda'").length) return [];
+  const hoy = new Date().toISOString().slice(0, 10);
+  return q("SELECT * FROM agenda WHERE fuente=? AND fecha >= ? ORDER BY fecha, orden", [PE, hoy]).map((p) => ({ ...p, rels: jsonDe(p.relaciones, []) }));
+}
+
+// Tarjeta con lo que se vota en el próximo pleno (una semana de sesiones) y, con un país elegido, lo que trata de él
+// en cualquiera de los próximos. abierta: la lista del pleno se ve sin pulsar.
+function proximasPe(iso3, { abierta = false, soloSobre = false } = {}) {
+  const puntos = agendaPe();
+  if (!puntos.length) return null;
+  const sobre = iso3 && !esOrganismo(iso3) ? puntos.filter((p) => p.rels.some((r) => r.pais === iso3)) : [];
+  if (soloSobre && !sobre.length) return null;
+  const fin = masDias(puntos[0].fecha, 6);
+  const proximo = puntos.filter((p) => p.fecha <= fin), luego = puntos.filter((p) => p.fecha > fin);
+  const fila = (p, conDia) => el("li", {},
+    conDia ? el("span", { class: "muted small" }, `${diaSemana(p.fecha)} ${fecha(p.fecha)} · `) : null,
+    p.url ? enlace(p.url, p.titulo) : p.titulo,
+    p.informe ? el("span", { class: "muted small" }, ` · ${p.informe}`) : null,
+    p.rels.length ? el("span", { class: "badges" }, p.rels.slice(0, 4).map((r) => chipRelacion(r))) : null);
+  const porDia = {};
+  for (const p of proximo) (porDia[p.fecha] ??= []).push(p);
+  const lugar = proximo[0].lugar ? ` en ${proximo[0].lugar}` : "";
+  const dias = Object.keys(porDia);
+  const actualizado = puntos[0].actualizado ? ` Orden del día provisional consultado el ${fecha(puntos[0].actualizado)}: puede cambiar hasta el mismo pleno.` : "";
+  const listaPleno = el("div", {}, dias.map((d) => el("div", { class: "agenda-dia" },
+    el("h4", {}, `${diaSemana(d)[0].toUpperCase()}${diaSemana(d).slice(1)} ${fecha(d)}`), el("ul", { class: "agenda" }, porDia[d].map((p) => fila(p, false))))),
+    luego.length ? el("details", {}, el("summary", { class: "small" }, `Y ${cuenta(luego.length, "votación prevista", "votaciones previstas")} en los plenos siguientes`),
+      el("ul", { class: "agenda" }, luego.map((p) => fila(p, true)))) : null);
+  return el("section", { class: "card agenda-card", style: "margin-bottom:16px" },
+    el("h3", {}, "Próximas votaciones en el pleno"),
+    el("p", { class: "muted small" }, soloSobre ? `Lo que el pleno tiene previsto votar sobre ${nombrePais(iso3)} en las próximas semanas.${actualizado} Las relaciones con otros países salen del título.`
+      : `Pleno${lugar} del ${fecha(dias[0])}${dias.length > 1 ? ` al ${fecha(dias[dias.length - 1])}` : ""}: ${cuenta(proximo.length, "votación prevista", "votaciones previstas")}.${actualizado} Las relaciones con otros países salen del título.`),
+    sobre.length ? el("div", { class: "agenda-sobre" }, el("h4", {}, `Sobre ${nombrePais(iso3)}`), el("ul", { class: "agenda" }, sobre.map((p) => fila(p, true)))) : null,
+    soloSobre ? null : abierta ? listaPleno : el("details", {}, el("summary", {}, el("b", {}, "Todo el orden del día")), listaPleno));
+}
+
 function pintarPe(qq) {
   const iso3 = paisActual();
   const f = CAT.fuentes[PE];
@@ -161,7 +205,8 @@ function pintarPe(qq) {
         el("h3", {}, `${nombrePais(iso3)} no tiene eurodiputados en ${textoAnios(anios)}`),
         el("p", {}, otros ? `Los tuvo en otros años de los que hay datos (${f.anio_min}–${f.anio_max}): cambia los años en la cabecera.`
           : "Solo los Estados de la Unión Europea eligen eurodiputados."),
-        el("p", {}, el("button", { class: "boton", onclick: () => irA("pe", { p: "EUU" }) }, "Ver todas las delegaciones nacionales"))));
+        el("p", {}, el("button", { class: "boton", onclick: () => irA("pe", { p: "EUU" }) }, "Ver todas las delegaciones nacionales"))),
+      proximasPe(iso3, { soloSobre: true }));
   }
   return pintarDelegacion(qq, R, c, iso3, anios);
 }
@@ -207,7 +252,8 @@ function pintarDelegacion(qq, R, c, iso3, anios) {
       stat("Participación", `${perfil.participacion} %`, "votos (sí, no o abstención) sobre el total de sus escaños en cada votación"),
       stat("Delegación unida", `${perfil.unida} %`, "votaciones en que al menos dos tercios de los suyos votan lo mismo"),
       stat("Con el resultado", `${perfil.conPleno} %`, "votaciones en que lo más votado por la delegación es lo que sale")),
-    el("div", { class: "grid g2 arriba", style: "margin-top:16px" },
+    el("div", { style: "margin-top:16px" }, proximasPe(iso3)),
+    el("div", { class: "grid g2 arriba" },
       el("section", { class: "card" }, el("h3", {}, "Por grupo europeo"),
         el("p", { class: "muted small" }, "Cada eurodiputado cuenta en el grupo en el que más votaciones ha estado. «Con su grupo»: votos en el mismo sentido que la mayoría de su grupo europeo."),
         el("div", { class: "tabla-scroll" }, tablaGrupos)),
@@ -303,6 +349,7 @@ function pintarDelegaciones(R, anios) {
     .sort((x, y) => y.n - x.n || nombrePais(x.p).localeCompare(nombrePais(y.p), "es"));
   return el("div", {},
     cabeceraPais("EUU", `Cómo vota cada delegación nacional en el Parlamento Europeo · ${textoAnios(anios)}. Pulsa un país para ver el voto de sus eurodiputados.`, "En el Parlamento Europeo"),
+    proximasPe(null, { abierta: true }),
     el("section", { class: "card" },
       el("div", { class: "tabla-scroll" }, el("table", { class: "tabla" },
         el("thead", {}, el("tr", {}, el("th", {}, "País"), el("th", { class: "num", title: `Eurodiputados que han votado en ${ultimo} (cuenta a los sustitutos)` }, `Eurodiputados (${ultimo})`),

@@ -5,7 +5,8 @@ la página carga con <script> (los navegadores no dejan leer ficheros locales co
 sql.js la abre en memoria. Va troceada para que solo se descargue lo que se mira:
 
 - datos/comun.js: países, fuentes, cámaras, temas, partidos, la cobertura de cada fuente por año y cuántos
-  eurodiputados tiene cada país cada año (para saber sin descargar el Parlamento Europeo quién tiene).
+  eurodiputados tiene cada país cada año (para saber sin descargar el Parlamento Europeo quién tiene), y las
+  próximas votaciones del pleno del Parlamento Europeo (data/bd/agenda_pe.json).
 - datos/<fuente>/<año>.js: lo de un año de una fuente (votaciones, voto por partido, voto nominal compacto,
   asuntos, fichas, afinidad entre partidos). Es lo que usan las vistas de país.
 - datos/mundo/<año>.js: la capa del mapa: relaciones entre países de ese año (de todas las fuentes), con
@@ -24,7 +25,7 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-from . import paises
+from . import agenda_pe, paises
 from .config import WEB_DIR
 from .recoger import avisos
 
@@ -67,7 +68,12 @@ CREATE TABLE asunto_mundo(id TEXT PRIMARY KEY, fuente TEXT, fecha TEXT, titulo T
   resumen TEXT, tema TEXT, resultado TEXT, anio INTEGER, relaciones TEXT);
 CREATE TABLE afinidad_onu(anio INTEGER, a TEXT, b TEXT, suma REAL, total INTEGER, PRIMARY KEY(anio, a, b)) WITHOUT ROWID;
 """
-TABLAS_COMUN = ("meta", "pais", "fuente", "camara", "tema", "tipo_relacion", "partido", "cobertura", "delegacion")
+# Solo en comun.js: fuera de ESQUEMA para no cambiar la huella (ni reescribir) los trozos de cada fuente y año.
+ESQUEMA_AGENDA = """
+CREATE TABLE agenda(id TEXT PRIMARY KEY, fuente TEXT, fecha TEXT, lugar TEXT, punto TEXT, orden REAL, titulo TEXT,
+  informe TEXT, url TEXT, relaciones TEXT, actualizado TEXT);
+"""
+TABLAS_COMUN = ("meta", "pais", "fuente", "camara", "tema", "tipo_relacion", "partido", "cobertura", "delegacion", "agenda")
 # Fuentes cuyos miembros son de varios países, con el país en el id («eup:ESP:257043»).
 PLURINACIONALES = ("eup",)
 _VOT = "votacion_id IN (SELECT id FROM votacion WHERE fuente=:f AND anio=:a)"
@@ -94,7 +100,7 @@ INDICE = DATOS_DIR / "indice.js"
 
 def construir(con, destino, log=print):
     web = sqlite3.connect(destino)
-    web.executescript(ESQUEMA)
+    web.executescript(ESQUEMA + ESQUEMA_AGENDA)
 
     def copiar(tabla, sql, args=()):
         filas = con.execute(sql, args).fetchall()
@@ -116,6 +122,10 @@ def construir(con, destino, log=print):
                                 MIN(v.anio), MAX(v.anio), COUNT(v.id)
                          FROM fuente f LEFT JOIN votacion v ON v.fuente=f.codigo GROUP BY f.codigo""")
     copiar("camara", "SELECT codigo, fuente, nombre, corto, escanos FROM camara")
+    agenda = agenda_pe.leer()
+    web.executemany("INSERT INTO agenda VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                    [(p["id"], "eup", p["fecha"], p["lugar"], p["punto"], p["orden"], p["titulo"], p.get("informe"), p["url"],
+                      json.dumps(p["relaciones"], ensure_ascii=False), agenda["actualizado"]) for p in agenda.get("puntos", [])])
     copiar("tema", "SELECT codigo, nombre, subtemas FROM tema")
     copiar("tipo_relacion", "SELECT codigo, nombre FROM tipo_relacion")
     copiar("partido", "SELECT fuente, codigo, nombre, siglas, color FROM partido")
@@ -178,7 +188,7 @@ def _trocear(completa, tmp):
         d.close()
         trozos.append((nombre, info, ruta, h.hexdigest()[:16]))
 
-    trozo("comun", ESQUEMA, [(t, "1=1") for t in TABLAS_COMUN], {}, {"tipo": "comun"})
+    trozo("comun", ESQUEMA + ESQUEMA_AGENDA, [(t, "1=1") for t in TABLAS_COMUN], {}, {"tipo": "comun"})
     for fuente, anio in web.execute("SELECT DISTINCT fuente, anio FROM votacion ORDER BY 1, 2").fetchall():
         trozo(f"{fuente}/{anio}", _SIN_INDICES, TABLAS_FUENTE, {"f": fuente, "a": anio}, {"tipo": "fuente", "fuente": fuente, "anio": anio})
     for (anio,) in web.execute("SELECT anio FROM relacion UNION SELECT anio FROM afinidad_onu ORDER BY 1").fetchall():

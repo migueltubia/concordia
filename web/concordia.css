@@ -279,3 +279,14 @@ button.pregunta:hover { border-color: var(--accent); }
 .movil .pregunta-compuesta { color: var(--ink); }
 .movil .pregunta-pais { font-size: 15px; }
 .movil .heat-lateral { max-width: none; }
+
+/* Próximas votaciones del pleno del Parlamento Europeo (pe.js) */
+.agenda { margin: 4px 0 10px; padding-left: 18px; font-size: 14px; }
+.agenda li { margin: 4px 0; }
+.agenda li .badges { display: inline-flex; flex-wrap: wrap; gap: 4px; margin-left: 6px; vertical-align: middle; }
+.agenda-dia h4, .agenda-sobre h4 { margin: 10px 0 2px; font-size: 13px; }
+.agenda-sobre { border-left: 3px solid var(--accent); padding-left: 10px; margin: 8px 0 12px; }
+
+/* Cohesión de cada partido por año (pais.js) */
+.mini-barras { display: block; }
+.mini-barras rect { fill: var(--seq-400); }

@@ -603,6 +603,56 @@ function pintarPartidos(qq) {
       partidos.map((p) => celdaPais(pais, p)))))))
     : el("p", { class: "muted" }, `Ningún asunto de estos años trata de otros países con un sentido claro${sinFichaIA(fuente, a, b)}.`);
 
+  // Cohesión: cuánto vota unido cada partido. Índice de acuerdo de Hix, Noury y Roland: (mayor opción − la mitad
+  // del resto) / votos emitidos, de 0 (sí, no y abstención a partes iguales) a 100 (todos lo mismo). Cuenta cada
+  // votación (salvo trámites) en que votan al menos dos de sus miembros. Si la fuente da el voto por grupo y no el
+  // de cada miembro (Países Bajos), saldría siempre 100: no se calcula.
+  const porMiembro = fuente.detalle !== "grupo";
+  const coh = {};
+  if (porMiembro) {
+    for (const r of q(`SELECT p.partido, v.anio, COUNT(*) AS n, SUM(p.sentido = 'dividido') AS dividido,
+                         SUM((MAX(p.si, p.no, p.abstencion) - 0.5 * (p.si + p.no + p.abstencion - MAX(p.si, p.no, p.abstencion))) * 1.0
+                             / (p.si + p.no + p.abstencion)) AS acuerdo
+                       FROM voto_partido p JOIN votacion v ON v.id=p.votacion_id
+                       WHERE v.fuente=? AND v.anio BETWEEN ? AND ? AND v.tipo <> 'procedimiento' AND p.si + p.no + p.abstencion >= 2
+                       GROUP BY p.partido, v.anio`, [fuente.codigo, a, b])) {
+      const c = (coh[r.partido] ??= { n: 0, dividido: 0, acuerdo: 0, anios: {} });
+      c.n += r.n; c.dividido += r.dividido; c.acuerdo += r.acuerdo;
+      c.anios[r.anio] = { n: r.n, v: (100 * r.acuerdo) / r.n };
+    }
+  }
+  const conCoh = partidos.filter((p) => coh[p]?.n >= 10).map((p) => ({ p, ...coh[p], indice: (100 * coh[p].acuerdo) / coh[p].n }))
+    .sort((x, y) => y.indice - x.indice);
+  const aniosCoh = [];
+  for (let y = a; y <= b; y++) if (conCoh.some((c) => c.anios[y]?.n >= 10)) aniosCoh.push(y);
+  // Evolución por año: una barra por año (más alta, más unido), en la escala de 50 a 100, donde están casi todos.
+  const evolucion = (c) => {
+    const ancho = 8, alto = 22;
+    return svgEl("svg", { width: aniosCoh.length * (ancho + 2), height: alto, class: "mini-barras", "aria-hidden": "true" },
+      aniosCoh.map((y, i) => {
+        const x = c.anios[y];
+        if (!x || x.n < 10) return null;
+        const h = Math.max(2, ((Math.max(50, x.v) - 50) / 50) * alto);
+        return svgEl("rect", { x: i * (ancho + 2), y: alto - h, width: ancho, height: h, rx: 1 }, svgEl("title", {}, `${y}: ${Math.round(x.v)} (${cuenta(x.n, "votación", "votaciones")})`));
+      }));
+  };
+  const tablaCoh = el("table", { class: "tabla" },
+    el("thead", {}, el("tr", {}, el("th", {}, "Partido"), el("th", { class: "num" }, "Votaciones"),
+      el("th", { class: "num", title: "Índice de acuerdo: 100 si todos sus miembros votan lo mismo, 0 si se reparten a partes iguales entre sí, no y abstención" }, "Cohesión"),
+      el("th", { class: "num", title: "Votaciones en que ninguna opción reúne a dos tercios de los suyos que votan" }, "Dividido"),
+      aniosCoh.length > 1 ? el("th", {}, `Por año (${aniosCoh[0]}–${aniosCoh[aniosCoh.length - 1]})`) : null)),
+    el("tbody", {}, conCoh.map((c) => el("tr", { title: nombreCompleto(c.p) },
+      el("td", {}, el("span", { class: "chip" }, el("span", { class: "sw", style: `background:${colorPartido(fuente.codigo, c.p)}` }), siglas(c.p))),
+      el("td", { class: "num" }, fmt(c.n)), el("td", { class: "num" }, el("b", {}, Math.round(c.indice))),
+      el("td", { class: "num" }, `${pct(c.dividido, c.n)} %`),
+      aniosCoh.length > 1 ? el("td", {}, evolucion(c)) : null))));
+  const cohesion = el("section", { class: "card" }, el("h3", {}, "Cuánto vota unido cada partido"),
+    !porMiembro ? el("p", { class: "muted" }, `${fuente.nombre} publica el voto de cada grupo, no el de cada miembro: no se puede medir si un grupo vota dividido.`)
+      : conCoh.length ? [
+        el("p", { class: "muted small" }, `Cohesión: índice de acuerdo de cada partido en las votaciones (salvo trámites) en que votan al menos dos de sus miembros. 100: todos votan lo mismo; 0: se reparten a partes iguales entre sí, no y abstención. «Dividido»: ninguna opción reúne a dos tercios de los suyos.${aniosCoh.length > 1 ? " Las barras van de 50 (abajo) a 100." : ""}`),
+        el("div", { class: "tabla-scroll" }, tablaCoh)]
+      : el("p", { class: "muted" }, "Pocas votaciones en esos años."));
+
   return el("div", {},
     cabeceraPais(iso3, `${fuente.nombre} · ${textoAnios([a, b])}.`, "Partidos"),
     fs.length > 1 ? segmentos(fs.map((f) => [f.codigo, f.corto]), fuente.codigo, (v) => irA("partidos", { f: v })) : null,
@@ -610,6 +660,7 @@ function pintarPartidos(qq) {
       el("p", { class: "muted small" }, "Porcentaje de votaciones (salvo trámites) en que dos partidos adoptan la misma posición: la de al menos dos tercios de sus miembros."),
       filaFiltros([selectFiltro("tema", [["", "Todos los temas"], ...CAT.temas.map((t) => [t.codigo, t.nombre])], tema)], (c) => irA("partidos", c)),
       el("div", { class: "heat-caja" }, mapaCalor, lateral)),
+    cohesion,
     el("section", { class: "card" }, el("h3", {}, "Cómo vota cada partido sobre otros países"),
       el("p", { class: "muted small" }, "Porcentaje de sus votos a favor de cada país: sí a lo que lo favorece (ayuda, acuerdos, apoyo) o no a lo que lo perjudica (sanciones, condenas). 100: siempre a su favor; 0: siempre en contra. Entre paréntesis, cuántas votaciones hay; pulsa un país para verlas. El sentido de cada asunto se deduce del título y puede equivocarse."),
       el("div", { class: "heat-caja" }, tablaPaises, el("div", { class: "heat-lateral" }, leyendaCeldas(DIVERGENTE, "en contra", "a favor")))),

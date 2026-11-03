@@ -129,6 +129,16 @@ oficial:
   reglas, como neutros si el título no los orienta, y en la IA, como pista. En 577 de los 803 asuntos que los
   tienen coinciden con los que las reglas sacan del título; en el resto añaden sobre todo países que el título
   no nombra (China en Hong Kong, Rusia en la ayuda a Ucrania) o nombra de forma ambigua (Georgia, Jordania).
+- **Próximas votaciones.** HowTheyVote solo trae lo ya votado. Lo que se va a votar sale del orden del día
+  provisional de los plenos de las próximas 9 semanas, de la [API de datos abiertos del
+  PE](https://data.europarl.europa.eu/en/developer-corner/opendata-api) (`agenda_pe.py`: las sesiones del año en
+  `meetings` y lo previsto en cada una en `foreseen-activities`, sin los puntos genéricos como «Textos cuyo debate
+  haya concluido»). Es una foto que cada recogida sustituye entera, en `data/bd/agenda_pe.json`, y la web la lleva
+  en `comun.js`. Los países afectados salen del título con las mismas reglas que las votaciones. Las páginas de los
+  informes en el sitio del PE no existen hasta que se publican, así que se enlaza el orden del día. Va dentro de
+  `actualizar` (con todas las fuentes o con `--fuente eup`) y suelta con `python -m concordia agenda`. La API de
+  votaciones del PE (`/meetings/{id}/vote-results`) solo da recuentos, no el voto de cada eurodiputado: no
+  sustituye a HowTheyVote.
 - **Tamaño.** De 7 a 10 MB por año en `data/bd/eup/` con unas 2.500 votaciones (2020 y 2021 tienen más de
   5.000: unos 15 MB) y cerca de 1,4 GB en la base de trabajo. En la web, 1 MB por cada 2.500 votaciones. La
   primera recogida completa tarda unos cuartos de hora; las semanales, poco más que la descarga.
@@ -146,6 +156,12 @@ corto, amplía con Ctrl + rueda, el doble clic o el pellizco (la rueda sola desp
 al par elegido cuando hay origen y destino, rotula los países principales sin que se solapen y resalta las
 relaciones del país o la flecha que hay bajo el puntero. La portada ofrece preguntas para empezar, y el
 detalle de una votación o de una flecha va en la URL (`v=`, `par=`) para poder enlazarlo.
+
+En **Partidos**, además de la afinidad, está la **cohesión** de cada partido: el índice de acuerdo (Hix, Noury y
+Roland) medio en las votaciones en que votan al menos dos de sus miembros, con su evolución por año. Con la Unión
+Europea elegida es la de los grupos del Parlamento Europeo. En **En el PE**,
+las próximas votaciones del pleno: con la Unión Europea elegida, todo el orden del día; con un país, plegado y con
+lo que trata de ese país aparte (también en los países sin eurodiputados).
 
 La cabecera tiene dos selectores que valen para todas las vistas y van en la URL: el **país** (`p=ESP`) y
 los **años** (`a=2021-2026`). Se filtra por años naturales y no por legislaturas, porque cada país tiene

@@ -1,7 +1,8 @@
 """Actualización completa, sin intervención (GitHub Actions o cualquier equipo con el repositorio clonado).
 
 1. Si no hay base de trabajo, se reconstruye desde data/bd/ (lo versionado).
-2. Cada conector trae lo nuevo desde su última recogida; uno que falla se anota y no para a los demás.
+2. Cada conector trae lo nuevo desde su última recogida; uno que falla se anota y no para a los demás. Con el
+   Parlamento Europeo, también el orden del día de sus próximos plenos (agenda_pe.py).
 3. Se cargan las fichas IA versionadas en data/llm/.
 4. Se procesa con reglas lo que ha cambiado (voto por partido, decisivas, fichas por reglas, relaciones,
    afinidades).
@@ -12,7 +13,7 @@
 
 from collections import defaultdict
 
-from . import almacen, db, exportar_web
+from . import agenda_pe, almacen, db, exportar_web
 from .config import DB_PATH
 from .llm import deepseek, fichas_io
 from .procesar import procesar
@@ -34,6 +35,12 @@ def actualizar(fuentes=None, limite_fichas=300, ia=True, log=print):
 
     log("== Recogida")
     _sumar(tocados, recoger(con, fuentes=fuentes, log=log))
+    if not fuentes or "eup" in fuentes:
+        log("-- Parlamento Europeo: próximas votaciones")
+        try:
+            agenda_pe.recoger(log=log)
+        except Exception as e:  # sin orden del día nuevo, la web sigue con el anterior
+            log(f"   ! orden del día: {type(e).__name__}: {e}")
 
     log("== Fichas IA versionadas")
     _sumar(tocados, fichas_io.importar_todo(con, log))

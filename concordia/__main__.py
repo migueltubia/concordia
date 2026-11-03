@@ -53,6 +53,7 @@ def main(argv=None):
     s.add_argument("ficheros", nargs="+")
     s.add_argument("--modelo", help="Modelo que generó las fichas (si las líneas no traen «_modelo»)")
 
+    sub.add_parser("agenda", help="Descarga el orden del día de los próximos plenos del Parlamento Europeo")
     sub.add_parser("web", help="Exporta los datos para la web (web/index.html, sin servidor)")
     sub.add_parser("estado", help="Resumen de lo que hay en la base de trabajo")
 
@@ -67,6 +68,11 @@ def main(argv=None):
         from .almacen import unir
 
         unir(log=log).close()
+        return
+    if a.cmd == "agenda":
+        from .agenda_pe import recoger
+
+        recoger(log=log)
         return
     if a.cmd == "probar":
         from .probar import probar
