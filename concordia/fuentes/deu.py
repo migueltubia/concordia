@@ -169,8 +169,14 @@ def _fraccion(etiqueta):
     return t
 
 
+# Votaciones a las que abgeordnetenwatch pone la introducción de otra: la 4124 (COVID-19-Schutzmaßnahmen-
+# Ausnahmenverordnung, mayo de 2021) trae la de un proyecto sobre los agentes judiciales, con su Drucksache
+# 19/27636. No se usan ni su resumen ni sus Drucksachen.
+INTRO_DE_OTRA = {4124}
+
+
 def _poll(p, wp):
-    intro = p.get("field_intro") or ""
+    intro = "" if p["id"] in INTRO_DE_OTRA else p.get("field_intro") or ""
     enlaces = re.findall(r'href="([^"]+)"', intro)
     drucksachen = []
     for m in re.finditer(r"bundestag\.de/(?:dip21/)?btd/(\d+)/\d+/(\d+)\.pdf", intro):

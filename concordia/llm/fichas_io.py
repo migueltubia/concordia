@@ -126,12 +126,15 @@ def anios_de(con, ids):
 
 
 def anotar(carpeta, fuente, lineas):
-    """Añade las fichas al JSONL del mes de su fuente (lo que se versiona)."""
+    """Añade las fichas al JSONL del mes de su fuente (lo que se versiona), con la versión del prompt y la fecha:
+    sin ellas, al reconstruir la base todas tomarían la versión actual y la fecha del día."""
     ruta = carpeta / fuente / f"{datetime.now(timezone.utc):%Y-%m}.jsonl"
     ruta.parent.mkdir(parents=True, exist_ok=True)
+    ahora = _ahora()
     with open(ruta, "a", encoding="utf-8") as fh:
         for l in lineas:
-            fh.write(json.dumps(l, ensure_ascii=False) + "\n")
+            fh.write(json.dumps({**l, "_version": l.get("_version") or VERSION_PROMPT, "_creado": l.get("_creado") or ahora},
+                                ensure_ascii=False) + "\n")
 
 
 def importar_todo(con, log=print):

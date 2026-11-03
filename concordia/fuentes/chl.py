@@ -316,6 +316,21 @@ def _asunto_otro(v, materia, fecha):
     return f"chl:otros:{v['id']}", titulo, None, "otro", "otra"
 
 
+_VACIAS = {"proyecto", "acuerdo", "aprueba", "modifica", "establece", "republica", "chile", "entre", "sobre", "materia"}
+
+
+def _raices(t):
+    return {w[:7] for w in re.findall(r"[a-z]{5,}", _plano(t)) if w not in _VACIAS}
+
+
+def _de_otro_proyecto(articulo, nombre):
+    """Si lo votado («Artículo» de la votación) es otro proyecto entero, que no se parece en nada al del boletín."""
+    if not nombre or not re.match(r"\W*Proyecto de (acuerdo|ley|reforma)", articulo or "", re.I):
+        return False
+    propias = _raices(articulo)
+    return len(propias) >= 4 and not (propias & _raices(nombre))
+
+
 def _procesar_camara(ctx, lista, militancias, proyectos):
     """Descarga el detalle de un lote de votaciones de la Cámara y lo guarda."""
     boletines = sorted({b for v in lista if (b := _boletin(v["desc"])) and b not in proyectos})
@@ -325,6 +340,12 @@ def _procesar_camara(ctx, lista, militancias, proyectos):
             proyectos[b] = p
         detalles = dict(zip([v["id"] for v in lista], ex.map(lambda v: _detalle(ctx, v["id"]), lista)))
         materias = dict(zip([v["id"] for v in sin_boletin], ex.map(lambda v: _materia(ctx, v["id"]), sin_boletin)))
+    for v in sin_boletin:
+        if not materias[v["id"]]:
+            # camara.cl rechaza a veces la ficha (403): vale la materia de la recogida anterior, que es el texto guardado
+            fila = ctx.con.execute("SELECT texto FROM votacion WHERE id=?", (f"chl:d{v['id']}",)).fetchone()
+            if fila and fila[0] and fila[0] != v["desc"][:600]:
+                materias[v["id"]] = fila[0]
     asuntos, votaciones = {}, []
     fallidas = set()
     for v in lista:
@@ -336,7 +357,17 @@ def _procesar_camara(ctx, lista, militancias, proyectos):
         numero = int(v["fecha"][11:19].replace(":", "") or 0) if len(v["fecha"]) >= 19 else None
         b = _boletin(v["desc"])
         url = f"{WEB_CAMARA}/sala_sesiones/votacion_detalle.aspx?prmIdVotacion={v['id']}"
-        if b:
+        tipo_v, articulo, tramite = ((proyectos.get(b) or {}).get("votos") or {}).get(v["id"], ("", "", "")) if b else ("", "", "")
+        if b and _de_otro_proyecto(articulo, (proyectos.get(b) or {}).get("nombre")):
+            # La Cámara cuelga a veces de un boletín la votación de otro proyecto: la 87189, en el 16631-07 (cómputo
+            # del arresto domiciliario), es el acuerdo con Bolivia sobre licencias de conducir. Va aparte, con su texto.
+            nombre = re.sub(r"^\W*Proyecto de (acuerdo|ley|reforma constitucional) que\s*", "", articulo, flags=re.I).strip(" “”\".")
+            aid = f"chl:otros:{v['id']}"
+            asuntos.setdefault(aid, Asunto(id=aid, titulo=(nombre[:1].upper() + nombre[1:])[:400], fecha=fecha, url=url,
+                                           tipo=tipo_asunto_proyecto(nombre, "0-10" if "acuerdo" in articulo.lower() else "0-0")))
+            texto = (" · ".join(x for x in (tramite, tipo_v) if x) + f": {articulo}")[:600]
+            tv = tipo_votacion_camara(tipo_v, "")
+        elif b:
             p = proyectos.get(b) or {}
             aid = f"chl:{b}"
             if aid not in asuntos:
@@ -344,7 +375,6 @@ def _procesar_camara(ctx, lista, militancias, proyectos):
                     id=aid, titulo=(p.get("nombre") or f"Boletín {b}")[:400], tipo=tipo_asunto_proyecto(p.get("nombre") or "", b),
                     fecha=p.get("fecha") or fecha, codigo=f"Boletín {b}",
                     url=f"{WEB_CAMARA}/ProyectosDeLey/tramitacion.aspx?prmID={p['id']}&prmBOLETIN={b}" if p.get("id") else None)
-            tipo_v, articulo, tramite = (p.get("votos") or {}).get(v["id"], ("", "", ""))
             texto = " · ".join(x for x in (tramite, tipo_v) if x)
             texto = (f"{texto}: {articulo}" if texto and articulo else texto or articulo or v["desc"])[:600]
             tv = tipo_votacion_camara(tipo_v, articulo)

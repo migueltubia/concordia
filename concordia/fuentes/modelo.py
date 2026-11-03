@@ -26,6 +26,9 @@ class Fuente:
     notas: str = ""
     activa: bool = True
     decisiva_propia: bool = False  # el conector marca la votación decisiva de cada asunto (no se calcula)
+    # El texto de cada votación acaba en « · <proyecto>» y un asunto puede reunir varios proyectos (Curia Vista):
+    # la decisiva es la votación final del principal, el primero que se vota, no la del último.
+    proyecto_en_texto: bool = False
 
 
 @dataclass

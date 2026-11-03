@@ -15,6 +15,7 @@
 """
 
 import json
+import re
 from collections import Counter, defaultdict
 from itertools import combinations
 
@@ -80,20 +81,33 @@ def votos_y_totales(con, fuente, anios):
 
 # ------------------------------------------------------------------ 2. decisivas y resultado
 
+def _proyecto_votado(texto):
+    """«Votación final · Loi fédérale … (sí: … / no: …)» -> «Loi fédérale …»."""
+    if " · " not in (texto or ""):
+        return ""
+    return re.sub(r"\s*\(sí: .*$", "", texto.split(" · ", 1)[1]).strip()
+
+
 def decisivas(con, fuente, anios):
     en = _en(anios)
     asuntos = [r[0] for r in con.execute(f"SELECT DISTINCT asunto_id FROM votacion WHERE fuente=? AND anio IN {en}", (fuente,))]
     if not FUENTES[fuente].decisiva_propia:
+        por_proyecto = FUENTES[fuente].proyecto_en_texto
         porc = defaultdict(list)
         for i in range(0, len(asuntos), 500):
             trozo = asuntos[i:i + 500]
-            for vid, aid, camara, tipo, fecha, numero in con.execute(
-                    f"SELECT id, asunto_id, camara, tipo, fecha, numero FROM votacion WHERE asunto_id IN ({','.join('?' * len(trozo))})", trozo):
-                porc[(aid, camara)].append((fecha, numero or 0, vid, tipo))
+            for vid, aid, camara, tipo, fecha, numero, texto in con.execute(
+                    f"SELECT id, asunto_id, camara, tipo, fecha, numero, texto FROM votacion "
+                    f"WHERE asunto_id IN ({','.join('?' * len(trozo))})", trozo):
+                proyecto = _proyecto_votado(texto) if por_proyecto else ""
+                porc[(aid, camara)].append((fecha, numero or 0, vid, tipo, proyecto))
         marcar = []
         for vs in porc.values():
             vs.sort()
             finales = [v for v in vs if v[3] == "final"]
+            if por_proyecto and len({v[4] for v in finales}) > 1:
+                principal = next(v[4] for v in vs if v[4] in {f[4] for f in finales})
+                finales = [v for v in finales if v[4] == principal]
             if not finales:
                 finales = [v for v in vs if v[3] not in ("procedimiento", "enmienda", "parcial")]
             if finales:

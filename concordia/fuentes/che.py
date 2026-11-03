@@ -51,6 +51,7 @@ FUENTE = Fuente(
     },
     notas=("Voto de cada diputado del Consejo Nacional en todas las votaciones electrónicas; el Consejo de los "
            "Estados no publica su voto nominal en el servicio de datos. «Sí» es siempre a favor del objeto."),
+    proyecto_en_texto=True,  # un objeto (21.501) reúne a veces varios proyectos de ley (BillNumber)
 )
 
 API = "https://ws.parlament.ch/odata.svc"

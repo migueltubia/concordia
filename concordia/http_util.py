@@ -9,6 +9,7 @@ tanto en GitHub Actions, no hace falta.
 import gzip
 import hashlib
 import json
+import sys
 import threading
 import time
 import urllib.error
@@ -102,6 +103,14 @@ def en_cache(url, subcarpeta, nombre=None, caduca_horas=None, **kw):
     if ruta.exists() and (caduca_horas is None or time.time() - ruta.stat().st_mtime < caduca_horas * 3600):
         return ruta
     tmp = ruta.with_name(ruta.name + ".tmp")
-    tmp.write_bytes(fetch(url, **kw))
+    try:
+        datos = fetch(url, **kw)
+    except RuntimeError as e:
+        if not ruta.exists():
+            raise
+        # caducada pero sin poder renovarla: mejor la copia vieja que perder la fuente entera
+        print(f"   ! se usa la copia guardada de {url}: {e}", file=sys.stderr, flush=True)
+        return ruta
+    tmp.write_bytes(datos)
     tmp.replace(ruta)
     return ruta

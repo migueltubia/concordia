@@ -153,6 +153,13 @@ def _titulo(v):
     return t or v["procedure_title"] or v["reference"] or v["id"]
 
 
+_VACIAS = {"amending", "regulation", "directive", "decision", "european", "union", "council", "proposal", "report"}
+
+
+def _palabras(t):
+    return {w[:6] for w in re.findall(r"[a-z]{5,}", (t or "").lower()) if w not in _VACIAS}
+
+
 def asuntos_de(votos, geo):
     """{vote_id: id del asunto} y {id del asunto: Asunto}, con todo lo publicado (los títulos no dependen del lote)."""
     grupos, fijo = defaultdict(list), {}
@@ -172,6 +179,11 @@ def asuntos_de(votos, geo):
         tipo_proc = primera["procedure_type"]
         extra = {}
         formal = re.sub(r"\s+", " ", primera["procedure_title"] or "").strip()
+        if formal and not (_palabras(formal) & _palabras(titulo)):
+            # HowTheyVote da a veces a la votación el título de otra (A9-0175/2021, el acuerdo con Argentina, sale
+            # como «antimicrobianos»): manda el del procedimiento, que es el que da el id del asunto, y el otro se
+            # descarta (no es una segunda forma de llamarlo, es otro expediente).
+            formal, titulo = None, formal
         if formal and formal.lower() != titulo.lower():
             extra["etiqueta"] = formal[:400]
         paises = sorted({GEO.get(c, c) for v in vs for c in geo.get(v["id"], ())})

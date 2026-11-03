@@ -9,7 +9,7 @@ import json
 from .. import paises
 from ..catalogos import CODIGOS_TEMA, TEMAS, TIPOS_RELACION
 
-VERSION_PROMPT = "fichas-mundo-v2"
+VERSION_PROMPT = "fichas-mundo-v3"
 ORIENTACIONES = ["positiva", "negativa", "neutra"]
 
 _TEMAS_TXT = "\n".join(f"- {c}: {n} (p. ej. {s})" for c, n, s in TEMAS)
@@ -18,7 +18,7 @@ _TIPOS_TXT = "\n".join(f"- {k}: {v}" for k, v in TIPOS_RELACION.items())
 REGLAS_RELACIONES = f"""Relaciones con otros países («relaciones»): los Estados que son OBJETO del asunto, con la
 orientación que el asunto tiene hacia cada uno si sale adelante.
 - «pais»: código ISO 3166-1 alfa-3 (USA, RUS, UKR, ISR, PSE, CHN, TWN, CUB, IRN...). Para Estados que ya no
-  existen: SUN no, usa RUS para la URSS; YUG Yugoslavia, CSK Checoslovaquia, DDR RDA.
+  existen: SUN no, usa RUS para la URSS; XKK Kosovo; YUG Yugoslavia, CSK Checoslovaquia, DDR RDA.
 - «orientacion»: «positiva» si lo favorece, lo apoya, coopera con él, le da ayuda, firma o ratifica un tratado
   con él, lo reconoce o le levanta sanciones; «negativa» si lo sanciona, lo condena, lo critica, lo acusa,
   restringe el comercio o la entrada de sus nacionales, autoriza o prepara una acción hostil o militar
@@ -50,9 +50,10 @@ en parlamentos nacionales y en la Asamblea General de la ONU: título oficial (a
 lengua), país y cámara, fecha, tipo y a veces el texto de lo que se votó. Devuelves para cada uno una ficha en JSON.
 
 Reglas:
-1. «resumen»: 1 a 3 frases neutras en español de España: qué pide, cambia o declara el asunto y a quién afecta.
-   Sin adjetivos valorativos, sin el lenguaje del preámbulo, sin opinar. En resoluciones y mociones sin fuerza de
-   ley, di que «pide», «insta» o «declara». Si el título es poco informativo, dilo y baja la confianza.
+1. «resumen»: 1 a 3 frases neutras en español de España: qué pide, cambia o declara el asunto y, si no es
+   evidente, a quién afecta. Sin adjetivos valorativos, sin el lenguaje del preámbulo, sin opinar. En resoluciones
+   y mociones sin fuerza de ley, di que «pide», «insta» o «declara». Si el título dice poco, resume lo que se sabe
+   y baja la confianza.
 2. Básate exclusivamente en el título y los metadatos. Puedes usar conocimiento general solo para interpretar
    siglas, nombres de leyes o contexto conocido, pero no inventes ni añadas ninguna información —cifras,
    artículos, medidas, nombres, fechas— que no se deduzca directamente del texto recibido.
@@ -63,6 +64,11 @@ Reglas:
 6. {REGLAS_RELACIONES}
 7. «confianza» entre 0 y 1 sobre la clasificación.
 8. Redacta en presente y en tercera persona («Establece…», «Condena…», «Insta al Gobierno a…»).
+9. Estilo: frases cortas y palabras corrientes, como se lo contarías a alguien que no sigue la política. Evita
+   «en materia de», «relativo a», «en el marco de», «así como», «integral», «fundamental», «clave». No acabes con
+   una frase de relleno sobre a quién afecta («Afecta a…») si no aporta nada. No describas el título ni los
+   metadatos («el título no precisa…», «no permite conocer…»): di lo que se sabe y baja la confianza. No
+   escribas «por tanto» ni «el asunto consiste en».
 
 Temas (lista cerrada):
 {_TEMAS_TXT}
@@ -110,6 +116,11 @@ EJEMPLO = {"fichas": [{
     "confianza": 0.8}]}
 
 
+# Códigos que los modelos usan y el catálogo tiene con otro: la URSS va como Rusia y Kosovo es XKK (XKX es el
+# que usan la UE y otros, y sin esto se descartaba).
+_ALIAS_ISO3 = {"SUN": "RUS", "XKX": "XKK", "KOS": "XKK"}
+
+
 def validar_relaciones(rels, origen=None):
     validas = paises.por_iso3()
     salida, vistos = [], set()
@@ -117,8 +128,7 @@ def validar_relaciones(rels, origen=None):
         if not isinstance(r, dict):
             continue
         iso3 = str(r.get("pais") or "").strip().upper()
-        if iso3 == "SUN":
-            iso3 = "RUS"
+        iso3 = _ALIAS_ISO3.get(iso3, iso3)
         if iso3 not in validas or paises.solo_origen(iso3) or (origen and iso3 in paises.propios(origen)) or iso3 in vistos:
             continue
         vistos.add(iso3)

@@ -65,7 +65,8 @@ CONVOCATORIAS = {9: "2019-08-29"}  # número -> primer día; la última es la ac
 SENTIDO = {"1": "si", "2": "no", "3": "abstencion", "5": "abstencion"}  # 0 ausente y 4 «не голосував» -> no_vota
 POR_LOTE = 300
 
-NUMERO = re.compile(r"№\s*(\d{3,5}(?:[-/][0-9A-Za-zА-Яа-яІіЇїЄєҐґ]+)*)")
+# Una letra pegada al número es otro proyecto: «№3025а» es el alternativo al 3025, no el 3025.
+NUMERO = re.compile(r"№\s*(\d{3,5}(?:[А-Яа-яІіЇїЄєҐґA-Za-z](?![А-Яа-яІіЇїЄєҐґA-Za-z]))?(?:[-/][0-9A-Za-zА-Яа-яІіЇїЄєҐґ]+)*)")
 # Cuestiones del orden del día que reúnen votaciones sin relación entre sí (no sirven de asunto).
 CAJON = re.compile(r"запит|додатково включені|продовження|оголошення|реєстрац|різне|порядок роботи|інформаці|заяви", re.I)
 
@@ -82,6 +83,13 @@ def _proyecto(texto):
         if "поправ" not in antes and "пропозиц" not in antes:
             return m.group(1).rstrip("-/")
     return None
+
+
+_VACIAS = {"проект", "проєкт", "закону", "україни", "внесення", "змін", "деяких", "законодавчих", "актів", "щодо", "постанови"}
+
+
+def _palabras(t):
+    return {w[:6] for w in re.findall(r"[а-яіїєґ']{5,}", (t or "").lower()) if w not in _VACIAS}
 
 
 def _clave(numero):
@@ -209,12 +217,18 @@ def cargar_convocatoria(ctx, skl, actual, desde_fecha):
         fecha = (e["date_event"] or e["date_agenda"])[:10]
         if numero:
             clave = _clave(numero)
+            b = proyectos.get(clave) or proyectos.get(numero)
+            if b and (b.get("registrationDate") or "")[:10] > fecha[:10] and not (_palabras(b["name"]) & _palabras(texto)):
+                # Registrado después de la votación y sobre otra cosa: el número es de un proyecto de la convocatoria
+                # anterior (en septiembre de 2019 se votó el №7203 de la VIII; el 7203 de la IX es de 2022). Un proyecto
+                # vuelto a registrar tras la votación (1182-1, a primera lectura de nuevo) sí es el mismo.
+                clave, b = f"{clave}-ant", None
             if f"ukr:{skl}:{clave}" not in asuntos:
-                b = proyectos.get(clave) or proyectos.get(numero)
                 titulo = (b["name"] if b else None) or (titulo_orden if num_orden in (numero, clave) else None) or _limpio(texto)
                 asuntos[f"ukr:{skl}:{clave}"] = Asunto(
                     id=f"ukr:{skl}:{clave}", titulo=titulo[:400], tipo=tipo_asunto(clave, titulo),
-                    fecha=(b["registrationDate"][:10] if b and b.get("registrationDate") else fecha), codigo=f"№ {clave}",
+                    fecha=(b["registrationDate"][:10] if b and b.get("registrationDate") else fecha),
+                    codigo=f"№ {numero} (convocatoria anterior)" if clave.endswith("-ant") else f"№ {clave}",
                     url=f"https://itd.rada.gov.ua/billInfo/Bills/Card/{b['id']}" if b else None)
             aid = f"ukr:{skl}:{clave}"
         elif titulo_orden and not CAJON.search(titulo_orden) and tipo_votacion(texto, "otro") != "procedimiento":

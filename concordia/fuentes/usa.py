@@ -114,7 +114,29 @@ def _nombre(bioname, estado):
     return f"{partes[1]} {apellido}".strip() + (f" ({estado})" if estado else "") if len(partes) > 1 else apellido
 
 
-def cargar_congreso(ctx, congreso, camara, actual, desde_fecha=None):
+def titulos_congreso(ctx, congreso, actual):
+    """Título de cada proyecto con todas las votaciones del Congreso en las dos cámaras (no solo las que entran en
+    esta recogida): el de su última votación final; si no la hay, el de otra que no sea enmienda. El de una
+    enmienda («To prohibit funding for COVID-19 vaccine mandates», en la H.R. 2471) describe la enmienda, no el
+    proyecto, y solo vale si no hay otro."""
+    mejor = {}
+    for camara, (letra, _) in CAMARA.items():
+        for r in _csv(ctx, f"{letra}{congreso:03d}_rollcalls", actual):
+            numero, desc = r["bill_number"].strip(), (r["vote_desc"] or "").strip()
+            if r["chamber"] != camara or not numero or not desc:
+                continue
+            rango = {"final": 3, "otra": 2}.get(tipo_votacion(r["vote_question"], None), 1)
+            if re.match(r"(in the nature of a substitute|an? amendment|to strike|to insert)\b", desc, re.I):
+                rango = 0  # descripción de una enmienda colgada de otra votación
+            clave = (rango, r["date"], int(r["rollnumber"]) if letra == "H" else 0)
+            aid = f"usa:{congreso}:{numero.upper()}"
+            if aid not in mejor or clave >= mejor[aid][0]:
+                mejor[aid] = (clave, desc)
+    return {aid: d for aid, (_, d) in mejor.items()}
+
+
+def cargar_congreso(ctx, congreso, camara, actual, desde_fecha=None, titulos=None):
+    titulos = titulos or {}
     letra, codigo_camara = CAMARA[camara]
     base = f"{letra}{congreso:03d}"
     miembros = {}
@@ -148,9 +170,8 @@ def cargar_congreso(ctx, congreso, camara, actual, desde_fecha=None):
         if desc.lower().startswith(("providing for consideration", "providing for the consideration", "waiving")):
             tipo_a = "procedimiento"
         tv = tipo_votacion(pregunta, tipo_a)
-        titulo = desc or pregunta or codigo or aid
+        titulo = titulos.get(aid) or desc or pregunta or codigo or aid
         previo = asuntos.get(aid)
-        # El título del asunto es el de su votación final, si la hay.
         if not previo or (tv == "final" and desc):
             asuntos[aid] = Asunto(id=aid, titulo=titulo[:400], tipo=tipo_a, fecha=previo.fecha if previo else r["date"],
                                   codigo=codigo, url=url_a, extra={"congreso": congreso})
@@ -180,10 +201,11 @@ def recoger(ctx):
                                      (f"usa-_:{congreso}:%",)).fetchone()[0]
             if ultima:  # se repasan dos semanas por si Voteview corrige algo
                 desde_fecha = date.fromordinal(date.fromisoformat(ultima).toordinal() - 14).isoformat()
+        titulos = titulos_congreso(ctx, congreso, es_actual)
         for camara in ("House", "Senate"):
             ctx.log(f"   {congreso}.º Congreso, {'Cámara' if camara == 'House' else 'Senado'}"
                     + (f" desde {desde_fecha}" if desde_fecha else ""))
-            cargar_congreso(ctx, congreso, camara, es_actual, desde_fecha)
+            cargar_congreso(ctx, congreso, camara, es_actual, desde_fecha, titulos)
         if not es_actual:
             cerrados.add(congreso)
             ctx.poner_marca("cerrados", sorted(cerrados))

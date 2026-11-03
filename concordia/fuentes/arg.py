@@ -901,6 +901,22 @@ def asuntos_senado(filas, ref):
     return info
 
 
+def _od_encaja(titulo, exps, ref):
+    """Si el orden del día que enlaza la lista de actas es de lo que dice el acta: la lista a veces enlaza el de
+    otro asunto. Solo se juzga con un título descriptivo (cinco raíces o más): los nombres populares («Ley de
+    Góndolas») no se parecen al título oficial, y las mociones nombran el expediente en vez de describirlo. Sin el
+    proyecto en los datos abiertos no hay con qué comparar y se da por bueno."""
+    limpio = limpiar_titulo_senado(titulo or "")
+    propias = {w[:7] for w in _palabras(limpio)}
+    if len(propias) < 5 or re.search(r"^MOCI|EXPEDIENTE|\bO\.?D\.? ?\d", _sin_tildes(limpio).upper()):
+        return True
+    for exp, _ in exps:
+        _, proyecto = clave_exp_senado(exp, ref)
+        if not proyecto or propias & {w[:7] for w in _palabras(proyecto["titulo"])}:
+            return True
+    return False
+
+
 def recoger_senado(ctx, ref):
     inicio = _inicio(ctx, "arg-s")
     hace_un_mes = (date.today() - timedelta(days=30)).isoformat()
@@ -922,7 +938,10 @@ def recoger_senado(ctx, ref):
             desde_od = exps_od.get(f["od"]) or []
             if not f["exps"] and desde_od and (any(c != "AC" for _, c in desde_od)
                                                 or NOMBRAMIENTO.search(_sin_tildes(f["titulo"]).upper())):
-                f["exps"] = desde_od
+                if _od_encaja(f["titulo"], desde_od, ref):
+                    f["exps"] = desde_od
+                else:  # el acta 1222 (Fonplata) enlaza el O.D. 5/2020, que es la modificación de la ley 27.237
+                    f["od"] = None
             if not f["titulo"] and f["exps"]:
                 f["titulo"] = _extracto_senado(ctx, *f["exps"][0]) or f"Expediente {exp_senado_legible(f['exps'][0][0])}"
         info = asuntos_senado(filas, ref)
