@@ -1,7 +1,7 @@
 {
  "arg": {
   "error": null,
-  "ultimo_ok": "2026-11-01T12:04:53+00:00"
+  "ultimo_ok": "2026-11-02T21:46:49+00:00"
  },
  "bra": {
   "cerrados": [
@@ -121,8 +121,8 @@
   ],
   "camara_pendientes": [],
   "error": null,
-  "senado_hasta": "2026-11-01",
-  "ultimo_ok": "2026-11-01T12:31:13+00:00"
+  "senado_hasta": "2026-11-03",
+  "ultimo_ok": "2026-11-02T23:43:14+00:00"
  },
  "cze": {
   "cerradas": [
@@ -133,7 +133,11 @@
   "ultimo_ok": "2026-11-01T12:00:41+00:00"
  },
  "deu": {
-  "error": null,
+  "error": {
+   "detalle": "RuntimeError: No se pudo descargar https://www.abgeordnetenwatch.de/api/v2/polls?field_legislature=111&range_end=1000: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Missing Authority Key Identifier (_ssl.c:1081)>",
+   "fecha": "2026-11-02T21:47:20+00:00",
+   "motivo": "error"
+  },
   "ultimo_ok": "2026-11-01T12:28:28+00:00"
  },
  "dnk": {
@@ -158,8 +162,8 @@
  },
  "eup": {
   "error": null,
-  "ultimo_ok": "2026-11-01T12:40:40+00:00",
-  "version": "2026-10-31T00:00:00+00:00"
+  "ultimo_ok": "2026-11-02T22:18:49+00:00",
+  "version": "2026-11-01T21:43:35+00:00"
  },
  "fin": {
   "error": null,
@@ -1574,12 +1578,8 @@
   "ultimo_ok": "2026-11-01T11:50:38+00:00"
  },
  "ukr": {
-  "error": {
-   "detalle": "RuntimeError: No se pudo descargar https://data.rada.gov.ua/ogd/zal/ppz/skl9/dict/mps.json: <urlopen error [Errno 110] Connection timed out>",
-   "fecha": "2026-11-01T12:40:36+00:00",
-   "motivo": "error"
-  },
-  "ultimo_ok": "2026-10-26T11:53:13+00:00"
+  "error": null,
+  "ultimo_ok": "2026-11-02T22:02:07+00:00"
  },
  "usa": {
   "cerrados": [
@@ -1597,6 +1597,6 @@
    118
   ],
   "error": null,
-  "ultimo_ok": "2026-11-01T11:49:50+00:00"
+  "ultimo_ok": "2026-11-02T21:44:45+00:00"
  }
 }
