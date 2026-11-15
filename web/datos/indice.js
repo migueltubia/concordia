@@ -1,12 +1,12 @@
 // Generado por `python -m concordia web`. Ficheros de datos que carga la web.
 window.CONCORDIA_INDICE = {
- "generado": "2026-11-08T12:27:28+00:00",
+ "generado": "2026-11-15T13:44:35+00:00",
  "ficheros": [
   {
    "nombre": "comun",
    "tipo": "comun",
-   "huella": "79c03a24187c1695",
-   "bytes": 68353
+   "huella": "e105eb2288829484",
+   "bytes": 67273
   },
   {
    "nombre": "arg/2019",
@@ -133,8 +133,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "bra",
    "anio": 2026,
-   "huella": "2f3e7d4732dd3f94",
-   "bytes": 219264
+   "huella": "86bc3bf906fb7ab9",
+   "bytes": 221260
   },
   {
    "nombre": "can/2019",
@@ -269,64 +269,64 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2019,
-   "huella": "072893a0e7fa80da",
-   "bytes": 745176
+   "huella": "c3d666190862c9ae",
+   "bytes": 724112
   },
   {
    "nombre": "chl/2020",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2020,
-   "huella": "1a0a0a4bf89c1548",
-   "bytes": 876448
+   "huella": "c9eaf8a37532e6fe",
+   "bytes": 856584
   },
   {
    "nombre": "chl/2021",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2021,
-   "huella": "e70eaa156e2b989c",
-   "bytes": 794016
+   "huella": "04b35dfa9f75f6b4",
+   "bytes": 772632
   },
   {
    "nombre": "chl/2022",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2022,
-   "huella": "b432cf8e3fce0b4d",
-   "bytes": 845796
+   "huella": "4b4525807eca6691",
+   "bytes": 821960
   },
   {
    "nombre": "chl/2023",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2023,
-   "huella": "042817680b7e5bae",
-   "bytes": 1137176
+   "huella": "66f9029c9dc1a01c",
+   "bytes": 1116516
   },
   {
    "nombre": "chl/2024",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2024,
-   "huella": "7248a39da156d8df",
-   "bytes": 997128
+   "huella": "996462b3df54004b",
+   "bytes": 997416
   },
   {
    "nombre": "chl/2025",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2025,
-   "huella": "e417524b9dde49ea",
-   "bytes": 813944
+   "huella": "45bb4d972792e25f",
+   "bytes": 792028
   },
   {
    "nombre": "chl/2026",
    "tipo": "fuente",
    "fuente": "chl",
    "anio": 2026,
-   "huella": "cc0e7b30f644fb67",
-   "bytes": 770432
+   "huella": "8e768a4d7ef69c58",
+   "bytes": 922192
   },
   {
    "nombre": "cze/2019",
@@ -389,8 +389,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "cze",
    "anio": 2026,
-   "huella": "7ba4d39a0004b9d6",
-   "bytes": 562712
+   "huella": "9f18b9a00fc813c6",
+   "bytes": 563396
   },
   {
    "nombre": "deu/2019",
@@ -453,8 +453,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "deu",
    "anio": 2026,
-   "huella": "6b22d54d9f058d1b",
-   "bytes": 87408
+   "huella": "084dad2c364dd678",
+   "bytes": 71896
   },
   {
    "nombre": "dnk/2019",
@@ -517,8 +517,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "dnk",
    "anio": 2026,
-   "huella": "c5c14153dd825033",
-   "bytes": 96404
+   "huella": "c7b98bd37da2e997",
+   "bytes": 76560
   },
   {
    "nombre": "esp/2012",
@@ -701,8 +701,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "est",
    "anio": 2026,
-   "huella": "7f3f6df851c059f6",
-   "bytes": 180736
+   "huella": "1a4ca771f7b60d76",
+   "bytes": 212956
   },
   {
    "nombre": "eup/2019",
@@ -765,8 +765,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "eup",
    "anio": 2026,
-   "huella": "40d376f83a5e2d30",
-   "bytes": 1197240
+   "huella": "59d8e523ceb51b92",
+   "bytes": 1203568
   },
   {
    "nombre": "fin/2019",
@@ -829,8 +829,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "fin",
    "anio": 2026,
-   "huella": "df9cee1edc8e9c45",
-   "bytes": 93584
+   "huella": "b295c144bf66f6eb",
+   "bytes": 97828
   },
   {
    "nombre": "fra/2019",
@@ -893,8 +893,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "fra",
    "anio": 2026,
-   "huella": "66df8719809cf66f",
-   "bytes": 1562472
+   "huella": "0cf2465275bf83df",
+   "bytes": 1596688
   },
   {
    "nombre": "gbr/2016",
@@ -981,8 +981,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "gbr",
    "anio": 2026,
-   "huella": "308e749b58cca2dc",
-   "bytes": 173964
+   "huella": "6e3d54a69dc7f258",
+   "bytes": 176372
   },
   {
    "nombre": "irl/2019",
@@ -1045,8 +1045,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "irl",
    "anio": 2026,
-   "huella": "7fa8a49fdd83ab85",
-   "bytes": 137980
+   "huella": "2a7d04eaf08c5b8e",
+   "bytes": 141756
   },
   {
    "nombre": "mex/2019",
@@ -1109,8 +1109,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "mex",
    "anio": 2026,
-   "huella": "204a6c05e1113a4f",
-   "bytes": 96024
+   "huella": "484def84496fa0d9",
+   "bytes": 96824
   },
   {
    "nombre": "nld/2019",
@@ -1173,8 +1173,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "nld",
    "anio": 2026,
-   "huella": "60e936b018791283",
-   "bytes": 2670068
+   "huella": "9e7a3b796338c57f",
+   "bytes": 2755124
   },
   {
    "nombre": "nor/2019",
@@ -1237,8 +1237,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "nor",
    "anio": 2026,
-   "huella": "1868a65013dc5133",
-   "bytes": 383372
+   "huella": "5e61f08628f1fc70",
+   "bytes": 361424
   },
   {
    "nombre": "onu/1946",
@@ -2005,8 +2005,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "swe",
    "anio": 2026,
-   "huella": "6c07d607fea40f62",
-   "bytes": 532272
+   "huella": "72fdc07ddcc9de49",
+   "bytes": 536192
   },
   {
    "nombre": "ukr/2019",
@@ -2277,8 +2277,8 @@ window.CONCORDIA_INDICE = {
    "tipo": "fuente",
    "fuente": "usa",
    "anio": 2026,
-   "huella": "d1d7013023610b8a",
-   "bytes": 196684
+   "huella": "c0ba71599e4f292b",
+   "bytes": 178572
   },
   {
    "nombre": "mundo/1946",
@@ -2837,27 +2837,21 @@ window.CONCORDIA_INDICE = {
    "nombre": "mundo/2026",
    "tipo": "mundo",
    "anio": 2026,
-   "huella": "031bcc837d55ee4f",
-   "bytes": 356970
+   "huella": "4516dab50fc49317",
+   "bytes": 359810
   }
  ],
  "avisos": {
   "arg": {
    "motivo": "error",
-   "detalle": "RuntimeError: No se pudo descargar https://datos.hcdn.gob.ar/api/3/action/package_show?id=proyectos-parlamentarios: <urlopen error [Errno 104] Connection reset by peer>",
-   "fecha": "2026-11-08T12:01:17+00:00",
+   "detalle": "RuntimeError: No se pudo descargar https://datos.hcdn.gob.ar/api/3/action/package_show?id=proyectos-parlamentarios: <urlopen error _ssl.c:994: The handshake operation timed out>",
+   "fecha": "2026-11-15T12:52:19+00:00",
    "ultimos_datos": "2026-10-29"
-  },
-  "chl": {
-   "motivo": "error",
-   "detalle": "ParseError: undefined entity: line 1, column 193",
-   "fecha": "2026-11-08T12:18:38+00:00",
-   "ultimos_datos": "2026-11-04"
   },
   "ukr": {
    "motivo": "error",
    "detalle": "RuntimeError: No se pudo descargar https://data.rada.gov.ua/ogd/zal/ppz/skl9/dict/mps.json: <urlopen error [Errno 110] Connection timed out>",
-   "fecha": "2026-11-08T12:23:57+00:00",
+   "fecha": "2026-11-15T13:40:45+00:00",
    "ultimos_datos": "2026-10-16"
   }
  }
