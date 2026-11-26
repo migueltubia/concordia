@@ -79,6 +79,7 @@ def fetch(url, retries=4, timeout=90, headers=None, formulario=None, post_json=N
             raise
         except urllib.error.HTTPError as e:
             if e.code in (400, 401, 403, 404, 410):
+                e.msg = f"{e.msg} ({url})"  # para que el error que se guarda diga qué descarga falló
                 raise
             ultimo = e
             if e.code == 429:

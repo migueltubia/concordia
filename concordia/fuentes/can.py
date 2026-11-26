@@ -227,9 +227,13 @@ def _descarga(ctx, url, nombre, caduca_horas):
 
 def _lista(ctx, ps, fresca):
     ruta = _descarga(ctx, f"{WEB}/votes/xml?parlSession={ps}", f"votos-{ps}.xml", 6 if fresca else None)
+    legislatura, sesion = ps.split("-")
     salida = []
     for v in ET.parse(ruta).getroot().findall("Vote"):
         g = lambda c: (v.findtext(c) or "").strip()  # noqa: E731
+        # Para una sesión que no existe, la web devuelve a veces las divisiones de la sesión en curso: no son suyas.
+        if (g("ParliamentNumber"), g("SessionNumber")) not in (("", ""), (legislatura, sesion)):
+            continue
         salida.append({"numero": int(g("DecisionDivisionNumber")), "fecha": g("DecisionEventDateTime")[:10],
                        "asunto": _limpio(g("DecisionDivisionSubject")), "resultado": g("DecisionResultName"),
                        "si": int(g("DecisionDivisionNumberOfYeas") or 0), "no": int(g("DecisionDivisionNumberOfNays") or 0),
@@ -466,6 +470,8 @@ def recoger(ctx):
     hechas = ctx.marca("sesiones", {})   # sesión -> {desde, hasta, cerrada}
     inicio = f"{ctx.desde}-01-01"
     sesiones = _sesiones(ctx)
+    # Sesiones apuntadas que ya no salen (las que se dieron por buenas sin existir): fuera de la marca.
+    hechas = {ps: h for ps, h in hechas.items() if ps in sesiones}
     for ps in sesiones:
         fin = SESIONES.get(ps, (None, None))[1]
         if fin and fin < ctx.desde:
@@ -474,7 +480,7 @@ def recoger(ctx):
         previa = None if ctx.completo else hechas.get(ps)
         corte = inicio
         if previa and previa["desde"] <= inicio:
-            if previa.get("cerrada"):
+            if previa.get("cerrada") and not actual:  # la sesión en curso nunca está cerrada
                 continue
             corte = max(inicio, (date.fromisoformat(previa["hasta"]) - timedelta(days=7)).isoformat())
         lista = _lista(ctx, ps, fresca=True)

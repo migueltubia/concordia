@@ -224,6 +224,17 @@ class Referencias:
     def cargar(self):
         if self._cargado:
             return
+        try:
+            self._cargar()
+        except Exception as e:
+            # Desde noviembre de 2026 datos.hcdn.gob.ar responde «Acceso no disponible» fuera de Argentina. Sin
+            # sus datos se pierde el enlace al proyecto (los títulos salen del acta), no las votaciones.
+            self.por_id, self.por_dip, self.por_sen, self.ods, self.por_ley = {}, {}, {}, {}, {}
+            self._cd = None
+            self.ctx.log(f"   ! datos abiertos HCDN no disponibles, se sigue sin ellos: {type(e).__name__}: {e}"[:250])
+        self._cargado = True
+
+    def _cargar(self):
         for r in self._csv("proyectos-parlamentarios", "hcdn_proyectos.csv"):
             p = {"id": r["PROYECTO_ID"], "titulo": _limpio(r.get("TITULO")), "tipo": (r.get("TIPO") or "").upper(),
                  "dip": _exp_csv(r.get("EXP_DIPUTADOS")), "sen": _exp_csv(r.get("EXP_SENADO")),
@@ -246,7 +257,6 @@ class Referencias:
         for r in self._csv("leyes-sancionadas", "hcdn_leyes.csv"):
             if (r.get("LEY") or "").strip().isdigit():
                 self.por_ley[int(r["LEY"])] = r["PROYECTO_ID"]
-        self._cargado = True
         self.ctx.log(f"   datos abiertos HCDN: {len(self.por_id)} proyectos, {len(self.ods)} órdenes del día, "
                      f"{len(self.por_ley)} leyes")
 
@@ -336,7 +346,7 @@ NO_TRATADO = re.compile(r"CONCILIACION|ACREEDOR|TENEDORES|HOLDOUT|TITULOS DE DEU
 # Nombramientos: en el Senado, «acuerdos» (pliegos) para designar jueces, embajadores y ascensos militares.
 NOMBRAMIENTO = re.compile(
     r"^\s*(ACUERDOS?\b(?!\s+(DE\s+|DEL\s+)?(CONCILIACI|LIBRE|COMERCIO|MARCO|COOPERACI|ENTRE|CON\b|SOBRE|INTERINO|ASOCIACI|"
-    r"MUTUO|RECIPROC))|PLIEGOS?\b|DESIGNACION(ES)? DE\s+(?!LA CIUDAD|LA LOCALIDAD|LA PROVINCIA)|RATIFICACION DE SECRETARI|"
+    r"MUTUO|RECIPROC|MERCOSUR|MERCADO COMUN))|PLIEGOS?\b|DESIGNACION(ES)? DE\s+(?!LA CIUDAD|LA LOCALIDAD|LA PROVINCIA)|RATIFICACION DE SECRETARI|"
     r"ELECCION DE|PRORROGA .{0,40}MANDATO|NOMBRAMIENTOS?\b|DEFENSORA? DE LOS DERECHOS)|DEFENSORA? DEL PUEBLO|"
     r"AUDITOR(ES|IA)? GENERAL|PRESIDENTE PROVISIONAL|"
     r"VICEPRESIDENCIA|PROSECRETARI|SECRETARIO PARLAMENTARIO|SECRETARIO ADMINISTRATIVO|AUTORIDADES DE LA (H\. )?CAMARA")

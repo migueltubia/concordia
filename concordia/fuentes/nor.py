@@ -62,6 +62,7 @@ SAK = "https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak"
 INTERVALO = 0.7            # segundos entre peticiones (la API admite unas 100 por minuto)
 PRESUPUESTO_MIN = int(os.environ.get("CONCORDIA_NOR_MINUTOS") or 40)  # minutos por recogida
 POR_LOTE = 40              # sak por guardado
+MAX_FALLOS = 20            # sak que no se pueden descargar antes de dar la API por caída
 SENTIDO = {2: "si", 3: "no", 1: "no_vota"}  # voteringsresultat: 1 ikke_tilstede, 2 for, 3 mot
 # Enumeraciones del formato JSON (en el XML van con su nombre).
 BUDSJETT, LOVSAK = 1, 3                                    # sak.type (2: alminneligsak)
@@ -228,10 +229,17 @@ def recoger(ctx):
             sesiones.append((s["id"], til))
     sesiones.sort(reverse=True)  # la sesión en curso primero; luego hacia atrás
     cerradas = set(ctx.marca("sesiones_cerradas", []))
-    vistas = ctx.marca("saker_vistas", {})  # {sesión: {sak: sist_oppdatert_dato}} de las sesiones a medias
+    # {sesión: {sak: sist_oppdatert_dato}} de las sesiones a medias: las sak ya votadas que no hace falta volver a
+    # mirar mientras no cambie su fecha. Ojo: el Storting no cambia esa fecha al votar (una sak puesta al día el
+    # 2 de noviembre se vota el 17), así que solo se apuntan las sak tratadas («behandlet») con votaciones de
+    # hace más de 3 días. La marca anterior («saker_vistas») apuntaba también las sak aún sin votar y perdía sus
+    # votaciones: se descarta, y la sesión en curso se vuelve a mirar entera una vez.
+    if ctx.marca("saker_vistas") is not None:
+        ctx.poner_marca("saker_vistas", None)
+    vistas = ctx.marca("saker_votadas", {})
     conocidas = set() if ctx.completo else {r[0] for r in ctx.con.execute("SELECT id FROM votacion WHERE fuente='nor'")}
     asignadas = {}  # votering -> sak a cuyo asunto va (en esta recogida)
-    estable = (hoy - timedelta(days=3)).isoformat()  # una sak tocada hace menos se vuelve a mirar
+    estable = (hoy - timedelta(days=3)).isoformat()  # una sak votada hace menos se vuelve a mirar
     for sid, til in sesiones:
         if sid in cerradas and not ctx.completo:
             continue
@@ -246,6 +254,16 @@ def recoger(ctx):
             pendientes.append((s, cambio))
         pendientes.sort(key=lambda p: p[0]["id"])
         ctx.log(f"   sesión {sid}: {len(pendientes)} sak por mirar")
+
+        def _sak_seguro(p):
+            # Una sak que no se puede descargar (un corte de red) no para la recogida: se queda sin apuntar y la
+            # siguiente la vuelve a mirar. Muchas seguidas son la API caída: entonces sí se para con error.
+            try:
+                return _sak(p[0], desde, conocidas)
+            except Exception as e:
+                return p[0], e
+
+        fallos = 0
         with ThreadPoolExecutor(4) as ex:
             for i in range(0, len(pendientes), POR_LOTE):
                 if time.monotonic() - reloj > PRESUPUESTO_MIN * 60:
@@ -253,7 +271,15 @@ def recoger(ctx):
                     return
                 trozo = pendientes[i:i + POR_LOTE]
                 asuntos, votaciones = [], []
-                for sak, salida in ex.map(lambda p: _sak(p[0], desde, conocidas), trozo):
+                ultima = {}  # sak -> fecha de su última votación
+                for sak, salida in ex.map(_sak_seguro, trozo):
+                    if isinstance(salida, Exception):
+                        fallos += 1
+                        ctx.log(f"   ! sak {sak['id']}: {type(salida).__name__}: {salida}"[:200])
+                        if fallos > MAX_FALLOS:
+                            raise RuntimeError(f"{fallos} sak sin poder descargar; la última: {salida}")
+                        continue
+                    ultima[sak["id"]] = max((f for _, f, *_ in salida), default=None)
                     if salida:
                         asunto, nuevas = _procesar(ctx, sak, salida, asignadas)
                         if nuevas:
@@ -263,13 +289,16 @@ def recoger(ctx):
                     ctx.guardar(asuntos, votaciones)
                     conocidas.update(v.id for v in votaciones)
                 for s, cambio in trozo:
-                    if cambio < estable:
+                    votada = ultima.get(s["id"])
+                    if s.get("status") == BEHANDLET and votada and votada < estable and cambio < estable:
                         hechas[str(s["id"])] = cambio
+                    else:
+                        hechas.pop(str(s["id"]), None)
                 vistas[sid] = hechas
-                ctx.poner_marca("saker_vistas", vistas)
+                ctx.poner_marca("saker_votadas", vistas)
                 ctx.log(f"   {sid}: {min(i + POR_LOTE, len(pendientes))}/{len(pendientes)} sak, {len(votaciones)} votaciones")
-        if til < (hoy - timedelta(days=45)).isoformat():
+        if til < (hoy - timedelta(days=45)).isoformat() and not fallos:  # con sak pendientes no se cierra
             cerradas.add(sid)
             vistas.pop(sid, None)
             ctx.poner_marca("sesiones_cerradas", sorted(cerradas))
-            ctx.poner_marca("saker_vistas", vistas)
+            ctx.poner_marca("saker_votadas", vistas)
